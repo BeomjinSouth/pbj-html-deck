@@ -1,0 +1,40 @@
+{
+  "cover": {
+    "name": "표지", "group": "open", "visual": true, "interaction": null,
+    "fields": {"title": {"type": "text", "required": true, "max": [22, 2]}, "image": {"type": "asset"}},
+    "mockup": "A title and one image"
+  },
+  "cards": {
+    "name": "카드", "group": "explain", "visual": false, "interaction": null,
+    "fields": {
+      "title": {"type": "text", "required": true, "max": [22, 1]},
+      "cards": {"type": "list", "min": 2, "max": 4, "of": {
+        "title": {"type": "text", "required": true, "max": [10, 1]},
+        "desc": {"type": "text", "max": [16, 2]}, "image": {"type": "asset"}
+      }},
+      "note": {"type": "text", "max": [30, 1]},
+      "config": {"type": "object", "of": {"label": {"type": "text", "required": true}, "show": {"type": "bool"}, "count": {"type": "number"}, "mode": {"type": "choice", "options": ["a", "b"]}, "raw": {"type": "raw"}}}
+    },
+    "mockup": "Parallel cards"
+  },
+  "quiz": {
+    "name": "고르기", "group": "check", "visual": false, "interaction": "quiz",
+    "fields": {"title": {"type": "text", "required": true, "max": [22, 1]}, "options": {"type": "list", "min": 2, "max": 4, "of": "text"}},
+    "mockup": "Choose one"
+  },
+  "order": {
+    "name": "순서 맞추기", "group": "explore", "visual": false, "interaction": "sort",
+    "fields": {"title": {"type": "text", "required": true, "max": [22, 1]}, "items": {"type": "list", "min": 2, "max": 5, "of": "text"}},
+    "mockup": "Order the chips"
+  },
+  "detail": {
+    "name": "설명", "group": "explain", "visual": false, "interaction": null,
+    "fields": {"title": {"type": "text", "required": true, "max": [22, 1]}, "body": {"type": "text", "max": [32, 3]}},
+    "mockup": "An explanation"
+  },
+  "wrap": {
+    "name": "정리", "group": "wrap", "visual": false, "interaction": null,
+    "fields": {"title": {"type": "text", "required": true, "max": [22, 1]}, "summary": {"type": "text", "max": [32, 2]}},
+    "mockup": "Summary"
+  }
+}

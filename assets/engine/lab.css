@@ -1,0 +1,17 @@
+/* Low-specificity defaults: the kit or the author can restyle the marks. */
+:where(.slide) [data-lab] [data-if].is-off { display:none; }
+/* Chrome negotiates the touch gesture on the SVG viewport, not a circle or path. */
+:where(.slide) svg[data-graph]:has([data-drag]) { touch-action:none; }
+:where(.slide) [data-lab] [data-drag] { touch-action:none; cursor:grab; user-select:none; }
+:where(.slide) [data-lab] [data-drag].is-drag { cursor:grabbing; }
+:where(.slide) .g-plane, :where(.slide) .g-plane * { pointer-events:none; }
+:where(.slide) .g-grid { stroke:currentColor; stroke-opacity:.16; stroke-width:1.25; }
+:where(.slide) .g-axis, :where(.slide) .g-tick { stroke:currentColor; stroke-width:2; }
+:where(.slide) .g-arrow { fill:currentColor; }
+:where(.slide) :is(.g-number,.g-origin,.g-name) {
+  fill:currentColor; font-family:var(--font-label,"Cambria",serif); font-style:normal; font-weight:400;
+  dominant-baseline:central; paint-order:stroke fill; stroke:var(--paper,transparent); stroke-width:.14em; stroke-linejoin:round;
+}
+:where(.slide) .g-name { font-family:var(--font-math,"Cambria Math",serif); font-style:italic; }
+:where(.slide) :where([data-graph]) :where(path[data-fn]) { fill:none; stroke:currentColor; stroke-width:4; stroke-linejoin:round; }
+:where(.slide) :where([data-graph]) :where(circle[data-pt],text[data-pt]) { fill:currentColor; }

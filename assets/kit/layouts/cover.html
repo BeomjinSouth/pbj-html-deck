@@ -1,0 +1,11 @@
+<section class="slide">
+  <div class="lead">
+    <div class="plate">
+      {{#tag}}<span class="tag" data-tone="{{{_tone}}}">{{tag}}</span>{{/tag}}
+      <h1{{#_len.title}} style="--n:{{{_len.title}}}"{{/_len.title}}>{{title}}</h1>
+      {{#sub}}<p class="sub">{{sub}}</p>{{/sub}}
+    </div>
+    {{#by}}<p class="by">{{by}}</p>{{/by}}
+  </div>
+  {{#mascot}}<figure class="buddy">{{asset:mascot}}</figure>{{/mascot}}
+</section>

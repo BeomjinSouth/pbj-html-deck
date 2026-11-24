@@ -1,0 +1,7 @@
+ONE compact scene illustration for a Korean classroom slide deck: a few objects grouped tightly together so that the whole group forms a single die-cut sticker with one continuous thick white border.
+Scene: {SUBJECT}
+A finished slide design may be attached. If this scene is drawn on that slide, match how it looks there (objects, arrangement, colors); in any case match the drawing style of that slide's illustrations. Draw ONLY this scene: none of the slide's cards, text, mascot or background.
+Style: {STYLE}
+Deck colors: {PALETTE}
+No loose pieces floating far from the group; simple and bold enough to read at a glance. Objects stay plain objects: no faces, eyes, mouths, arms or legs on them unless the scene asks for them. Centered, fully inside the frame with a generous empty margin on every side. Transparent background: nothing behind the subject, no scenery, no ground, no ground shadow, no glow, no frame, no border box.
+{TEXTS}

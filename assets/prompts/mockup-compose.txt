@@ -1,0 +1,20 @@
+Design ONE finished presentation slide for a Korean classroom, shown full-screen on a large classroom display. 16:9 landscape.
+
+STYLE REFERENCE: The attached kit board is a contact sheet of six finished slides (a 2 by 3 grid) from this deck's design system. Match its look exactly: the card style, outlines and hard shadows, tilted tag pills, yellow marker highlights, colors, spacing, and above all the typeface (the rounded, chunky Korean display typeface "Maplestory": Bold for titles, Light for body text; math letters in italic serif). The board is only a style reference: do not copy its layouts, its wording or its pictures. Draw ONE slide only, not a grid, composed from the Layout description below.
+
+MASCOT: The attached character sheet is the deck mascot. Wherever the mascot is listed, draw exactly this character (same body shape and proportions, colors, face and accessories) in the described pose, as a die-cut sticker. Do not draw the mascot where it is not listed.
+
+VISUAL DIRECTION: "Sticker Pop", a playful sticker-book look. Colors: {PALETTE}. The background color fills the whole canvas with a faint dot grid. Content sits on white cards with a 4px dark-navy outline, 28px rounded corners and a hard offset shadow (8px down-right, solid navy, no blur). Titles are dark navy, with the key word sitting on a hand-drawn yellow marker swash. Small tag pills are slightly tilted like stickers. Illustrations are die-cut stickers with thick white borders. Energetic but tidy.
+Illustration style: {STYLE}
+
+THIS SLIDE
+Layout: {LAYOUT}
+Text on the slide, verbatim (label: "text" - draw only what is inside the quotes, never the label):
+{TEXTS}
+Illustrations:
+{ILLUSTRATIONS}
+Notes for you, not slide text (never write these on the slide): purpose of the slide "{PURPOSE}"; what the eye should land on first "{FOCUS}"; extra direction: {NOTE}
+
+COMPOSITION: Follow the Layout description for where things go. Title text is the largest text; body text is clearly smaller; the focal element gets the most room and two or three small radiating sparkle strokes. Generous, even margins. If the Layout description mentions a check button, label it "확인"; do not add buttons, icons or badges that it does not mention. Mathematical figures (coordinate planes, tables, diagrams) are drawn cleanly and plainly, with no invented numbers or labels.
+
+RULES: Korean text must be spelled exactly, every syllable block crisp and correct, large and readable from the back of a classroom. Only the listed text, plus the numbers and letters that belong to a graph, table or diagram: no extra words, no captions, no lorem ipsum, no watermark, no signature. Interactive parts (buttons, sliders, chips, checkboxes, input boxes) are shown in their untouched initial state: nothing selected, nothing marked right or wrong, no answers revealed. One clear focal point; nothing cramped, nothing cut off; keep all content away from the canvas edges. No browser window, no app chrome, no device frame, no cursor, no presenter, no hands. Flat front view of the slide only, filling the whole canvas edge to edge.

@@ -1,0 +1,27 @@
+<section class="slide">
+  <header class="hd">
+    {{#tag}}<span class="tag" data-tone="{{{_tone}}}">{{tag}}</span>{{/tag}}
+    <div class="fit"><h2{{#_len.title}} style="--n:{{{_len.title}}}"{{/_len.title}}>{{title}}</h2></div>
+  </header>
+  <div class="main" data-sort style="{{#_len.chips.text}}--nc:{{{_len.chips.text}}};{{/_len.chips.text}}">
+    <div class="card pool" data-pool>
+      {{#chips|shuffle}}<div class="piece" data-chip data-to="{{to}}" role="button" tabindex="0"><span>{{text}}</span></div>
+      {{/chips}}
+    </div>
+    <div class="lower">
+      <div class="bins{{#yesno}} yesno{{/yesno}}" style="{{#_len.bins.label}}--n:{{{_len.bins.label}}};{{/_len.bins.label}}">
+        {{#bins}}<div class="bin" data-bin="{{key}}"><b class="binlabel">{{label}}</b></div>
+        {{/bins}}
+      </div>
+      <button class="btn round" data-check>확인</button>
+    </div>
+  </div>
+  {{#mascot}}<figure class="buddy" data-buddy>
+    <div class="says">
+      {{#say}}{{#@first}}<p class="bubble" data-when="idle">{{.}}</p>{{/@first}}{{/say}}
+      <p class="bubble" data-when="correct done">{{#cheer}}{{cheer}}{{/cheer}}{{^cheer}}정답!{{/cheer}}</p>
+      <p class="bubble" data-when="wrong">{{#retry}}{{retry}}{{/retry}}{{^retry}}다시 해 볼까?{{/retry}}</p>
+    </div>
+    {{#deck.mascot.yes}}{{asset:mascot|when-idle}}{{asset:deck.mascot.yes|when-yes}}{{asset:deck.mascot.no|when-no}}{{/deck.mascot.yes}}{{^deck.mascot.yes}}{{asset:mascot}}{{/deck.mascot.yes}}
+  </figure>{{/mascot}}
+</section>

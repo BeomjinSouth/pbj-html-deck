@@ -1,0 +1,1971 @@
+{
+ "cover": {
+  "name": "표지",
+  "use": "첫 장. 제목과 마스코트",
+  "group": "open",
+  "buddy": "pose",
+  "interaction": null,
+  "visual": true,
+  "fields": {
+   "title": {
+    "type": "text",
+    "max": [
+     9,
+     2
+    ],
+    "required": true
+   },
+   "tag": {
+    "type": "text",
+    "max": [
+     12,
+     1
+    ]
+   },
+   "sub": {
+    "type": "text",
+    "max": [
+     22,
+     1
+    ]
+   },
+   "by": {
+    "type": "text",
+    "max": [
+     24,
+     1
+    ]
+   }
+  },
+  "mockup": "Cover slide. Left: one big white rounded card with a thick navy outline and a hard offset shadow, holding the huge two-line title (one key word highlighted by a yellow marker swash) and a short subtitle under it; a small tilted tag pill sits on the card's top-left corner. Right: the mascot, large, full body, in the described pose."
+ },
+ "goals": {
+  "name": "목표",
+  "use": "오늘의 목표 2~4개(누르면 체크)",
+  "group": "open",
+  "buddy": "pose",
+  "interaction": "toggle",
+  "visual": true,
+  "fields": {
+   "title": {
+    "type": "text",
+    "max": [
+     14,
+     1
+    ],
+    "required": true
+   },
+   "tag": {
+    "type": "text",
+    "max": [
+     7,
+     1
+    ]
+   },
+   "items": {
+    "type": "list",
+    "min": 2,
+    "max": 4,
+    "of": {
+     "type": "text",
+     "required": true,
+     "max": [
+      14,
+      1
+     ]
+    },
+    "required": true
+   }
+  },
+  "mockup": "Learning-goals slide. Tag pill and title at the top left. Goal rows stacked vertically, each a wide white card with a round empty checkbox on the left and one line of text. The mascot at the right, full body."
+ },
+ "agenda": {
+  "name": "순서",
+  "use": "오늘의 흐름 3~6단계. 지금 단계에 마스코트",
+  "group": "open",
+  "buddy": "pose",
+  "interaction": null,
+  "visual": false,
+  "fields": {
+   "title": {
+    "type": "text",
+    "max": [
+     20,
+     1
+    ],
+    "required": true
+   },
+   "tag": {
+    "type": "text",
+    "max": [
+     7,
+     1
+    ]
+   },
+   "items": {
+    "type": "list",
+    "min": 3,
+    "max": 6,
+    "of": {
+     "text": {
+      "type": "text",
+      "max": [
+       6,
+       2
+      ],
+      "required": true
+     },
+     "now": {
+      "type": "bool"
+     }
+    },
+    "required": true
+   }
+  },
+  "mockup": "Agenda slide. Tag pill and title at the top. One horizontal dotted path with numbered round stops, a short label under each stop. The current stop is filled yellow and slightly bigger, and the small mascot stands right above it."
+ },
+ "ask": {
+  "name": "큰 발문",
+  "use": "생각을 여는 질문 하나. 타이머 선택",
+  "group": "open",
+  "buddy": "say",
+  "interaction": null,
+  "visual": true,
+  "fields": {
+   "title": {
+    "type": "text",
+    "max": [
+     9,
+     2
+    ],
+    "required": true
+   },
+   "tag": {
+    "type": "text",
+    "max": [
+     7,
+     1
+    ]
+   },
+   "say": {
+    "type": "list",
+    "max": 4,
+    "of": {
+     "type": "text",
+     "required": true,
+     "max": [
+      9,
+      2
+     ]
+    }
+   },
+   "hint": {
+    "type": "text",
+    "max": [
+     18,
+     1
+    ]
+   },
+   "timer": {
+    "type": "number",
+    "min": 10,
+    "max": 3600
+   }
+  },
+  "mockup": "Big-question slide with almost no chrome. One big white card filling the slide. A huge two-line question at the center-left with one key phrase highlighted, a small hint chip under it, and a round countdown timer button at the bottom left. The mascot at the right, thinking, with a small thought bubble."
+ },
+ "section": {
+  "name": "구분장",
+  "use": "단원·활동이 바뀔 때. 큰 번호와 제목",
+  "group": "open",
+  "buddy": "pose",
+  "interaction": null,
+  "visual": false,
+  "fields": {
+   "title": {
+    "type": "text",
+    "max": [
+     10,
+     1
+    ],
+    "required": true
+   },
+   "no": {
+    "type": "text",
+    "max": [
+     2,
+     1
+    ]
+   },
+   "sub": {
+    "type": "text",
+    "max": [
+     18,
+     1
+    ]
+   }
+  },
+  "mockup": "Section-divider slide. A full solid accent-color background. At the left, a huge number inside a tilted white sticker badge with a navy outline. Next to it a big white title and a smaller white subtitle. The mascot at the right side."
+ },
+ "point": {
+  "name": "핵심 한 문장",
+  "use": "꼭 기억할 한 문장. 노란 바탕",
+  "group": "explain",
+  "buddy": "say",
+  "interaction": null,
+  "visual": true,
+  "fields": {
+   "title": {
+    "type": "text",
+    "max": [
+     10,
+     2
+    ],
+    "required": true
+   },
+   "tag": {
+    "type": "text",
+    "max": [
+     7,
+     1
+    ]
+   },
+   "say": {
+    "type": "list",
+    "max": 4,
+    "of": {
+     "type": "text",
+     "required": true,
+     "max": [
+      9,
+      2
+     ]
+    }
+   },
+   "sub": {
+    "type": "text",
+    "max": [
+     20,
+     1
+    ]
+   }
+  },
+  "mockup": "Key-message slide. One big yellow rounded card with a thick navy outline filling the slide, a small tilted tag pill on its top-left corner. A huge two-line statement at the left, a small white chip under it. The mascot at the right with a short speech bubble."
+ },
+ "cards": {
+  "name": "카드 2~4장",
+  "use": "나란히 놓고 견줄 것 2~4개",
+  "group": "explain",
+  "buddy": "say",
+  "interaction": null,
+  "visual": true,
+  "fields": {
+   "title": {
+    "type": "text",
+    "max": [
+     20,
+     1
+    ],
+    "required": true
+   },
+   "tag": {
+    "type": "text",
+    "max": [
+     7,
+     1
+    ]
+   },
+   "say": {
+    "type": "list",
+    "max": 4,
+    "of": {
+     "type": "text",
+     "required": true,
+     "max": [
+      7,
+      2
+     ]
+    }
+   },
+   "cards": {
+    "type": "list",
+    "min": 2,
+    "max": 4,
+    "of": {
+     "title": {
+      "type": "text",
+      "max": [
+       7,
+       1
+      ],
+      "required": true
+     },
+     "desc": {
+      "type": "text",
+      "max": [
+       8,
+       2
+      ]
+     },
+     "image": {
+      "type": "asset"
+     },
+     "draw": {
+      "type": "raw",
+      "visual": true
+     }
+    },
+    "required": true
+   },
+   "note": {
+    "type": "text",
+    "max": [
+     22,
+     1
+    ]
+   }
+  },
+  "mockup": "Concept slide. Tag pill and title at the top left. Below, equal white cards in a row; each card has a picture on a soft tinted panel on top and one bold line plus one short line below. A wide yellow conclusion bar at the bottom. The mascot stands at the right pointing at the cards, with a speech bubble."
+ },
+ "steps": {
+  "name": "차례",
+  "use": "순서가 있는 설명 2~5단계. 단계마다 그림이 바뀐다",
+  "group": "explain",
+  "buddy": null,
+  "interaction": null,
+  "visual": true,
+  "fields": {
+   "title": {
+    "type": "text",
+    "max": [
+     20,
+     1
+    ],
+    "required": true
+   },
+   "tag": {
+    "type": "text",
+    "max": [
+     7,
+     1
+    ]
+   },
+   "steps": {
+    "type": "list",
+    "min": 2,
+    "max": 5,
+    "of": {
+     "text": {
+      "type": "text",
+      "max": [
+       13,
+       1
+      ],
+      "required": true
+     },
+     "image": {
+      "type": "asset"
+     },
+     "draw": {
+      "type": "raw",
+      "visual": true
+     }
+    },
+    "required": true
+   }
+  },
+  "mockup": "Step-by-step slide. Tag pill and title at the top. Left: a vertical list of numbered step rows; the active step is highlighted yellow and slightly larger, the others are quieter. Right: one large white card showing the picture for the active step."
+ },
+ "compare": {
+  "name": "견주기",
+  "use": "두 가지를 나란히(되는 것/안 되는 것, 전/후)",
+  "group": "explain",
+  "buddy": null,
+  "interaction": null,
+  "visual": true,
+  "fields": {
+   "title": {
+    "type": "text",
+    "max": [
+     20,
+     1
+    ],
+    "required": true
+   },
+   "tag": {
+    "type": "text",
+    "max": [
+     7,
+     1
+    ]
+   },
+   "yesno": {
+    "type": "bool"
+   },
+   "left": {
+    "type": "object",
+    "of": {
+     "label": {
+      "type": "text",
+      "max": [
+       6,
+       1
+      ],
+      "required": true
+     },
+     "image": {
+      "type": "asset"
+     },
+     "draw": {
+      "type": "raw",
+      "visual": true
+     },
+     "lines": {
+      "type": "list",
+      "min": 0,
+      "max": 3,
+      "of": {
+       "type": "text",
+       "required": true,
+       "max": [
+        13,
+        1
+       ]
+      }
+     }
+    },
+    "required": true
+   },
+   "right": {
+    "type": "object",
+    "of": {
+     "label": {
+      "type": "text",
+      "max": [
+       6,
+       1
+      ],
+      "required": true
+     },
+     "image": {
+      "type": "asset"
+     },
+     "draw": {
+      "type": "raw",
+      "visual": true
+     },
+     "lines": {
+      "type": "list",
+      "min": 0,
+      "max": 3,
+      "of": {
+       "type": "text",
+       "required": true,
+       "max": [
+        13,
+        1
+       ]
+      }
+     }
+    },
+    "required": true
+   },
+   "note": {
+    "type": "text",
+    "max": [
+     26,
+     1
+    ]
+   }
+  },
+  "mockup": "Comparison slide. Tag pill and title at the top. Two large side-by-side white panels with a round \"VS\" badge between them. Each panel has a colored header chip on its top edge, a picture, then one or two centered lines of text. A wide yellow conclusion bar at the bottom."
+ },
+ "show": {
+  "name": "큰 그림",
+  "use": "그림·사진 하나를 크게 보고 짚을 점 1~4개",
+  "group": "explain",
+  "buddy": null,
+  "interaction": null,
+  "visual": true,
+  "fields": {
+   "title": {
+    "type": "text",
+    "max": [
+     20,
+     1
+    ],
+    "required": true
+   },
+   "tag": {
+    "type": "text",
+    "max": [
+     7,
+     1
+    ]
+   },
+   "image": {
+    "type": "asset"
+   },
+   "draw": {
+    "type": "raw",
+    "visual": true
+   },
+   "points": {
+    "type": "list",
+    "min": 0,
+    "max": 4,
+    "of": {
+     "type": "text",
+     "required": true,
+     "max": [
+      14,
+      1
+     ]
+    }
+   },
+   "note": {
+    "type": "text",
+    "max": [
+     26,
+     1
+    ]
+   }
+  },
+  "mockup": "Show-and-point slide. Tag pill and title at the top. Left, about 55% wide: one large white card with a big picture. Right: numbered rows, each one short line."
+ },
+ "example": {
+  "name": "예제 풀이",
+  "use": "문제 하나와 풀이 줄 1~4개, 답",
+  "group": "explain",
+  "buddy": null,
+  "interaction": null,
+  "visual": false,
+  "fields": {
+   "title": {
+    "type": "text",
+    "max": [
+     20,
+     1
+    ],
+    "required": true
+   },
+   "tag": {
+    "type": "text",
+    "max": [
+     7,
+     1
+    ]
+   },
+   "problem": {
+    "type": "text",
+    "max": [
+     20,
+     3
+    ],
+    "required": true
+   },
+   "lines": {
+    "type": "list",
+    "min": 1,
+    "max": 4,
+    "of": {
+     "text": {
+      "type": "text",
+      "max": [
+       15,
+       1
+      ],
+      "required": true
+     },
+     "why": {
+      "type": "text",
+      "max": [
+       5,
+       1
+      ]
+     }
+    },
+    "required": true
+   },
+   "answer": {
+    "type": "text",
+    "max": [
+     18,
+     1
+    ]
+   },
+   "image": {
+    "type": "asset"
+   },
+   "draw": {
+    "type": "raw",
+    "visual": true
+   }
+  },
+  "mockup": "Worked-example slide. Tag pill and title at the top. Left: a white problem card with a small dark label, then numbered solution lines separated by thin dotted rules (each with a tiny reason chip at its right end), then a yellow answer bar. Right: one white card with a diagram."
+ },
+ "table": {
+  "name": "표",
+  "use": "값을 모아 견줄 때. 2~5열 × 2~5줄",
+  "group": "explain",
+  "buddy": "say",
+  "interaction": null,
+  "visual": false,
+  "fields": {
+   "title": {
+    "type": "text",
+    "max": [
+     20,
+     1
+    ],
+    "required": true
+   },
+   "tag": {
+    "type": "text",
+    "max": [
+     7,
+     1
+    ]
+   },
+   "say": {
+    "type": "list",
+    "max": 4,
+    "of": {
+     "type": "text",
+     "required": true,
+     "max": [
+      9,
+      2
+     ]
+    }
+   },
+   "head": {
+    "type": "list",
+    "min": 2,
+    "max": 5,
+    "of": {
+     "type": "text",
+     "required": true,
+     "max": [
+      6,
+      1
+     ]
+    },
+    "required": true
+   },
+   "rows": {
+    "type": "list",
+    "min": 2,
+    "max": 5,
+    "of": {
+     "cells": {
+      "type": "list",
+      "min": 2,
+      "max": 5,
+      "of": {
+       "type": "text",
+       "required": true,
+       "max": [
+        6,
+        1
+       ]
+      },
+      "required": true
+     },
+     "hl": {
+      "type": "bool"
+     }
+    },
+    "required": true
+   },
+   "note": {
+    "type": "text",
+    "max": [
+     22,
+     1
+    ]
+   }
+  },
+  "mockup": "Table slide. Tag pill and title at the top. One white card holding a clean table: a soft blue header row, large centered cells, thin dotted row rules, one row highlighted yellow. A wide yellow conclusion bar at the bottom."
+ },
+ "tabs": {
+  "name": "탭",
+  "use": "같은 틀의 내용 2~4개를 골라 보기",
+  "group": "explain",
+  "buddy": null,
+  "interaction": "tabs",
+  "visual": false,
+  "fields": {
+   "title": {
+    "type": "text",
+    "max": [
+     20,
+     1
+    ],
+    "required": true
+   },
+   "tag": {
+    "type": "text",
+    "max": [
+     7,
+     1
+    ]
+   },
+   "tabs": {
+    "type": "list",
+    "min": 2,
+    "max": 4,
+    "of": {
+     "label": {
+      "type": "text",
+      "max": [
+       6,
+       1
+      ],
+      "required": true
+     },
+     "heading": {
+      "type": "text",
+      "max": [
+       11,
+       1
+      ],
+      "required": true
+     },
+     "lines": {
+      "type": "list",
+      "min": 0,
+      "max": 3,
+      "of": {
+       "type": "text",
+       "required": true,
+       "max": [
+        16,
+        1
+       ]
+      }
+     },
+     "image": {
+      "type": "asset"
+     },
+     "draw": {
+      "type": "raw",
+      "visual": true
+     }
+    },
+    "required": true
+   }
+  },
+  "mockup": "Explore-by-tabs slide. Tag pill and title at the top. A row of tab buttons, the first one active (filled yellow), then one large content card below: on its left a sticker illustration, on its right a heading and two or three short lines."
+ },
+ "activity": {
+  "name": "활동 안내",
+  "use": "모둠·짝 활동의 할 일 2~4줄과 타이머",
+  "group": "explore",
+  "buddy": "pose",
+  "interaction": "timer",
+  "visual": true,
+  "fields": {
+   "title": {
+    "type": "text",
+    "max": [
+     20,
+     1
+    ],
+    "required": true
+   },
+   "tag": {
+    "type": "text",
+    "max": [
+     7,
+     1
+    ]
+   },
+   "steps": {
+    "type": "list",
+    "min": 2,
+    "max": 4,
+    "of": {
+     "type": "text",
+     "required": true,
+     "max": [
+      18,
+      1
+     ]
+    },
+    "required": true
+   },
+   "timer": {
+    "type": "number",
+    "min": 10,
+    "max": 3600,
+    "required": true
+   },
+   "chips": {
+    "type": "list",
+    "min": 0,
+    "max": 3,
+    "of": {
+     "type": "text",
+     "required": true,
+     "max": [
+      4,
+      1
+     ]
+    }
+   }
+  },
+  "mockup": "Activity-instruction slide. Tag pill and title at the top. Left: numbered instruction rows. Right: a big round countdown timer drawn as a ring with the time in its center, and under it two small tilted sticker chips. The mascot at the bottom right."
+ },
+ "lab": {
+  "name": "조작 탐구",
+  "use": "값을 바꾸면 그림이 따라 바뀐다(슬라이더)",
+  "group": "explore",
+  "buddy": "pose",
+  "interaction": "lab",
+  "visual": true,
+  "fields": {
+   "title": {
+    "type": "text",
+    "max": [
+     20,
+     1
+    ],
+    "required": true
+   },
+   "tag": {
+    "type": "text",
+    "max": [
+     7,
+     1
+    ]
+   },
+   "state": {
+    "type": "json",
+    "required": true
+   },
+   "stage": {
+    "type": "raw",
+    "required": true,
+    "visual": true
+   },
+   "controls": {
+    "type": "list",
+    "min": 1,
+    "max": 2,
+    "of": {
+     "label": {
+      "type": "text",
+      "max": [
+       8,
+       1
+      ],
+      "required": true
+     },
+     "var": {
+      "type": "raw",
+      "required": true
+     },
+     "min": {
+      "type": "number",
+      "required": true
+     },
+     "max": {
+      "type": "number",
+      "required": true
+     },
+     "step": {
+      "type": "number"
+     },
+     "value": {
+      "type": "number",
+      "required": true
+     },
+     "unit": {
+      "type": "text",
+      "max": [
+       3,
+       1
+      ]
+     }
+    },
+    "required": true
+   },
+   "readouts": {
+    "type": "list",
+    "min": 0,
+    "max": 2,
+    "of": {
+     "type": "text",
+     "required": true,
+     "max": [
+      13,
+      1
+     ]
+    }
+   },
+   "status": {
+    "type": "list",
+    "min": 0,
+    "max": 4,
+    "of": {
+     "if": {
+      "type": "raw",
+      "required": true
+     },
+     "text": {
+      "type": "text",
+      "max": [
+       9,
+       1
+      ],
+      "required": true
+     },
+     "tone": {
+      "type": "choice",
+      "options": [
+       "",
+       "yes",
+       "no"
+      ]
+     }
+    }
+   },
+   "hint": {
+    "type": "text",
+    "max": [
+     13,
+     1
+    ]
+   }
+  },
+  "mockup": "Interactive exploration slide that looks like a small web app. Tag pill and title at the top. Left, about 55% wide: a large white card containing the diagram. Right: a control panel card with a slider (a big round yellow knob on a track), a value box, readout rows, and a rounded status badge. The mascot peeking small at the bottom right corner."
+ },
+ "graph": {
+  "name": "움직이는 그래프",
+  "use": "좌표평면의 곡선·점을 슬라이더나 끌기로 바꾼다",
+  "group": "explore",
+  "buddy": "pose",
+  "interaction": "lab",
+  "visual": false,
+  "fields": {
+   "title": {
+    "type": "text",
+    "max": [
+     20,
+     1
+    ],
+    "required": true
+   },
+   "tag": {
+    "type": "text",
+    "max": [
+     7,
+     1
+    ]
+   },
+   "state": {
+    "type": "json",
+    "required": true
+   },
+   "graph": {
+    "type": "json",
+    "required": true
+   },
+   "curves": {
+    "type": "list",
+    "min": 0,
+    "max": 4,
+    "of": {
+     "fn": {
+      "type": "raw",
+      "required": true
+     },
+     "tone": {
+      "type": "choice",
+      "options": [
+       "",
+       "sky",
+       "mint",
+       "violet",
+       "ink"
+      ]
+     },
+     "dashed": {
+      "type": "bool"
+     }
+    }
+   },
+   "points": {
+    "type": "list",
+    "min": 0,
+    "max": 4,
+    "of": {
+     "at": {
+      "type": "raw",
+      "required": true
+     },
+     "tone": {
+      "type": "choice",
+      "options": [
+       "",
+       "sky",
+       "mint",
+       "coral"
+      ]
+     },
+     "drag": {
+      "type": "raw"
+     },
+     "snap": {
+      "type": "number"
+     }
+    }
+   },
+   "controls": {
+    "type": "list",
+    "min": 0,
+    "max": 2,
+    "of": {
+     "label": {
+      "type": "text",
+      "max": [
+       8,
+       1
+      ],
+      "required": true
+     },
+     "var": {
+      "type": "raw",
+      "required": true
+     },
+     "min": {
+      "type": "number",
+      "required": true
+     },
+     "max": {
+      "type": "number",
+      "required": true
+     },
+     "step": {
+      "type": "number"
+     },
+     "value": {
+      "type": "number",
+      "required": true
+     },
+     "unit": {
+      "type": "text",
+      "max": [
+       3,
+       1
+      ]
+     }
+    }
+   },
+   "formula": {
+    "type": "text",
+    "max": [
+     14,
+     1
+    ]
+   },
+   "readouts": {
+    "type": "list",
+    "min": 0,
+    "max": 2,
+    "of": {
+     "type": "text",
+     "required": true,
+     "max": [
+      13,
+      1
+     ]
+    }
+   },
+   "hint": {
+    "type": "text",
+    "max": [
+     13,
+     1
+    ]
+   }
+  },
+  "mockup": "Interactive graph slide that looks like a small web app. Tag pill and title at the top. Left: a large white card with a clean coordinate plane (light grid, x-axis and y-axis with arrowheads, the origin labelled O, axis names x and y in italic) and the curve drawn thick in coral. Right: a control card with one slider (a big round knob on a track), a value box, a large formula readout on a soft coral panel, and a hint chip below."
+ },
+ "flip": {
+  "name": "뒤집기 카드",
+  "use": "앞면의 낱말·물음을 누르면 뒷면의 뜻·답",
+  "group": "check",
+  "buddy": null,
+  "interaction": "flip",
+  "visual": false,
+  "fields": {
+   "title": {
+    "type": "text",
+    "max": [
+     20,
+     1
+    ],
+    "required": true
+   },
+   "tag": {
+    "type": "text",
+    "max": [
+     7,
+     1
+    ]
+   },
+   "cards": {
+    "type": "list",
+    "min": 2,
+    "max": 4,
+    "of": {
+     "front": {
+      "type": "text",
+      "max": [
+       7,
+       1
+      ],
+      "required": true
+     },
+     "back": {
+      "type": "text",
+      "max": [
+       8,
+       3
+      ],
+      "required": true
+     },
+     "image": {
+      "type": "asset"
+     }
+    },
+    "required": true
+   }
+  },
+  "mockup": "Flip-card slide. Tag pill and title at the top. Large white cards in a row showing their fronts: a big colored question-mark sticker, a short bold label, and a tiny hint line at the bottom."
+ },
+ "quiz": {
+  "name": "고르기",
+  "use": "짧은 보기 2~4개 가운데 정답 고르기",
+  "group": "check",
+  "buddy": "say",
+  "interaction": "quiz",
+  "visual": false,
+  "fields": {
+   "title": {
+    "type": "text",
+    "max": [
+     15,
+     2
+    ],
+    "required": true
+   },
+   "tag": {
+    "type": "text",
+    "max": [
+     7,
+     1
+    ]
+   },
+   "say": {
+    "type": "list",
+    "max": 4,
+    "of": {
+     "type": "text",
+     "required": true,
+     "max": [
+      9,
+      2
+     ]
+    }
+   },
+   "hint": {
+    "type": "text",
+    "max": [
+     14,
+     1
+    ]
+   },
+   "mode": {
+    "type": "choice",
+    "options": [
+     "",
+     "once"
+    ]
+   },
+   "options": {
+    "type": "list",
+    "min": 2,
+    "max": 4,
+    "of": {
+     "text": {
+      "type": "text",
+      "max": [
+       8,
+       1
+      ],
+      "required": true
+     },
+     "correct": {
+      "type": "bool"
+     }
+    },
+    "required": true
+   },
+   "explain": {
+    "type": "text",
+    "max": [
+     26,
+     1
+    ]
+   },
+   "cheer": {
+    "type": "text",
+    "max": [
+     8,
+     1
+    ]
+   },
+   "retry": {
+    "type": "text",
+    "max": [
+     9,
+     1
+    ]
+   }
+  },
+  "mockup": "Interactive quiz slide in its initial state (nothing selected). A white question card at the top with the tag pill on its corner and a small hint chip under the question. Below, large answer buttons in a 2 by 2 grid, each with a small round letter badge (A, B, C, D). The mascot as a quiz host at the right with a short speech bubble."
+ },
+ "quiz-long": {
+  "name": "고르기(긴 보기)",
+  "use": "문장으로 된 보기 2~4개",
+  "group": "check",
+  "buddy": "say",
+  "interaction": "quiz",
+  "visual": false,
+  "fields": {
+   "title": {
+    "type": "text",
+    "max": [
+     15,
+     2
+    ],
+    "required": true
+   },
+   "tag": {
+    "type": "text",
+    "max": [
+     7,
+     1
+    ]
+   },
+   "say": {
+    "type": "list",
+    "max": 4,
+    "of": {
+     "type": "text",
+     "required": true,
+     "max": [
+      9,
+      2
+     ]
+    }
+   },
+   "hint": {
+    "type": "text",
+    "max": [
+     14,
+     1
+    ]
+   },
+   "mode": {
+    "type": "choice",
+    "options": [
+     "",
+     "once"
+    ]
+   },
+   "options": {
+    "type": "list",
+    "min": 2,
+    "max": 4,
+    "of": {
+     "text": {
+      "type": "text",
+      "max": [
+       20,
+       1
+      ],
+      "required": true
+     },
+     "correct": {
+      "type": "bool"
+     }
+    },
+    "required": true
+   },
+   "explain": {
+    "type": "text",
+    "max": [
+     26,
+     1
+    ]
+   },
+   "cheer": {
+    "type": "text",
+    "max": [
+     8,
+     1
+    ]
+   },
+   "retry": {
+    "type": "text",
+    "max": [
+     9,
+     1
+    ]
+   }
+  },
+  "mockup": "Interactive quiz slide in its initial state. A white question card at the top with the tag pill on its corner. Below, full-width answer rows stacked vertically, each with a small round letter badge and one sentence. The mascot at the right with a short speech bubble."
+ },
+ "ox": {
+  "name": "OX",
+  "use": "맞다/아니다를 고르기",
+  "group": "check",
+  "buddy": "say",
+  "interaction": "quiz",
+  "visual": false,
+  "fields": {
+   "title": {
+    "type": "text",
+    "max": [
+     13,
+     2
+    ],
+    "required": true
+   },
+   "tag": {
+    "type": "text",
+    "max": [
+     7,
+     1
+    ]
+   },
+   "say": {
+    "type": "list",
+    "max": 4,
+    "of": {
+     "type": "text",
+     "required": true,
+     "max": [
+      9,
+      2
+     ]
+    }
+   },
+   "truth": {
+    "type": "bool",
+    "required": true
+   },
+   "mode": {
+    "type": "choice",
+    "options": [
+     "",
+     "once"
+    ]
+   },
+   "explain": {
+    "type": "text",
+    "max": [
+     26,
+     1
+    ]
+   },
+   "cheer": {
+    "type": "text",
+    "max": [
+     8,
+     1
+    ]
+   },
+   "retry": {
+    "type": "text",
+    "max": [
+     9,
+     1
+    ]
+   }
+  },
+  "mockup": "True-or-false slide in its initial state. A white statement card at the top with the tag pill on its corner. Below, two huge square buttons side by side: a big blue ring (O) and a big red cross (X). The mascot at the right."
+ },
+ "sort": {
+  "name": "나눠 담기",
+  "use": "칩 3~8개를 2~3칸에 끌어 담기",
+  "group": "check",
+  "buddy": "say",
+  "interaction": "sort",
+  "visual": false,
+  "fields": {
+   "title": {
+    "type": "text",
+    "max": [
+     20,
+     1
+    ],
+    "required": true
+   },
+   "tag": {
+    "type": "text",
+    "max": [
+     7,
+     1
+    ]
+   },
+   "say": {
+    "type": "list",
+    "max": 4,
+    "of": {
+     "type": "text",
+     "required": true,
+     "max": [
+      9,
+      2
+     ]
+    }
+   },
+   "chips": {
+    "type": "list",
+    "min": 3,
+    "max": 8,
+    "of": {
+     "text": {
+      "type": "text",
+      "max": [
+       5,
+       1
+      ],
+      "required": true
+     },
+     "to": {
+      "type": "raw",
+      "required": true
+     }
+    },
+    "required": true
+   },
+   "bins": {
+    "type": "list",
+    "min": 2,
+    "max": 3,
+    "of": {
+     "key": {
+      "type": "raw",
+      "required": true
+     },
+     "label": {
+      "type": "text",
+      "max": [
+       8,
+       1
+      ],
+      "required": true
+     }
+    },
+    "required": true
+   },
+   "yesno": {
+    "type": "bool"
+   },
+   "cheer": {
+    "type": "text",
+    "max": [
+     8,
+     1
+    ]
+   },
+   "retry": {
+    "type": "text",
+    "max": [
+     9,
+     1
+    ]
+   }
+  },
+  "mockup": "Drag-and-drop sorting slide in its initial state. Tag pill and title at the top. Upper area: a white tray holding draggable chips (white pills with a navy outline and a small grip mark). Lower area: large drop zones side by side with dashed outlines, softly tinted, each with a label at its top. A round yellow button at the right. The mascot at the right."
+ },
+ "order": {
+  "name": "순서 맞추기",
+  "use": "섞인 조각 3~5개를 차례대로 놓기",
+  "group": "check",
+  "buddy": "say",
+  "interaction": "sort",
+  "visual": false,
+  "fields": {
+   "title": {
+    "type": "text",
+    "max": [
+     20,
+     1
+    ],
+    "required": true
+   },
+   "tag": {
+    "type": "text",
+    "max": [
+     7,
+     1
+    ]
+   },
+   "say": {
+    "type": "list",
+    "max": 4,
+    "of": {
+     "type": "text",
+     "required": true,
+     "max": [
+      9,
+      2
+     ]
+    }
+   },
+   "items": {
+    "type": "list",
+    "min": 3,
+    "max": 5,
+    "of": {
+     "type": "text",
+     "required": true,
+     "max": [
+      11,
+      1
+     ]
+    },
+    "required": true
+   },
+   "cheer": {
+    "type": "text",
+    "max": [
+     8,
+     1
+    ]
+   },
+   "retry": {
+    "type": "text",
+    "max": [
+     9,
+     1
+    ]
+   }
+  },
+  "mockup": "Put-in-order slide in its initial state. Tag pill and title at the top. Left: a white tray with shuffled draggable rows (each with a small grip mark). Right: a white card with numbered empty dashed slots and a round yellow button at its bottom right corner."
+ },
+ "match": {
+  "name": "짝 맞추기",
+  "use": "왼쪽 낱말 2~4개에 맞는 설명 끌어다 놓기",
+  "group": "check",
+  "buddy": null,
+  "interaction": "sort",
+  "visual": false,
+  "fields": {
+   "title": {
+    "type": "text",
+    "max": [
+     20,
+     1
+    ],
+    "required": true
+   },
+   "tag": {
+    "type": "text",
+    "max": [
+     7,
+     1
+    ]
+   },
+   "pairs": {
+    "type": "list",
+    "min": 2,
+    "max": 4,
+    "of": {
+     "left": {
+      "type": "text",
+      "max": [
+       6,
+       1
+      ],
+      "required": true
+     },
+     "right": {
+      "type": "text",
+      "max": [
+       10,
+       1
+      ],
+      "required": true
+     }
+    },
+    "required": true
+   }
+  },
+  "mockup": "Matching slide in its initial state. Tag pill and title at the top. Left: stacked yellow key labels, each followed by an empty dashed slot. Right: a white tray with draggable description rows and a round yellow button at its bottom right corner."
+ },
+ "reveal": {
+  "name": "눌러서 여는 답",
+  "use": "물음 2~3개. 답은 가리개를 눌러 확인",
+  "group": "check",
+  "buddy": null,
+  "interaction": "peek",
+  "visual": false,
+  "fields": {
+   "title": {
+    "type": "text",
+    "max": [
+     20,
+     1
+    ],
+    "required": true
+   },
+   "tag": {
+    "type": "text",
+    "max": [
+     7,
+     1
+    ]
+   },
+   "lead": {
+    "type": "text",
+    "max": [
+     22,
+     1
+    ]
+   },
+   "cards": {
+    "type": "list",
+    "min": 2,
+    "max": 3,
+    "of": {
+     "prompt": {
+      "type": "text",
+      "max": [
+       9,
+       2
+      ],
+      "required": true
+     },
+     "answer": {
+      "type": "text",
+      "max": [
+       8,
+       1
+      ],
+      "required": true
+     }
+    },
+    "required": true
+   }
+  },
+  "mockup": "Tap-to-reveal slide. Tag pill and title at the top, one lead line under the title. White question cards in a row; each has a prompt on top and an answer box covered by a yellow sticker flap with a big question mark."
+ },
+ "input": {
+  "name": "답 쓰기",
+  "use": "수·낱말을 써서 확인(자동 채점)",
+  "group": "check",
+  "buddy": "say",
+  "interaction": "input",
+  "visual": false,
+  "fields": {
+   "title": {
+    "type": "text",
+    "max": [
+     20,
+     1
+    ],
+    "required": true
+   },
+   "tag": {
+    "type": "text",
+    "max": [
+     7,
+     1
+    ]
+   },
+   "say": {
+    "type": "list",
+    "max": 4,
+    "of": {
+     "type": "text",
+     "required": true,
+     "max": [
+      9,
+      2
+     ]
+    }
+   },
+   "question": {
+    "type": "text",
+    "max": [
+     22,
+     2
+    ],
+    "required": true
+   },
+   "answer": {
+    "type": "raw",
+    "required": true
+   },
+   "tol": {
+    "type": "number",
+    "min": 0
+   },
+   "unit": {
+    "type": "text",
+    "max": [
+     3,
+     1
+    ]
+   },
+   "explain": {
+    "type": "text",
+    "max": [
+     26,
+     1
+    ]
+   },
+   "cheer": {
+    "type": "text",
+    "max": [
+     8,
+     1
+    ]
+   },
+   "retry": {
+    "type": "text",
+    "max": [
+     9,
+     1
+    ]
+   }
+  },
+  "mockup": "Type-your-answer slide that looks like a small web app. Tag pill and title at the top. One large white card with a two-line question, then an input row: a wide input box, a unit label, and a rounded coral button. The mascot at the right."
+ },
+ "write": {
+  "name": "내 말로 쓰기",
+  "use": "빈칸 문장틀을 보고 공책에 쓰기. 타이머 선택",
+  "group": "check",
+  "buddy": "say",
+  "interaction": null,
+  "visual": false,
+  "fields": {
+   "title": {
+    "type": "text",
+    "max": [
+     20,
+     1
+    ],
+    "required": true
+   },
+   "tag": {
+    "type": "text",
+    "max": [
+     7,
+     1
+    ]
+   },
+   "say": {
+    "type": "list",
+    "max": 4,
+    "of": {
+     "type": "text",
+     "required": true,
+     "max": [
+      9,
+      2
+     ]
+    }
+   },
+   "frame": {
+    "type": "text",
+    "max": [
+     18,
+     3
+    ],
+    "required": true
+   },
+   "timer": {
+    "type": "number",
+    "min": 10,
+    "max": 3600
+   },
+   "hint": {
+    "type": "text",
+    "max": [
+     11,
+     1
+    ]
+   }
+  },
+  "mockup": "Write-in-your-own-words slide. Tag pill and title at the top. One large notebook-style white card (spiral rings along its top edge) holding a two-line sentence with wide empty blank slots (underlined gaps). A small round timer and a hint chip under the card. The mascot at the right."
+ },
+ "pick": {
+  "name": "발표자 뽑기",
+  "use": "번호나 이름을 무작위로 뽑기",
+  "group": "check",
+  "buddy": "say",
+  "interaction": "pick",
+  "visual": false,
+  "fields": {
+   "title": {
+    "type": "text",
+    "max": [
+     20,
+     1
+    ],
+    "required": true
+   },
+   "tag": {
+    "type": "text",
+    "max": [
+     7,
+     1
+    ]
+   },
+   "say": {
+    "type": "list",
+    "max": 4,
+    "of": {
+     "type": "text",
+     "required": true,
+     "max": [
+      9,
+      2
+     ]
+    }
+   },
+   "range": {
+    "type": "raw",
+    "required": true
+   },
+   "label": {
+    "type": "text",
+    "max": [
+     6,
+     1
+    ]
+   }
+  },
+  "mockup": "Random-picker slide. Tag pill and title at the top. In the center a huge yellow disc with a navy outline showing a big question mark, and a rounded button under it. The mascot at the right."
+ },
+ "summary": {
+  "name": "정리",
+  "use": "오늘 알게 된 것 2~4줄과 다음 차시 안내",
+  "group": "wrap",
+  "buddy": "say",
+  "interaction": null,
+  "visual": false,
+  "fields": {
+   "title": {
+    "type": "text",
+    "max": [
+     20,
+     1
+    ],
+    "required": true
+   },
+   "tag": {
+    "type": "text",
+    "max": [
+     7,
+     1
+    ]
+   },
+   "say": {
+    "type": "list",
+    "max": 4,
+    "of": {
+     "type": "text",
+     "required": true,
+     "max": [
+      9,
+      2
+     ]
+    }
+   },
+   "items": {
+    "type": "list",
+    "min": 2,
+    "max": 4,
+    "of": {
+     "type": "text",
+     "required": true,
+     "max": [
+      20,
+      1
+     ]
+    },
+    "required": true
+   },
+   "next": {
+    "type": "text",
+    "max": [
+     22,
+     1
+    ]
+   }
+  },
+  "mockup": "Summary slide. Tag pill and title at the top. Stacked takeaway rows, each with a colored number sticker and one short line. A closing line at the bottom on a yellow bar. The mascot at the right, celebrating."
+ },
+ "closing": {
+  "name": "마침",
+  "use": "끝인사와 다음 준비물",
+  "group": "wrap",
+  "buddy": "say",
+  "interaction": null,
+  "visual": true,
+  "fields": {
+   "title": {
+    "type": "text",
+    "max": [
+     10,
+     1
+    ],
+    "required": true
+   },
+   "tag": {
+    "type": "text",
+    "max": [
+     7,
+     1
+    ]
+   },
+   "say": {
+    "type": "list",
+    "max": 4,
+    "of": {
+     "type": "text",
+     "required": true,
+     "max": [
+      9,
+      2
+     ]
+    }
+   },
+   "sub": {
+    "type": "text",
+    "max": [
+     20,
+     1
+    ]
+   },
+   "next": {
+    "type": "text",
+    "max": [
+     14,
+     1
+    ]
+   }
+  },
+  "mockup": "Closing slide. No cards. A huge friendly closing phrase at the left with one word highlighted, one short line under it, and a small tilted yellow sticker chip. The mascot, large, waving at the right with a short speech bubble."
+ }
+}

@@ -1,0 +1,14 @@
+<section class="slide">
+  <header class="hd">
+    {{#tag}}<span class="tag" data-tone="{{{_tone}}}">{{tag}}</span>{{/tag}}
+    <div class="fit"><h2{{#_len.title}} style="--n:{{{_len.title}}}"{{/_len.title}}>{{title}}</h2></div>
+  </header>
+  <div class="main">
+    <div class="split wide">
+      <figure class="card shot" data-zoom><div class="pic">{{asset:image}}{{{draw}}}</div></figure>
+      {{#points}}{{#@first}}<ol class="points">{{/@first}}<li class="row"{{step}}><b class="badge">{{{@n}}}</b><span>{{.}}</span></li>
+      {{#@last}}</ol>{{/@last}}{{/points}}
+    </div>
+    {{#note}}<p class="bar"{{step}}>{{note}}</p>{{/note}}
+  </div>
+</section>

@@ -1,0 +1,6 @@
+<section class="slide cards" data-title="{{title}}">
+  {{! 카드 제목과 설명 }}<h2>{{title}}</h2>
+  {{#cards}}<article{{step}}><h3>{{title}}</h3><p>{{desc}}</p>{{asset:image}}</article>{{/cards}}
+  {{#config}}<p data-value="{{{count}}}">{{label}}</p>{{/config}}
+  {{^note}}<p>메모 없음</p>{{/note}}
+</section>

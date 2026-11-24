@@ -1,0 +1,17 @@
+<section class="slide">
+  <header class="hd">
+    {{#tag}}<span class="tag" data-tone="{{{_tone}}}">{{tag}}</span>{{/tag}}
+    <div class="fit"><h2{{#_len.title}} style="--n:{{{_len.title}}}"{{/_len.title}}>{{title}}</h2></div>
+  </header>
+  <div class="main">
+    <ol class="rows">
+      {{#items}}<li class="row"{{step}}><b class="badge">{{{@n}}}</b><span>{{.}}</span></li>
+      {{/items}}
+    </ol>
+    {{#next}}<p class="bar plain"{{step:same}}>{{next}}</p>{{/next}}
+  </div>
+  {{#mascot}}<figure class="buddy">
+    {{#say}}{{#@first}}<div class="says"{{step:same}}>{{/@first}}<p class="bubble"{{^@first}}{{step}}{{/@first}}>{{.}}</p>{{#@last}}</div>{{/@last}}{{/say}}
+    {{asset:mascot}}
+  </figure>{{/mascot}}
+</section>

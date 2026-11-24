@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><title>디자인 검사 시험</title>
+<link rel="stylesheet" href="../../assets/engine/deck.css">
+<style id="maple-faces">
+@font-face{font-family:Maplestory;src:url('../../assets/fonts/Maplestory Light.ttf');font-weight:300}
+@font-face{font-family:Maplestory;src:url('../../assets/fonts/Maplestory Bold.ttf');font-weight:700}
+</style>
+<style>
+.slide{background:white;color:#1d2833;font:300 40px/1.2 Maplestory,sans-serif}
+.slide h2{position:absolute;left:120px;top:100px;margin:0;font-size:55px}
+.slide p{margin:0}
+.group{position:absolute;left:100px;top:250px;width:1100px;height:450px}
+.group>div{position:absolute;width:200px;height:100px;background:#e4ebf4}
+@keyframes audit-rise{from{transform:translateY(800px);opacity:0}to{transform:translateY(0);opacity:1}}
+[data-case="step-hit"] [data-step]:not([data-waiting]){animation:audit-rise 30s both}
+</style></head><body><div class="viewer"><main id="deck"></main></div>
+<script>
+// 픽셀 경계와 투명 여백을 가진 작은 실제 PNG를 만들어 검사한다.
+const makeImage = transparent => {
+  const c=document.createElement('canvas');c.width=200;c.height=100;
+  const ctx=c.getContext('2d');ctx.fillStyle='#286f9d';ctx.fillRect(0,0,transparent?100:200,100);
+  return c.toDataURL('image/png');
+};
+const opaque = makeImage(false), half = makeImage(true), cases = {};
+function add(id, body, attrs = '') {
+  const s=document.createElement('section'); s.className='slide';s.dataset.slide='';s.dataset.case=id;
+  s.innerHTML=`<h2>검사</h2>${body}`;
+  for (const [name,value] of Object.entries(attrs || {})) s.setAttribute(name,value);
+  cases[id]=document.querySelector('#deck').children.length;
+  document.querySelector('#deck').append(s);return s;
+}
+const img=(src,css,attrs='')=>`<img src="${src}" style="position:absolute;${css}" ${attrs}>`;
+const para=(text,css='left:120px;top:400px')=>`<p style="position:absolute;${css}">${text}</p>`;
+const diagram='<svg style="position:absolute;left:1200px;top:300px;width:200px;height:200px" viewBox="0 0 200 200"><circle cx="100" cy="100" r="80" fill="teal"/></svg>';
+
+add('placeholder-hit',img(opaque,'left:500px;top:350px;width:200px;height:100px','data-placeholder data-asset="star"'));
+add('placeholder-ok1',img(opaque,'left:500px;top:350px;width:200px;height:100px'));
+add('placeholder-ok2',diagram);
+add('distorted-hit',img(opaque,'left:500px;top:350px;width:300px;height:200px'));
+add('distorted-ok1',img(opaque,'left:500px;top:350px;width:206px;height:100px'));
+add('distorted-ok2',img(opaque,'left:500px;top:350px;width:300px;height:200px;object-fit:contain'));
+add('distorted-ok3',img(opaque,'left:500px;top:350px;width:300px;height:200px;object-fit:cover'));
+add('upscaled-hit',img(opaque,'left:500px;top:350px;width:282px;height:141px'));
+add('upscaled-ok1',img(opaque,'left:500px;top:350px;width:280px;height:140px'));
+add('upscaled-ok2',img(opaque,'left:500px;top:350px;width:280px;height:400px;object-fit:contain'));
+add('upscaled-ok3',img('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2220%22 height=%2210%22%3E%3C/svg%3E','left:500px;top:350px;width:500px;height:250px'));
+add('upscaled-ok4',img(opaque,'left:500px;top:350px;width:200px;height:100px;scale:2'));
+add('whole-hit',img(opaque,'left:0;top:0;width:1920px;height:1080px;z-index:-1'));
+add('whole-ok1',img(opaque,'left:0;top:0;width:1920px;height:1080px;z-index:-1')+para('본문'));
+add('whole-ok2',img(half,'left:0;top:0;width:1920px;height:1080px;z-index:-1'));
+add('whole-ok3',img(opaque,'left:0;top:0;width:1000px;height:900px;z-index:-1'));
+add('whole-ok4',img(opaque,'left:0;top:0;width:1400px;height:1000px;object-fit:contain;z-index:-1'));
+add('whole-bg-hit','',{'style':`background-image:url(${opaque});background-size:cover`});
+add('whole-bg-ok','',{'style':`background-image:url(${half});background-size:cover`});
+add('whole-bg-small','',{'style':`background-image:url(${opaque});background-repeat:no-repeat;background-size:200px 100px`});
+add('whole-bg-contain',`<div style="position:absolute;left:0;top:0;width:1400px;height:1000px;background-image:url(${opaque});background-size:contain;background-repeat:no-repeat"></div>`);
+add('heavy-hit',para('한'.repeat(91)));
+add('heavy-ok1',para('한'.repeat(88))); // 제목 두 글자를 합해 90
+add('heavy-ok2',para('A'.repeat(176))); // 영문 88 + 제목 2
+add('heavy-ok3',`<div data-quiz>${para('한'.repeat(120),'left:120px;top:400px')}<span data-opt>${'한'.repeat(200)}</span></div>`.replace('한'.repeat(120),'짧은 질문'));
+add('heavy-ok4',`<div style="position:absolute;left:120px;top:400px" data-peek>답<span>${'한'.repeat(120)}</span></div><svg><text>${'한'.repeat(120)}</text></svg>`);
+add('empty-hit',para('짧은 글'));
+add('empty-ok1','<div style="position:absolute;left:120px;top:100px;width:1100px;height:760px;background:#ddeeff"></div>');
+add('empty-ok2',para('표지'),{'data-layout':'cover'});
+add('empty-ok3',para('구분'),{'data-layout':'section'});
+add('empty-ok4',para('여백'),{'data-roomy':''});
+add('empty-ok5','<svg style="position:absolute;inset:0;width:1920px;height:1080px" viewBox="0 0 1920 1080"><rect x="150" y="200" width="1300" height="600" fill="#ddd"/><circle cx="1500" cy="800" r="70" fill="blue"/></svg>');
+add('empty-ok6',para('구형 표지')).classList.add('cover');
+add('empty-ok7',para('구형 구분장')).classList.add('divider');
+add('empty-ok8',para('구형 발문')).classList.add('ask');
+add('edge-hit',para('가장자리','left:20px;top:400px'));
+add('edge-ok1',para('안쪽','left:57px;top:400px'));
+add('edge-ok2',`<div data-bleed>${para('재단','left:20px;top:400px')}</div>`);
+add('edge-ok3',para('<span data-bleed>재단 글자</span>','left:20px;top:400px'));
+add('onimage-hit',img(half,'left:300px;top:300px;width:600px;height:300px')+para('겹친 글','left:330px;top:350px'));
+add('onimage-ok1',img(half,'left:300px;top:300px;width:600px;height:300px')+para('투명 여백','left:650px;top:350px'));
+add('onimage-ok2',img(half,'left:300px;top:300px;width:600px;height:300px')+`<div data-over>${para('의도한 글','left:330px;top:350px')}</div>`);
+add('onimage-ok3',img(opaque,'left:0;top:0;width:1920px;height:1080px;z-index:-1')+para('배경 위 글','left:330px;top:350px'));
+add('onimage-ok4',`<div style="opacity:.2">${img(opaque,'left:300px;top:300px;width:600px;height:300px')}</div>`+para('옅은 그림','left:330px;top:350px'));
+add('onimage-ok5',img(half,'left:300px;top:300px;width:600px;height:300px')+para('<span data-over>의도한 글</span>','left:330px;top:350px'));
+const pair=(y1,y2,x2=400)=>`<div class="group"><div style="left:0;top:${y1}px"></div><div style="left:${x2}px;top:${y2}px"></div></div>`;
+add('near-hit',pair(30,35));
+add('near-hit-inline','<div class="group" style="white-space:nowrap"><div style="position:relative;display:inline-block;left:auto;top:30px"></div><div style="position:relative;display:inline-block;left:auto;top:35px;margin-left:40px"></div></div>');
+add('near-ok1',pair(30,31));
+add('near-ok2',pair(30,41));
+add('near-ok3',pair(30,35,100));
+add('near-ok4','<div class="group" style="display:flex;flex-wrap:wrap;gap:20px;width:430px"><div style="position:static"></div><div style="position:static"></div><div style="position:static"></div></div>');
+add('visual-hit',para('글만 있는 장'));
+add('visual-ok1',diagram);
+add('visual-ok2','<button data-timer="10" style="position:absolute;left:400px;top:400px">시작</button>');
+add('visual-ok3',para('구분'),{'data-layout':'section'});
+add('visual-ok4',para('구형 구분장')).classList.add('divider');
+add('visual-ok5','<table style="position:absolute;left:400px;top:300px"><tr><td>값</td></tr></table>');
+add('visual-hidden-table','<table style="display:none"><tr><td>숨김</td></tr></table>');
+add('font-hit',para('− ✓'));
+add('font-ok1',para('한글 ABC 123'));
+add('font-ok2',para('<math><mo>−</mo><mo>✓</mo></math>'));
+add('font-ok3',para('<var>− ✓</var>'));
+// 숨긴 장의 등장 효과를 끝 위치에서 재는지도 확인한다.
+add('step-hit',para('가장자리','left:120px;top:20px').replace('<p ','<p data-step="1" '));
+</script>
+<script src="../../assets/engine/deck.js"></script><script src="../../assets/engine/lint.js"></script>
+</body></html>

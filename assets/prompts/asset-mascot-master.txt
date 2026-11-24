@@ -1,0 +1,7 @@
+Character sheet of an original mascot for a Korean classroom slide deck: ONE character, full body, one pose.
+Character: {SUBJECT}
+Style: {STYLE}
+Deck colors the character should sit well with: {PALETTE}
+Front-facing three-quarter view, friendly open smile, a simple memorable silhouette that still reads when the character is drawn small. Whole body from head to feet. Centered, fully inside the frame with a generous empty margin on every side. Transparent background: nothing behind the subject, no scenery, no ground, no ground shadow, no glow, no frame, no border box.
+An original design: do not imitate any existing cartoon, game, film or brand character.
+{TEXTS}

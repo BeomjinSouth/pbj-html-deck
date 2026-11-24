@@ -1,0 +1,6 @@
+ONE full-bleed background for a Korean classroom slide, 16:9 landscape, opaque, filling the whole canvas edge to edge.
+Background: {SUBJECT}
+Style: flat, soft and calm, in the same family as this illustration style: {STYLE}
+Deck colors: {PALETTE}
+Slide text will sit on top of it: keep the middle of the picture quiet and low in contrast, put any detail near the edges and corners, no focal object in the center, no characters, no cards, no frames.
+{TEXTS}

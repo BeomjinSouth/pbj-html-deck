@@ -1,0 +1,26 @@
+<section class="slide">
+  <header class="hd">
+    {{#tag}}<span class="tag" data-tone="{{{_tone}}}">{{tag}}</span>{{/tag}}
+    <div class="fit"><h2{{#_len.title}} style="--n:{{{_len.title}}}"{{/_len.title}}>{{title}}</h2></div>
+  </header>
+  <div class="main" data-lab='{{{state}}}'>
+    <div class="split lab">
+      <div class="card stage plot"><svg viewBox="0 0 940 760" data-graph='{{{graph}}}' role="img" aria-label="{{title}}">
+        {{#curves}}<path class="curve {{{tone}}}{{#dashed}} dash{{/dashed}}" data-fn="{{{fn}}}"/>
+        {{/curves}}{{#points}}<circle class="gpt {{{tone}}}" r="14" data-pt="{{{at}}}"{{#drag}} data-drag="{{{drag}}}"{{/drag}}{{#snap}} data-snap="{{{snap}}}"{{/snap}}/>
+        {{/points}}
+      </svg></div>
+      <div class="card panel" style="{{#_len.readouts}}--nr:{{{_len.readouts}}};{{/_len.readouts}}{{#_len.hint}}--nh:{{{_len.hint}}};{{/_len.hint}}{{#_len.formula}}--nf:{{{_len.formula}}};{{/_len.formula}}">
+        {{#controls}}<label class="ctl"><span class="ctl-name">{{label}}</span>
+          <span class="ctl-row"><input type="range" data-var="{{var}}" min="{{{min}}}" max="{{{max}}}" step="{{{step}}}" value="{{{value}}}" data-bind="--p:({{var}}-({{{min}}}))/(({{{max}}})-({{{min}}}))"><output class="val"><b data-show="{{var}}">{{{value}}}</b>{{#unit}} {{unit}}{{/unit}}</output></span>
+        </label>
+        {{/controls}}
+        {{#formula}}<p class="formula">{{formula}}</p>{{/formula}}
+        {{#readouts}}<p class="readout">{{.}}</p>
+        {{/readouts}}
+        {{#hint}}<p class="chip y">{{hint}}</p>{{/hint}}
+        {{asset:mascot|peek}}
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="ko" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="deck-credit" content="시험 글꼴 저작권 안내">
+<title>상호작용 시험</title>
+<link data-deck="engine" rel="stylesheet" href="../../assets/engine/deck.css">
+<style>
+.slide{box-sizing:border-box;background:#fff;color:#142537;font:40px/1.2 sans-serif;padding:70px}
+.slide h2{margin:0 0 24px}
+.slide :is(button,input,textarea){font:inherit}
+.slide button{padding:8px 20px}
+.slide .row{display:flex;gap:22px;margin:16px 0}
+.slide [data-explain]:not(.is-open),.slide [data-flip]:not(.is-flipped)>:nth-child(2),.slide [data-flip].is-flipped>:first-child,.slide [data-peek]:not(.is-open) span{display:none}
+.slide :is([data-bin],[data-lane],[data-pool]){display:flex;align-items:center;gap:8px;border:3px solid #aaa;width:520px;min-height:125px;padding:12px;box-sizing:border-box}
+.slide [data-chip]{flex:none}
+.slide [data-when]{display:none}
+.slide [data-buddy]:not([data-mood]) [data-when="idle"],.slide [data-mood="correct"] [data-when="correct"],.slide [data-mood="wrong"] [data-when="wrong"],.slide [data-mood="done"] [data-when="done"]{display:inline}
+.slide #until-only{position:absolute;top:520px}
+</style>
+</head>
+<body><div class="viewer"><main id="deck">
+<section class="slide" data-slide>
+  <h2>연출</h2>
+  <div class="row"><button id="jump" data-jump="4">요약</button><button id="zoom" data-zoom>확대</button><button id="early-toggle" data-toggle data-until="7">미리 보기</button></div>
+  <p id="intro" data-until="2">시작</p><p id="middle" data-step="2" data-until="4">중간</p>
+  <p id="summary" data-step="4" data-in="pop">요약</p><p id="until-only" data-until="7">일곱 이전</p>
+</section>
+<section class="slide" data-slide>
+  <h2>선택과 전환</h2>
+  <div class="row" id="quiz" data-quiz><button id="wrong" data-opt>둘</button><button id="right" data-opt data-correct>셋</button><button id="other" data-opt>넷</button><span data-explain>세 변</span></div>
+  <div class="row" id="once" data-quiz="once"><button data-opt>아니요</button><button data-opt data-correct>예</button></div>
+  <div class="row" id="multi" data-quiz="multi"><button data-opt data-correct>가</button><button data-opt>나</button><button data-opt data-correct>다</button><button data-check>확인</button></div>
+  <div class="row"><button id="flip" data-flip><span>앞</span><span>뒤</span></button><button id="peek" data-peek>정답 <span>세 변</span></button><button id="toggle-a" data-toggle data-group="가">가</button><button id="toggle-b" data-toggle data-group="가">나</button><button id="kept" data-toggle data-keep>유지</button></div>
+  <div id="tabs" data-tabs data-start="b"><button data-tab="a">가</button><button data-tab="b">나</button><div data-pane="a">첫 칸</div><div data-pane="b">둘째 칸<span hidden>작성자가 숨긴 글</span></div></div>
+  <div id="buddy" data-buddy><span data-when="idle">도전</span><span data-when="correct">성공</span><span data-when="wrong">다시</span><span data-when="done">완료</span></div>
+</section>
+<section class="slide" data-slide>
+  <h2>분류와 배열</h2>
+  <div id="sort" data-sort class="row"><div data-pool><button id="blue" data-chip data-to="b">파랑</button><em>·</em><button id="red" data-chip data-to="r">빨강</button></div><div data-bin="r" data-max="1">빨강 칸</div><div data-bin="b" data-max="1">파랑 칸</div></div>
+  <div id="order" data-sort="order" data-keep><div class="row"><div data-pool><button id="second" data-chip data-rank="2">둘</button><button id="first" data-chip data-rank="1">하나</button></div><div data-lane></div></div><button data-check>확인</button></div>
+</section>
+<section class="slide" data-slide>
+  <h2>입력과 기록</h2>
+  <div class="row" id="inputs" data-inputs><input id="answer" aria-label="길이" data-answer="7|7cm|칠" data-tol="0.01"><input id="word" aria-label="이름" data-answer="세 변"><button data-check>확인</button></div>
+  <textarea id="note" data-note aria-label="메모"></textarea>
+  <div class="row"><button id="timer" data-timer="1.2"><b>시간</b></button><button id="pick" data-pick="1-3">번호</button><output data-pick-out></output></div>
+  <div class="row"><div data-pick="가,나"><button>뽑기</button><output data-pick-out></output></div><button id="count" data-count>세기</button><output data-count-out>0</output></div>
+</section>
+<section class="slide" data-slide><h2>정리</h2></section>
+</main></div>
+<script data-deck="engine" src="../../assets/engine/deck.js"></script>
+<script data-deck="engine" src="../../assets/engine/widgets.js"></script>
+<script>
+if (new URLSearchParams(location.search).has('probe')) {
+  window.calls = [];
+  deck.ext('probe', {
+    init(api) { window.probe = api; calls.push('init'); },
+    enter(slide, page) { calls.push(`enter:${page}:${slide.hidden}`); },
+    leave(slide, page) { calls.push(`leave:${page}:${slide.hidden}`); },
+    reset(slide) { calls.push(`reset:${deck.slides.indexOf(slide)}`); },
+    mode(mode, prev) { calls.push(`mode:${prev}:${mode}`); },
+    key(event) { if (event.code === 'KeyR') { calls.push('key'); return true; } return false; },
+    validate(slide) { calls.push(`validate:${deck.slides.indexOf(slide)}`); return []; },
+    async selftest(slide) { calls.push(`selftest:${deck.slides.indexOf(slide)}`); return []; }
+  });
+  deck.ext('pen', { key(event) { if (event.code === 'KeyP') { calls.push('pen'); return true; } return false; } });
+}
+</script>
+</body>
+</html>

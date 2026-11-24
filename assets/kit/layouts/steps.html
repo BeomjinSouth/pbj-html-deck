@@ -1,0 +1,18 @@
+<section class="slide">
+  <header class="hd">
+    {{#tag}}<span class="tag" data-tone="{{{_tone}}}">{{tag}}</span>{{/tag}}
+    <div class="fit"><h2{{#_len.title}} style="--n:{{{_len.title}}}"{{/_len.title}}>{{title}}</h2></div>
+  </header>
+  <div class="main">
+    <div class="split">
+      <ol class="steps">
+        {{#steps}}<li class="row" data-jump="{{{@i}}}" role="button" tabindex="0"><b class="badge">{{{@n}}}</b><span>{{text}}</span></li>
+        {{/steps}}
+      </ol>
+      <div class="card frame">
+        {{#steps}}<div class="pic"{{^@first}} data-step="{{{@i}}}"{{/@first}}{{^@last}} data-until="{{{@n}}}"{{/@last}}>{{asset:image}}{{{draw}}}</div>
+        {{/steps}}
+      </div>
+    </div>
+  </div>
+</section>

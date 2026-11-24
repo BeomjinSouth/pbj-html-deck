@@ -1,0 +1,19 @@
+<section class="slide">
+  <header class="hd">
+    {{#tag}}<span class="tag" data-tone="{{{_tone}}}">{{tag}}</span>{{/tag}}
+    <div class="fit"><h2{{#_len.title}} style="--n:{{{_len.title}}}"{{/_len.title}}>{{title}}</h2></div>
+  </header>
+  <div class="main">
+    <div class="split ex">
+      <div class="work">
+        <div class="card prob"><b class="lbl">문제</b><p style="{{#_len.problem}}--n:{{{_len.problem}}};{{/_len.problem}}">{{problem}}</p></div>
+        <ol class="sol" style="{{#_len.lines.text}}--n:{{{_len.lines.text}}};{{/_len.lines.text}}{{#_len.lines.why}}--nw:{{{_len.lines.why}}};{{/_len.lines.why}}">
+          {{#lines}}<li{{step}}><span>{{text}}</span>{{#why}}<em class="why">{{why}}</em>{{/why}}</li>
+          {{/lines}}
+        </ol>
+        {{#answer}}<p class="ansline" style="{{#_len.answer}}--n:{{{_len.answer}}};{{/_len.answer}}"{{step}}><b class="lbl">답</b><span>{{answer}}</span></p>{{/answer}}
+      </div>
+      {{#image}}<figure class="card shot"><div class="pic">{{asset:image}}</div></figure>{{/image}}{{#draw}}<figure class="card shot"><div class="pic">{{{draw}}}</div></figure>{{/draw}}
+    </div>
+  </div>
+</section>

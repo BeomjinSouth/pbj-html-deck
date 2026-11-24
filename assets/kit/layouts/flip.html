@@ -1,0 +1,15 @@
+<section class="slide">
+  <header class="hd">
+    {{#tag}}<span class="tag" data-tone="{{{_tone}}}">{{tag}}</span>{{/tag}}
+    <div class="fit"><h2{{#_len.title}} style="--n:{{{_len.title}}}"{{/_len.title}}>{{title}}</h2></div>
+  </header>
+  <div class="main">
+    <div class="flips" style="{{#_len.cards.front}}--nt:{{{_len.cards.front}}};{{/_len.cards.front}}{{#_len.cards.back}}--nb:{{{_len.cards.back}}};{{/_len.cards.back}}">
+      {{#cards}}<div class="flip" data-flip role="button" tabindex="0">
+        <div class="face">{{#image}}<div class="pic">{{asset:image}}</div>{{/image}}{{^image}}<i class="qm" aria-hidden="true"></i>{{/image}}<h3>{{front}}</h3><small>눌러서 뒤집기</small></div>
+        <div class="face"><p>{{back}}</p></div>
+      </div>
+      {{/cards}}
+    </div>
+  </div>
+</section>

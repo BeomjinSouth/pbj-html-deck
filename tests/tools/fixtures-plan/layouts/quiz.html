@@ -1,0 +1,5 @@
+<section class="slide quiz" data-title="{{title}}">
+  <h2>{{title}}</h2><div data-quiz>
+  {{#options}}<button data-index="{{@i}}"{{step}}>{{@n}}/{{@count}} {{.}}{{#@first}} 처음{{/@first}}{{#@last}} 끝{{/@last}}</button>{{/options}}
+  </div><p{{step:same}}>다시 생각해 보세요.</p>
+</section>

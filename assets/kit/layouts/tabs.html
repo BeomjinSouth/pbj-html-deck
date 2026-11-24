@@ -1,0 +1,17 @@
+<section class="slide">
+  <header class="hd">
+    {{#tag}}<span class="tag" data-tone="{{{_tone}}}">{{tag}}</span>{{/tag}}
+    <div class="fit"><h2{{#_len.title}} style="--n:{{{_len.title}}}"{{/_len.title}}>{{title}}</h2></div>
+  </header>
+  <div class="main" data-tabs>
+    <div class="tablist">
+      {{#tabs}}<div class="tab" data-tab="t{{{@n}}}" role="button" tabindex="0">{{label}}</div>
+      {{/tabs}}
+    </div>
+    {{#tabs}}<div class="card pane" data-pane="t{{{@n}}}">
+      <div class="pic">{{asset:image}}{{{draw}}}</div>
+      <div class="txt"><h3>{{heading}}</h3>{{#lines}}<p>{{.}}</p>{{/lines}}</div>
+    </div>
+    {{/tabs}}
+  </div>
+</section>

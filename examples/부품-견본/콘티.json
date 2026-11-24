@@ -1,0 +1,700 @@
+{
+  "meta": {
+    "title": "세 막대로 삼각형 만들기",
+    "kind": "lesson",
+    "audience": "중학교 1학년 · 수학",
+    "duration": "45분",
+    "goal": "삼각형이 되는 세 변의 길이 조건을 설명할 수 있다",
+    "message": "가장 긴 변은 나머지 두 변의 합보다 짧다",
+    "palette": "sunny"
+  },
+  "mascot": {
+    "id": "mascot",
+    "name": "세모",
+    "look": "a cute chubby orange fox cub with a teal scarf"
+  },
+  "slides": [
+    {
+      "id": "cover",
+      "layout": "cover",
+      "purpose": "오늘 무엇을 할지 기대한다",
+      "focus": "제목",
+      "tag": "중1 수학 · 기본 도형",
+      "title": "세 막대로\n**삼각형** 만들기",
+      "sub": "막대 세 개만 있으면 언제나 될까?",
+      "mascot": "mascot_sticks"
+    },
+    {
+      "id": "goals",
+      "layout": "goals",
+      "purpose": "오늘의 목표를 읽는다",
+      "focus": "목표 세 줄",
+      "tag": "오늘 할 일",
+      "title": "오늘의 **목표** 세 가지",
+      "items": [
+        "삼각형이 되는 막대 찾기",
+        "세 변의 길이 관계 말하기",
+        "새 막대에 적용하기"
+      ],
+      "mascot": "mascot"
+    },
+    {
+      "id": "agenda",
+      "layout": "agenda",
+      "purpose": "수업의 흐름을 안다",
+      "focus": "지금 할 차례",
+      "tag": "오늘 할 일",
+      "title": "오늘의 **순서**",
+      "mascot": "mascot",
+      "items": [
+        {
+          "text": "생각 열기"
+        },
+        {
+          "text": "막대로 탐구",
+          "now": true
+        },
+        {
+          "text": "조건 찾기"
+        },
+        {
+          "text": "확인하기"
+        },
+        {
+          "text": "정리"
+        }
+      ]
+    },
+    {
+      "id": "ask",
+      "layout": "ask",
+      "purpose": "짝과 예상을 이야기한다",
+      "focus": "큰 발문",
+      "tag": "생각 열기",
+      "title": "막대 세 개면\n**언제나** 삼각형?",
+      "hint": "짝과 1분 이야기해요",
+      "timer": 60,
+      "mascot": "mascot_think",
+      "say": [
+        "음…"
+      ]
+    },
+    {
+      "id": "part2",
+      "layout": "section",
+      "purpose": "탐구로 넘어간다",
+      "focus": "구분 제목",
+      "no": "2",
+      "title": "직접 **만들어** 보기",
+      "sub": "탐구 활동 · 15분",
+      "mascot": "mascot"
+    },
+    {
+      "id": "activity",
+      "layout": "activity",
+      "purpose": "짝과 막대로 확인한다",
+      "focus": "할 일 세 가지",
+      "tag": "탐구 1",
+      "title": "막대로 **직접** 확인해요",
+      "steps": [
+        "6 cm 막대를 책상에 놓기",
+        "양 끝에 3 cm, 4 cm 대기",
+        "돌려서 끝이 만나는지 보기"
+      ],
+      "timer": 420,
+      "chips": [
+        "짝 활동",
+        "기록지"
+      ],
+      "mascot": "mascot_sticks"
+    },
+    {
+      "id": "meet",
+      "layout": "cards",
+      "purpose": "세 경우를 견주어 본다",
+      "focus": "세 그림의 차이",
+      "tag": "탐구 1",
+      "title": "막대 끝이 **만날까?**",
+      "cards": [
+        {
+          "draw": "<svg viewBox=\"0 0 360 240\" role=\"img\"><line class=\"rod-edge\" x1=\"30\" y1=\"200\" x2=\"150.8\" y2=\"111.1\"/><line class=\"rod c-coral\" x1=\"30\" y1=\"200\" x2=\"150.8\" y2=\"111.1\"/><line class=\"rod-edge\" x1=\"330\" y1=\"200\" x2=\"150.8\" y2=\"111.1\"/><line class=\"rod c-sky\" x1=\"330\" y1=\"200\" x2=\"150.8\" y2=\"111.1\"/><line class=\"rod-edge\" x1=\"30\" y1=\"200\" x2=\"330\" y2=\"200\"/><line class=\"rod c-yellow\" x1=\"30\" y1=\"200\" x2=\"330\" y2=\"200\"/></svg>",
+          "title": "3 · 4 · 6",
+          "desc": "만난다! 삼각형"
+        },
+        {
+          "draw": "<svg viewBox=\"0 0 360 240\" role=\"img\"><line class=\"rod-edge\" x1=\"5\" y1=\"150\" x2=\"155\" y2=\"150\"/><line class=\"rod c-coral\" x1=\"5\" y1=\"150\" x2=\"155\" y2=\"150\"/><line class=\"rod-edge\" x1=\"155\" y1=\"150\" x2=\"355\" y2=\"150\"/><line class=\"rod c-sky\" x1=\"155\" y1=\"150\" x2=\"355\" y2=\"150\"/><line class=\"rod-edge\" x1=\"5\" y1=\"200\" x2=\"355\" y2=\"200\"/><line class=\"rod c-yellow\" x1=\"5\" y1=\"200\" x2=\"355\" y2=\"200\"/></svg>",
+          "title": "3 · 4 · 7",
+          "desc": "딱 붙어 일직선"
+        },
+        {
+          "draw": "<svg viewBox=\"0 0 360 240\" role=\"img\"><line class=\"rod-edge\" x1=\"8\" y1=\"200\" x2=\"90.9\" y2=\"101.2\"/><line class=\"rod c-coral\" x1=\"8\" y1=\"200\" x2=\"90.9\" y2=\"101.2\"/><line class=\"rod-edge\" x1=\"352\" y1=\"200\" x2=\"241.4\" y2=\"68.2\"/><line class=\"rod c-sky\" x1=\"352\" y1=\"200\" x2=\"241.4\" y2=\"68.2\"/><line class=\"rod-edge\" x1=\"8\" y1=\"200\" x2=\"352\" y2=\"200\"/><line class=\"rod c-yellow\" x1=\"8\" y1=\"200\" x2=\"352\" y2=\"200\"/></svg>",
+          "title": "3 · 4 · 8",
+          "desc": "닿지 않는다"
+        }
+      ],
+      "note": "가장 긴 막대 < 나머지 두 막대의 합",
+      "mascot": "mascot",
+      "say": [
+        "가장 긴 막대를 봐!"
+      ]
+    },
+    {
+      "id": "steps",
+      "layout": "steps",
+      "purpose": "만드는 순서를 따라 한다",
+      "focus": "지금 단계의 그림",
+      "tag": "탐구 1",
+      "title": "막대를 **이어** 보자",
+      "steps": [
+        {
+          "text": "긴 막대를 놓는다",
+          "draw": "<svg viewBox=\"0 0 360 240\" role=\"img\"><line class=\"rod-edge\" x1=\"30\" y1=\"200\" x2=\"330\" y2=\"200\"/><line class=\"rod c-yellow\" x1=\"30\" y1=\"200\" x2=\"330\" y2=\"200\"/></svg>"
+        },
+        {
+          "text": "양 끝에 짧은 막대를 댄다",
+          "draw": "<svg viewBox=\"0 0 360 240\" role=\"img\"><line class=\"rod-edge\" x1=\"30\" y1=\"200\" x2=\"96\" y2=\"86\"/><line class=\"rod c-sky\" x1=\"30\" y1=\"200\" x2=\"96\" y2=\"86\"/><line class=\"rod-edge\" x1=\"330\" y1=\"200\" x2=\"264\" y2=\"86\"/><line class=\"rod c-coral\" x1=\"330\" y1=\"200\" x2=\"264\" y2=\"86\"/><line class=\"rod-edge\" x1=\"30\" y1=\"200\" x2=\"330\" y2=\"200\"/><line class=\"rod c-yellow\" x1=\"30\" y1=\"200\" x2=\"330\" y2=\"200\"/></svg>"
+        },
+        {
+          "text": "두 막대를 돌린다",
+          "draw": "<svg viewBox=\"0 0 360 240\" role=\"img\"><line class=\"rod-edge\" x1=\"8\" y1=\"200\" x2=\"90.9\" y2=\"101.2\"/><line class=\"rod c-coral\" x1=\"8\" y1=\"200\" x2=\"90.9\" y2=\"101.2\"/><line class=\"rod-edge\" x1=\"352\" y1=\"200\" x2=\"241.4\" y2=\"68.2\"/><line class=\"rod c-sky\" x1=\"352\" y1=\"200\" x2=\"241.4\" y2=\"68.2\"/><line class=\"rod-edge\" x1=\"8\" y1=\"200\" x2=\"352\" y2=\"200\"/><line class=\"rod c-yellow\" x1=\"8\" y1=\"200\" x2=\"352\" y2=\"200\"/></svg>"
+        },
+        {
+          "text": "끝이 만나는지 본다",
+          "draw": "<svg viewBox=\"0 0 360 240\" role=\"img\"><line class=\"rod-edge\" x1=\"30\" y1=\"200\" x2=\"150.8\" y2=\"111.1\"/><line class=\"rod c-coral\" x1=\"30\" y1=\"200\" x2=\"150.8\" y2=\"111.1\"/><line class=\"rod-edge\" x1=\"330\" y1=\"200\" x2=\"150.8\" y2=\"111.1\"/><line class=\"rod c-sky\" x1=\"330\" y1=\"200\" x2=\"150.8\" y2=\"111.1\"/><line class=\"rod-edge\" x1=\"30\" y1=\"200\" x2=\"330\" y2=\"200\"/><line class=\"rod c-yellow\" x1=\"30\" y1=\"200\" x2=\"330\" y2=\"200\"/></svg>"
+        }
+      ]
+    },
+    {
+      "id": "lab",
+      "layout": "lab",
+      "purpose": "막대 길이를 바꾸며 관찰한다",
+      "focus": "움직이는 막대",
+      "tag": "직접 해 보기",
+      "title": "막대 **길이를** 바꿔 보자",
+      "state": {
+        "a": 6
+      },
+      "stage": "<svg viewBox=\"0 0 900 640\" role=\"img\" aria-label=\"길이를 바꿀 수 있는 막대 세 개\"><line class=\"rod-edge\" x1=\"90\" y1=\"520\" x2=\"570\" y2=\"520\" data-bind=\"x2:90+80*a\"/><line class=\"rod c-yellow\" x1=\"90\" y1=\"520\" x2=\"570\" y2=\"520\" data-bind=\"x2:90+80*a\"/><g transform=\"rotate(-36.34 90 476)\" data-bind=\"transform:'rotate('+(a<7?-atan2(sqrt(max(0,9-pow((a*a-7)/(2*a),2))),(a*a-7)/(2*a))*180/PI:0)+' 90 476)'\"><line class=\"rod-edge\" x1=\"90\" y1=\"476\" x2=\"330\" y2=\"476\"/><line class=\"rod c-sky\" x1=\"90\" y1=\"476\" x2=\"330\" y2=\"476\"/></g><g transform=\"translate(480 0)\" data-bind=\"transform:'translate('+(80*a)+' 0)'\"><g transform=\"rotate(26.38 90 476)\" data-bind=\"transform:'rotate('+(a<7?atan2(sqrt(max(0,9-pow((a*a-7)/(2*a),2))),a-(a*a-7)/(2*a))*180/PI:0)+' 90 476)'\"><line class=\"rod-edge\" x1=\"90\" y1=\"476\" x2=\"-230\" y2=\"476\"/><line class=\"rod c-coral\" x1=\"90\" y1=\"476\" x2=\"-230\" y2=\"476\"/></g></g><text class=\"lb ko\" x=\"330\" y=\"592\" data-bind=\"x:90+40*a\"><tspan data-show=\"a\">6</tspan> cm</text></svg>",
+      "controls": [
+        {
+          "label": "가장 긴 막대",
+          "var": "a",
+          "min": 5,
+          "max": 9,
+          "step": 0.5,
+          "value": 6,
+          "unit": "cm"
+        }
+      ],
+      "readouts": [
+        "나머지 두 막대 3 + 4 = 7",
+        "{a} 와 7 을 견줘요"
+      ],
+      "status": [
+        {
+          "if": "a < 7",
+          "text": "삼각형이 된다!",
+          "tone": "yes"
+        },
+        {
+          "if": "a == 7",
+          "text": "딱 붙어 일직선",
+          "tone": ""
+        },
+        {
+          "if": "a > 7",
+          "text": "닿지 않는다",
+          "tone": "no"
+        }
+      ],
+      "mascot": "mascot"
+    },
+    {
+      "id": "table",
+      "layout": "table",
+      "purpose": "결과를 표로 모은다",
+      "focus": "가장 긴 변과 합의 비교",
+      "tag": "탐구 1",
+      "title": "표로 **모아** 보자",
+      "head": [
+        "막대",
+        "가장 긴 변",
+        "나머지 합",
+        "삼각형"
+      ],
+      "rows": [
+        {
+          "cells": [
+            "3, 4, 6",
+            "6",
+            "7",
+            "된다"
+          ],
+          "hl": true
+        },
+        {
+          "cells": [
+            "3, 4, 7",
+            "7",
+            "7",
+            "안 된다"
+          ]
+        },
+        {
+          "cells": [
+            "3, 4, 8",
+            "8",
+            "7",
+            "안 된다"
+          ]
+        }
+      ],
+      "note": "가장 긴 변이 더 짧을 때만 된다"
+    },
+    {
+      "id": "diff",
+      "layout": "compare",
+      "purpose": "두 경우의 차이를 말한다",
+      "focus": "부등호의 방향",
+      "tag": "탐구 1",
+      "title": "무엇이 **달랐을까?**",
+      "yesno": true,
+      "left": {
+        "label": "된다",
+        "draw": "<svg viewBox=\"0 0 360 240\" role=\"img\"><line class=\"rod-edge\" x1=\"30\" y1=\"200\" x2=\"150.8\" y2=\"111.1\"/><line class=\"rod c-coral\" x1=\"30\" y1=\"200\" x2=\"150.8\" y2=\"111.1\"/><line class=\"rod-edge\" x1=\"330\" y1=\"200\" x2=\"150.8\" y2=\"111.1\"/><line class=\"rod c-sky\" x1=\"330\" y1=\"200\" x2=\"150.8\" y2=\"111.1\"/><line class=\"rod-edge\" x1=\"30\" y1=\"200\" x2=\"330\" y2=\"200\"/><line class=\"rod c-yellow\" x1=\"30\" y1=\"200\" x2=\"330\" y2=\"200\"/></svg>",
+        "lines": [
+          "3 · 4 · 6",
+          "$6 < 3 + 4$"
+        ]
+      },
+      "right": {
+        "label": "안 된다",
+        "draw": "<svg viewBox=\"0 0 360 240\" role=\"img\"><line class=\"rod-edge\" x1=\"8\" y1=\"200\" x2=\"90.9\" y2=\"101.2\"/><line class=\"rod c-coral\" x1=\"8\" y1=\"200\" x2=\"90.9\" y2=\"101.2\"/><line class=\"rod-edge\" x1=\"352\" y1=\"200\" x2=\"241.4\" y2=\"68.2\"/><line class=\"rod c-sky\" x1=\"352\" y1=\"200\" x2=\"241.4\" y2=\"68.2\"/><line class=\"rod-edge\" x1=\"8\" y1=\"200\" x2=\"352\" y2=\"200\"/><line class=\"rod c-yellow\" x1=\"8\" y1=\"200\" x2=\"352\" y2=\"200\"/></svg>",
+        "lines": [
+          "3 · 4 · 8",
+          "$8 > 3 + 4$"
+        ]
+      },
+      "note": "가장 긴 변이 더 짧아야 한다"
+    },
+    {
+      "id": "key",
+      "layout": "point",
+      "purpose": "조건을 한 문장으로 기억한다",
+      "focus": "부등식 한 줄",
+      "tag": "오늘의 핵심",
+      "title": "**가장 긴 변** <\n나머지 두 변의 합",
+      "sub": "삼각형이 되는 조건",
+      "mascot": "mascot_cheer",
+      "say": [
+        "이것만 기억해!"
+      ]
+    },
+    {
+      "id": "show",
+      "layout": "show",
+      "purpose": "준비물과 놓는 법을 본다",
+      "focus": "큰 그림",
+      "tag": "탐구 2",
+      "title": "이렇게 **놓아요**",
+      "image": "sticks",
+      "points": [
+        "막대 세 개를 준비해요",
+        "가장 긴 막대를 먼저 놓아요",
+        "짧은 두 막대를 양 끝에 대요"
+      ]
+    },
+    {
+      "id": "example",
+      "layout": "example",
+      "purpose": "조건을 써서 문제를 푼다",
+      "focus": "풀이 세 줄",
+      "tag": "탐구 2",
+      "title": "**조건**을 써 보자",
+      "problem": "두 변이 5 cm, 8 cm인 삼각형에서 가장 긴 변이 $x$ cm일 때, 자연수 $x$를 모두 구하시오.",
+      "lines": [
+        {
+          "text": "$x$가 가장 길다: $x \\ge 8$",
+          "why": "가장 긴 변"
+        },
+        {
+          "text": "삼각형이 된다: $x < 5 + 8$",
+          "why": "조건"
+        },
+        {
+          "text": "$8 \\le x < 13$",
+          "why": "함께 쓰기"
+        }
+      ],
+      "answer": "8, 9, 10, 11, 12",
+      "draw": "<svg viewBox=\"0 0 360 240\" role=\"img\"><line class=\"rod-edge\" x1=\"30\" y1=\"200\" x2=\"150.8\" y2=\"111.1\"/><line class=\"rod c-coral\" x1=\"30\" y1=\"200\" x2=\"150.8\" y2=\"111.1\"/><line class=\"rod-edge\" x1=\"330\" y1=\"200\" x2=\"150.8\" y2=\"111.1\"/><line class=\"rod c-sky\" x1=\"330\" y1=\"200\" x2=\"150.8\" y2=\"111.1\"/><line class=\"rod-edge\" x1=\"30\" y1=\"200\" x2=\"330\" y2=\"200\"/><line class=\"rod c-yellow\" x1=\"30\" y1=\"200\" x2=\"330\" y2=\"200\"/></svg>"
+    },
+    {
+      "id": "graph",
+      "layout": "graph",
+      "purpose": "a를 바꾸며 그래프를 본다",
+      "focus": "움직이는 곡선",
+      "tag": "탐구 2",
+      "title": "*a*가 **커지면** 그래프는?",
+      "graph": {
+        "x": [
+          -5,
+          5
+        ],
+        "y": [
+          -2,
+          8
+        ]
+      },
+      "state": {
+        "a": 2
+      },
+      "curves": [
+        {
+          "fn": "x*x",
+          "tone": "ink",
+          "dashed": true
+        },
+        {
+          "fn": "a*x*x",
+          "tone": ""
+        }
+      ],
+      "controls": [
+        {
+          "label": "*a*",
+          "var": "a",
+          "min": 0.5,
+          "max": 4,
+          "step": 0.5,
+          "value": 2
+        }
+      ],
+      "formula": "$y = \\val{a}x^2$",
+      "hint": "슬라이더를 움직여 보세요"
+    },
+    {
+      "id": "tabs",
+      "layout": "tabs",
+      "purpose": "네 가지를 하나씩 살핀다",
+      "focus": "켜진 탭의 내용",
+      "tag": "둘러보기",
+      "title": "네 가지만 **기억해요**",
+      "tabs": [
+        {
+          "label": "질문하기",
+          "heading": "먼저 물어보기",
+          "lines": [
+            "막대 세 개면 될까?",
+            "왜 그렇게 생각해?"
+          ],
+          "image": "mascot"
+        },
+        {
+          "label": "자료 만들기",
+          "heading": "수업 자료 만들기",
+          "lines": [
+            "주제만 말하면 초안이 나와요",
+            "고칠 곳은 눌러서 바로 고쳐요"
+          ],
+          "image": "sticks"
+        },
+        {
+          "label": "피드백",
+          "heading": "바로 알려 주기",
+          "lines": [
+            "맞았는지 곧바로 보여요",
+            "틀리면 다시 해 봐요"
+          ]
+        },
+        {
+          "label": "기록하기",
+          "heading": "남겨 두기",
+          "lines": [
+            "오늘 한 것을 적어요"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "flip",
+      "layout": "flip",
+      "purpose": "뜻을 떠올린 뒤 뒤집어 확인한다",
+      "focus": "카드 세 장",
+      "tag": "개념 확인",
+      "title": "카드를 **뒤집어** 보세요",
+      "cards": [
+        {
+          "front": "삼각형",
+          "back": "두 변의 합이\n더 커야 해요"
+        },
+        {
+          "front": "이등변삼각형",
+          "back": "두 변의\n길이가 같아요"
+        },
+        {
+          "front": "정삼각형",
+          "back": "세 변의\n길이가 같아요"
+        }
+      ]
+    },
+    {
+      "id": "quiz",
+      "layout": "quiz",
+      "purpose": "조건을 적용해 고른다",
+      "focus": "네 개의 보기",
+      "tag": "확인 문제",
+      "title": "**삼각형**을 만들 수 있는 것은?",
+      "hint": "가장 긴 변부터 찾아요",
+      "options": [
+        {
+          "text": "2, 3, 6"
+        },
+        {
+          "text": "3, 4, 6",
+          "correct": true
+        },
+        {
+          "text": "1, 2, 3"
+        },
+        {
+          "text": "4, 4, 9"
+        }
+      ],
+      "explain": "$6 < 3 + 4$ 이니까 삼각형이 된다",
+      "mascot": "mascot_think",
+      "say": [
+        "골라 봐!"
+      ]
+    },
+    {
+      "id": "quiz2",
+      "layout": "quiz-long",
+      "purpose": "옳은 설명을 고른다",
+      "focus": "세 문장",
+      "tag": "확인 문제",
+      "title": "다음 중 **옳은** 것은?",
+      "options": [
+        {
+          "text": "막대 세 개면 언제나 삼각형이 된다"
+        },
+        {
+          "text": "세 변의 길이가 같으면 정삼각형이다",
+          "correct": true
+        },
+        {
+          "text": "가장 긴 변은 두 변의 합보다 길다"
+        }
+      ],
+      "explain": "정삼각형은 세 변의 길이가 모두 같다",
+      "mascot": "mascot"
+    },
+    {
+      "id": "ox",
+      "layout": "ox",
+      "purpose": "참인지 거짓인지 판단한다",
+      "focus": "O와 X",
+      "tag": "확인 문제",
+      "title": "2, 3, 5인 막대로\n삼각형을 만들 수 **있다**",
+      "truth": false,
+      "explain": "$5 = 2 + 3$ 이라 일직선이 된다",
+      "mascot": "mascot"
+    },
+    {
+      "id": "sort",
+      "layout": "sort",
+      "purpose": "되는 것과 안 되는 것을 나눈다",
+      "focus": "여섯 조각",
+      "tag": "나누어 담기",
+      "title": "끌어서 **나누어** 담아요",
+      "yesno": true,
+      "bins": [
+        {
+          "key": "y",
+          "label": "삼각형이 된다"
+        },
+        {
+          "key": "n",
+          "label": "안 된다"
+        }
+      ],
+      "chips": [
+        {
+          "text": "2, 3, 4",
+          "to": "y"
+        },
+        {
+          "text": "2, 3, 5",
+          "to": "n"
+        },
+        {
+          "text": "5, 5, 9",
+          "to": "y"
+        },
+        {
+          "text": "4, 6, 11",
+          "to": "n"
+        },
+        {
+          "text": "3, 3, 3",
+          "to": "y"
+        },
+        {
+          "text": "1, 4, 6",
+          "to": "n"
+        }
+      ],
+      "mascot": "mascot"
+    },
+    {
+      "id": "order",
+      "layout": "order",
+      "purpose": "알아보는 순서를 맞춘다",
+      "focus": "네 조각의 순서",
+      "tag": "확인",
+      "title": "**순서대로** 놓아요",
+      "mascot": "mascot_think",
+      "items": [
+        "가장 긴 변을 찾는다",
+        "나머지 두 변을 더한다",
+        "두 값을 견준다",
+        "더 짧으면 삼각형!"
+      ]
+    },
+    {
+      "id": "match",
+      "layout": "match",
+      "purpose": "이름과 뜻을 잇는다",
+      "focus": "세 쌍",
+      "tag": "확인",
+      "title": "알맞은 **짝**을 찾아요",
+      "pairs": [
+        {
+          "left": "정삼각형",
+          "right": "세 변의 길이가 같다"
+        },
+        {
+          "left": "이등변삼각형",
+          "right": "두 변의 길이가 같다"
+        },
+        {
+          "left": "직각삼각형",
+          "right": "한 각이 직각이다"
+        }
+      ]
+    },
+    {
+      "id": "reveal",
+      "layout": "reveal",
+      "purpose": "답을 말한 뒤 열어 본다",
+      "focus": "가려진 답",
+      "tag": "확인",
+      "title": "**빈칸**에 알맞은 말은?",
+      "lead": "가장 긴 변이 7일 때",
+      "cards": [
+        {
+          "prompt": "나머지 두 변의 합은",
+          "answer": "7보다 크다"
+        },
+        {
+          "prompt": "두 변이 3, 4이면",
+          "answer": "안 된다"
+        },
+        {
+          "prompt": "두 변이 3, 5이면",
+          "answer": "된다"
+        }
+      ]
+    },
+    {
+      "id": "input",
+      "layout": "input",
+      "purpose": "답을 직접 써 넣는다",
+      "focus": "입력칸",
+      "tag": "적용",
+      "title": "**답**을 써 보세요",
+      "question": "두 변이 5 cm, 8 cm일 때\n가장 긴 변이 될 수 있는 가장 큰 자연수는?",
+      "answer": "12|12cm",
+      "unit": "cm",
+      "explain": "$x < 5 + 8$ 이니까 12",
+      "mascot": "mascot"
+    },
+    {
+      "id": "write",
+      "layout": "write",
+      "purpose": "조건을 내 말로 쓴다",
+      "focus": "빈칸 두 곳",
+      "tag": "정리",
+      "title": "내 **말로** 써 보세요",
+      "frame": "삼각형이 되려면 가장 긴 변이\n나머지 두 변의 [[합]]보다 [[짧아야]] 한다.",
+      "hint": "공책에 써요",
+      "timer": 120,
+      "mascot": "mascot"
+    },
+    {
+      "id": "pick",
+      "layout": "pick",
+      "purpose": "발표할 사람을 정한다",
+      "focus": "뽑힌 번호",
+      "tag": "정리",
+      "title": "누가 **발표**할까?",
+      "range": "1-28",
+      "label": "번호 뽑기",
+      "mascot": "mascot"
+    },
+    {
+      "id": "wrap",
+      "layout": "summary",
+      "purpose": "배운 것을 되짚는다",
+      "focus": "세 줄 정리",
+      "tag": "정리",
+      "title": "오늘 **알게** 된 것",
+      "items": [
+        "세 막대가 늘 삼각형이 되진 않아요",
+        "가장 긴 변을 먼저 봐요",
+        "나머지 두 변의 합보다 짧아야 해요"
+      ],
+      "next": "다음 시간 · 삼각형의 작도",
+      "mascot": "mascot_cheer"
+    },
+    {
+      "id": "bye",
+      "layout": "closing",
+      "purpose": "수업을 마친다",
+      "focus": "마침 인사",
+      "title": "**수고**했어요!",
+      "sub": "다음 시간에는 삼각형을 작도해요",
+      "next": "준비물 · 자와 컴퍼스",
+      "mascot": "mascot",
+      "say": [
+        "또 만나!"
+      ]
+    }
+  ],
+  "assets": [
+    {
+      "id": "mascot_think",
+      "kind": "mascot",
+      "prompt": "thinking, one paw on chin, looking up",
+      "alt": "생각하는 세모"
+    },
+    {
+      "id": "mascot_cheer",
+      "kind": "mascot",
+      "prompt": "cheering with both paws raised",
+      "alt": "기뻐하는 세모"
+    },
+    {
+      "id": "mascot_sticks",
+      "kind": "mascot",
+      "prompt": "holding three colorful sticks",
+      "alt": "막대 세 개를 든 세모"
+    },
+    {
+      "id": "sticks",
+      "kind": "sticker",
+      "prompt": "three colorful sticks",
+      "alt": "막대 세 개"
+    }
+  ]
+}

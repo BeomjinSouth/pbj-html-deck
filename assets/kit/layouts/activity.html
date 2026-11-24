@@ -1,0 +1,19 @@
+<section class="slide">
+  <header class="hd">
+    {{#tag}}<span class="tag" data-tone="{{{_tone}}}">{{tag}}</span>{{/tag}}
+    <div class="fit"><h2{{#_len.title}} style="--n:{{{_len.title}}}"{{/_len.title}}>{{title}}</h2></div>
+  </header>
+  <div class="main">
+    <div class="split act">
+      <ol class="rows">
+        {{#steps}}<li class="row"><b class="badge">{{{@n}}}</b><span>{{.}}</span></li>
+        {{/steps}}
+      </ol>
+      <aside class="side">
+        {{#timer}}<button class="big" data-timer="{{{timer}}}">{{{_mmss.timer}}}</button>{{/timer}}
+        {{#chips}}{{#@first}}<div class="chipline" style="{{#_len.chips}}--n:{{{_len.chips}}};{{/_len.chips}}">{{/@first}}<span class="chip sticker y">{{.}}</span>{{#@last}}</div>{{/@last}}{{/chips}}
+        {{asset:mascot}}
+      </aside>
+    </div>
+  </div>
+</section>

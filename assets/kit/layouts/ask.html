@@ -1,0 +1,14 @@
+<section class="slide">
+  <div class="plate">
+    {{#tag}}<span class="tag" data-tone="{{{_tone}}}">{{tag}}</span>{{/tag}}
+    <div class="words">
+      <h2 class="q"{{#_len.title}} style="--n:{{{_len.title}}}"{{/_len.title}}>{{title}}</h2>
+      {{#hint}}<p class="chip">{{hint}}</p>{{/hint}}
+    </div>
+    {{#mascot}}<figure class="buddy">
+      {{#say}}{{#@first}}<div class="says">{{/@first}}<p class="bubble think"{{^@first}} data-step="{{{@i}}}"{{/@first}}{{^@last}} data-until="{{{@n}}}"{{/@last}}>{{.}}</p>{{#@last}}</div>{{/@last}}{{/say}}
+      {{asset:mascot}}
+    </figure>{{/mascot}}
+    {{#timer}}<button data-timer="{{{timer}}}">{{{_mmss.timer}}}</button>{{/timer}}
+  </div>
+</section>

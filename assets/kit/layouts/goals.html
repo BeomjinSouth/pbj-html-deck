@@ -1,0 +1,13 @@
+<section class="slide">
+  <header class="hd stack">
+    {{#tag}}<span class="tag" data-tone="{{{_tone}}}">{{tag}}</span>{{/tag}}
+    <div class="fit"><h2{{#_len.title}} style="--n:{{{_len.title}}}"{{/_len.title}}>{{title}}</h2></div>
+  </header>
+  <div class="main">
+    <ul class="rows">
+      {{#items}}<li class="row" data-toggle data-keep role="button" tabindex="0"><i class="tick"></i><span>{{.}}</span></li>
+      {{/items}}
+    </ul>
+  </div>
+  {{#mascot}}<figure class="buddy">{{asset:mascot}}</figure>{{/mascot}}
+</section>

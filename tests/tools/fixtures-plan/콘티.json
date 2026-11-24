@@ -1,0 +1,22 @@
+{
+  "meta": {"title": "삼각형 수업", "kind": "lesson", "audience": "중학생", "duration": "45분", "goal": "삼각형을 설명한다", "message": "변의 길이를 비교한다", "palette": "notebook"},
+  "mascot": {"id": "mascot", "name": "세모", "look": "A small friendly triangle"},
+  "style": {},
+  "slides": [
+    {"id": "cover", "layout": "cover", "title": "삼각형의 **조건**", "purpose": "오늘 살펴볼 주제를 알아본다", "focus": "삼각형을 만드는 조건", "mascot": "pose-one", "image": "star", "talk": "질문으로 시작한다."},
+    {"id": "cards", "layout": "cards", "title": "두 조건 비교하기", "purpose": "두 가지 조건을 서로 비교한다", "focus": "두 카드에 적힌 변의 길이", "mascot": "pose-two", "cards": [{"title": "첫 조건", "desc": "길이가 같아요"}, {"title": "둘째 조건", "desc": "길이가 달라요"}], "config": {"label": "비교", "show": true, "count": 2, "mode": "a", "raw": "x^2"}},
+    {"id": "quiz", "layout": "quiz", "title": "삼각형이 될까요?", "purpose": "삼각형이 되는 것을 고른다", "focus": "정답을 고르는 보기", "mascot": "pose-three", "options": ["가능해요", "불가능해요"]},
+    {"id": "order", "layout": "order", "title": "풀이 순서를 맞춰요", "purpose": "풀이의 순서를 바르게 정한다", "focus": "순서를 바꾸는 보기", "mascot": "pose-four", "items": ["읽기", "비교", "판단"]},
+    {"id": "detail-one", "layout": "detail", "title": "조건 살펴보기", "purpose": "세 변의 길이를 살펴본다", "focus": "가장 긴 변의 길이", "body": "첫째 설명이에요."},
+    {"id": "detail-two", "layout": "detail", "title": "길이 비교하기", "purpose": "나머지 변의 합을 구한다", "focus": "나머지 두 변의 합", "mascot": "pose-one", "body": "둘째 설명이에요."},
+    {"id": "quiz-two", "layout": "quiz", "title": "한 번 더 확인해요", "purpose": "다른 문제에 조건을 적용한다", "focus": "새로 주어진 길이", "options": ["맞아요", "아니에요"]},
+    {"id": "wrap", "layout": "wrap", "title": "오늘의 정리", "purpose": "삼각형의 조건을 말로 정리한다", "focus": "가장 긴 변과 나머지 변의 합", "mascot": "pose-two", "summary": "긴 변은 나머지 두 변의 합보다 짧아요."}
+  ],
+  "assets": [
+    {"id": "pose-one", "kind": "mascot", "prompt": "waving", "alt": "손을 흔들어요"},
+    {"id": "pose-two", "kind": "mascot", "prompt": "pointing", "alt": "카드를 가리켜요"},
+    {"id": "pose-three", "kind": "mascot", "prompt": "thinking", "alt": "생각하고 있어요"},
+    {"id": "pose-four", "kind": "mascot", "prompt": "smiling", "alt": "웃고 있어요"},
+    {"id": "star", "kind": "sticker", "prompt": "star", "alt": "반짝이는 별"}
+  ]
+}

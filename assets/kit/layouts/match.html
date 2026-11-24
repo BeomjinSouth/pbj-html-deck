@@ -1,0 +1,19 @@
+<section class="slide">
+  <header class="hd">
+    {{#tag}}<span class="tag" data-tone="{{{_tone}}}">{{tag}}</span>{{/tag}}
+    <div class="fit"><h2{{#_len.title}} style="--n:{{{_len.title}}}"{{/_len.title}}>{{title}}</h2></div>
+  </header>
+  <div class="main" data-sort>
+    <div class="split match">
+      <div class="pairs">
+        {{#pairs}}<div class="pair"><b class="key">{{left}}</b><div class="bin slot" data-bin="p{{{@rank}}}" data-max="1"></div></div>
+        {{/pairs}}
+      </div>
+      <div class="card pool col" data-pool>
+        {{#pairs|shuffle}}<div class="piece" data-chip data-to="p{{{@rank}}}" role="button" tabindex="0"><span>{{right}}</span></div>
+        {{/pairs}}
+      </div>
+    </div>
+    <button class="btn round corner" data-check>확인</button>
+  </div>
+</section>

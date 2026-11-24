@@ -1,0 +1,21 @@
+/* The surface is in canvas pixels; the controls are in screen pixels. */
+.slide .pen-surface { position:absolute; z-index:2147482999; inset:0; display:block; width:100%; height:100%; pointer-events:none; }
+.slide .pen-surface.is-drawing { pointer-events:auto; touch-action:none; user-select:none; }
+html[data-deck-mode] .slide .pen-surface.is-drawing { cursor:crosshair !important; }
+html[data-deck-mode="edit"] .pen-surface { display:none !important; }
+.slide .pen-stroke { fill:none; stroke:var(--pen-ink,var(--ink,#1b2130)); stroke-width:7; stroke-linecap:round; stroke-linejoin:round; pointer-events:none; }
+.slide .pen-stroke-blue { stroke:var(--pen-blue,#2e65d7); }
+.slide .pen-stroke-red { stroke:var(--pen-red,#cf3a2c); }
+.slide .pen-stroke-mark { stroke:var(--pen-mark,#ffcf35); stroke-width:28; opacity:.38; }
+.pen-chrome { position:fixed; z-index:2147483000; inset:8px 8px auto auto; max-width:calc(100% - 16px); font:14px system-ui,sans-serif; }
+.pen-chrome [hidden] { display:none !important; }
+html[data-deck-shot] .pen-chrome { display:none !important; }
+.pen-chrome:has(>.pen-open:not([hidden])) { opacity:.3; transition:opacity .2s; }
+.pen-chrome:has(>.pen-open:not([hidden])):is(:hover,:focus-within) { opacity:1; }
+.pen-tools { display:flex; flex-wrap:wrap; justify-content:flex-end; gap:4px; padding:4px; background:#15171c; border-radius:8px; }
+.pen-button { min-width:44px; min-height:44px; padding:0 8px; border:1px solid #969da8; border-radius:6px; background:#fff; color:#1b2130; font:inherit; cursor:pointer; touch-action:manipulation; }
+.pen-button[aria-pressed="true"] { box-shadow:inset 0 0 0 2px currentColor; font-weight:bold; }
+.pen-blue { color:#20499d; }
+.pen-red { color:#9f281e; }
+.pen-mark { background:#ffe37a; }
+@media print { .pen-surface,.pen-chrome { display:none !important; } }

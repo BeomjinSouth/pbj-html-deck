@@ -1,0 +1,8 @@
+<section class="slide" data-tone="{{{_tone}}}">
+  {{#no}}<div class="no">{{no}}</div>{{/no}}
+  <div class="words">
+    <h2{{#_len.title}} style="--n:{{{_len.title}}}"{{/_len.title}}>{{title}}</h2>
+    {{#sub}}<p class="sub" style="{{#_len.sub}}--n:{{{_len.sub}}};{{/_len.sub}}">{{sub}}</p>{{/sub}}
+  </div>
+  {{#mascot}}<figure class="buddy">{{asset:mascot}}</figure>{{/mascot}}
+</section>

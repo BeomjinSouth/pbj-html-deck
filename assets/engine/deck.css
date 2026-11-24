@@ -1,0 +1,72 @@
+/* 구조 — 스크립트를 실행하지 않아도 같은 1920×1080 캔버스 */
+html,body{height:100%;margin:0}
+body{background:var(--deck-backdrop,#15171c);overflow:hidden}
+.viewer{height:calc(100dvh - var(--bar,0px));width:calc(100% - var(--panel,0px));display:grid;place-items:center}
+#deck{position:relative;container-type:inline-size;width:min(100%,calc((100dvh - var(--bar,0px)) * 16 / 9));aspect-ratio:16/9;overflow:clip}
+.slide{position:absolute;left:0;top:0;width:1920px;height:1080px;box-sizing:border-box;overflow:clip;
+  transform-origin:0 0;transform:scale(tan(atan2(100cqw,1920px)))}
+@media screen{
+  .slide[hidden]:not(:where(html.deck-on #deck > .slide:has(svg [id]))){display:none!important}
+  /* A visible copy may use a paint server in an earlier, inactive slide.
+     Keep that SVG laid out without painting the slide or letting it be used. */
+  :where(html.deck-on #deck > .slide[hidden]:has(svg [id])){display:block;opacity:0!important;pointer-events:none!important;interactivity:inert!important}
+  html:not(.deck-on) #deck>.slide:not(:first-child){display:none}
+  .slide [data-gone]{display:none!important}
+}
+[data-waiting]{visibility:hidden}
+.slide [data-pane].is-off{display:none!important}
+#deck [data-chip]{touch-action:none;user-select:none}
+.deck-layer{position:absolute;inset:0;pointer-events:none}
+.deck-sort-proxy{position:absolute;pointer-events:none!important;z-index:1}
+.deck-burst{position:absolute;z-index:2}
+.deck-burst i{position:absolute;inset:0 auto auto 0;width:12px;height:12px;border-radius:50%;background:var(--accent,#2f5bea);animation:deck-burst .45s ease-out both}
+@keyframes deck-burst{to{translate:var(--dx) var(--dy);opacity:0}}
+#deck-zoom[open]{width:100vw;height:100dvh;max-width:none;max-height:none;margin:0;border:0;padding:0;display:grid;place-items:center;background:#15171c;color:white;box-sizing:border-box}
+#deck-zoom .deck-zoom-content{width:var(--zoom-width);height:var(--zoom-height);zoom:min(tan(atan2(94vw,var(--zoom-width))),tan(atan2(88dvh,var(--zoom-height))));pointer-events:none}
+#deck-zoom .deck-zoom-content>div,#deck-zoom .deck-zoom-content>div>*{width:100%!important;height:100%!important}
+#deck-zoom .deck-zoom-content>div>*{position:static!important;box-sizing:border-box;display:block!important;margin:0!important;scale:none!important;translate:none!important;transform:none!important}
+#deck-zoom img{object-fit:contain}
+#deck-zoom-close{position:absolute;right:16px;top:16px}
+#deck-overview .deck-credit{display:block;margin-top:16px}
+
+/* 입력 처리와 좁은 화면의 패널 배치 */
+html[data-deck-mode="edit"] #deck{touch-action:none;user-select:none}
+html[data-deck-mode="edit"] #deck [contenteditable]{user-select:text;cursor:text}
+html[data-deck-mode="edit"] #deck :is([data-lock],[data-lock] *){pointer-events:none!important}
+/* A capture can resize the viewport and wake the edge navigation. Hide its host, not its state. */
+html[data-deck-shot]{--bar:0px!important;--panel:0px!important}
+html[data-deck-shot] :is(#deck-ui,#deck-overview,#deck-zoom){display:none!important}
+html[data-deck-shot] #deck > .slide[data-deck-page]::after{content:none!important}
+html[data-deck-mode="present"] body[data-deck-idle],
+html[data-deck-mode="present"] body[data-deck-idle] .viewer *{cursor:none!important}
+@media(max-width:760px){
+  html[data-deck-mode="edit"] .viewer{width:100%}
+}
+
+/* 모아보기만 라이트 DOM에 둔다. 각 칸이 배율을 위한 컨테이너다. */
+#deck-overview{position:fixed;inset:0;z-index:2147483001;overflow:auto;background:#15171c;color:#f7f8fa;padding:20px clamp(12px,3vw,48px) 32px;font:14px/1.4 system-ui,"Malgun Gothic",sans-serif;box-sizing:border-box}
+#deck-overview .deck-overview-heading{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:0 0 16px}
+#deck-overview .deck-overview-heading h2{font:700 19px/1.3 system-ui,sans-serif;margin:0;color:inherit}
+#deck-overview .deck-overview-grid{display:grid;grid-template-columns:repeat(var(--columns,3),minmax(0,1fr));gap:14px}
+#deck-overview .deck-thumbnail{min-width:0;position:relative;border:1px solid #414855;background:#222631;border-radius:8px;overflow:clip}
+#deck-overview .deck-thumbnail:has(:focus-visible){outline:2px solid #9db2ff;outline-offset:2px}
+#deck-overview .deck-thumbnail[aria-current="true"]{border-color:#829fff}
+#deck-overview .deck-thumb-canvas{container-type:inline-size;aspect-ratio:16/9;position:relative;overflow:clip;pointer-events:none}
+#deck-overview .deck-thumbnail>button{appearance:none;font:inherit;text-align:left;color:inherit;cursor:pointer;background:none;border:0;display:block;width:100%;padding:8px 10px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#deck-overview .deck-thumbnail>button::after{content:"";position:absolute;inset:0}
+#deck-overview .deck-overview-close{font:inherit;color:inherit;background:#303543;border:0;border-radius:8px;padding:8px 12px;cursor:pointer}
+
+/* 장 크기는 인쇄 용지 크기와 같다. 건너뛰기 장도 출력한다. */
+@page{size:1920px 1080px;margin:0}
+@media print{
+  html,body{height:auto;overflow:visible;background:none}
+  body{print-color-adjust:exact;-webkit-print-color-adjust:exact}
+  [data-deck-rt]{display:none!important}
+  .viewer,html[data-deck-mode="edit"] .viewer{display:block;width:auto;height:auto}
+  #deck{width:1920px;aspect-ratio:auto;height:auto;overflow:visible;container-type:normal}
+  html #deck>.slide{position:relative;transform:none;break-inside:avoid;break-after:page}
+  html #deck>.slide:last-child{break-after:auto}
+  #deck [data-waiting]{visibility:visible!important}
+  /* 펼친 장의 등장 효과가 첫 프레임(투명)에서 찍히지 않게 인쇄에서는 움직임을 끈다. */
+  #deck *,#deck *::before,#deck *::after{animation:none!important;transition:none!important}
+}

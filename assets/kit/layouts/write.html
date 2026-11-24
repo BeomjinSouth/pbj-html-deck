@@ -1,0 +1,17 @@
+<section class="slide">
+  <header class="hd">
+    {{#tag}}<span class="tag" data-tone="{{{_tone}}}">{{tag}}</span>{{/tag}}
+    <div class="fit"><h2{{#_len.title}} style="--n:{{{_len.title}}}"{{/_len.title}}>{{title}}</h2></div>
+  </header>
+  <div class="main">
+    <div class="card note"><p class="frame">{{frame}}</p></div>
+    <div class="foot">
+      {{#timer}}<button data-timer="{{{timer}}}">{{{_mmss.timer}}}</button>{{/timer}}
+      {{#hint}}<p class="chip">{{hint}}</p>{{/hint}}
+    </div>
+  </div>
+  {{#mascot}}<figure class="buddy">
+    {{#say}}{{#@first}}<div class="says">{{/@first}}<p class="bubble"{{^@first}} data-step="{{{@i}}}"{{/@first}}{{^@last}} data-until="{{{@n}}}"{{/@last}}>{{.}}</p>{{#@last}}</div>{{/@last}}{{/say}}
+    {{asset:mascot}}
+  </figure>{{/mascot}}
+</section>

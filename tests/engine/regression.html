@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="ko" data-theme="light" style="--title-scale:1;--body-scale:1">
+<head>
+<meta charset="utf-8">
+<title>엔진 회귀 시험</title>
+<link data-deck="engine" rel="stylesheet" href="../../assets/engine/deck.css">
+<style data-deck="basefont">@font-face{font-family:"Deck Sans";src:local(Arial),url(data:font/woff;base64,AAAA)}</style>
+<style data-deck="fonts"></style>
+<style>
+:root{--accent:teal;--paper:white;--ink:black}
+html[data-theme=dark]{--paper:#242424;--ink:white}
+.slide{background:var(--paper);color:var(--ink);font:calc(32px * var(--body-scale))/1.25 Arial,sans-serif}
+.slide :is(h2,p,figure){margin:0}
+#lesson-title{color:var(--accent);font-size:calc(50px * var(--title-scale))}
+#figure{position:absolute;left:900px;top:135px;width:500px;height:250px}
+#caption{position:absolute;left:100px;top:350px}
+#flex{display:flex;position:absolute;left:100px;top:500px;width:800px}
+#flex p{flex:1 1 0;min-width:0;background:#cfc}
+#link-box{position:absolute;left:900px;top:555px}
+.slide .ans{display:none}
+.slide .is-open .ans{display:inline}
+</style>
+</head><body><div class="viewer"><main id="deck">
+<section class="slide" data-slide data-skip><h2>교사 해설</h2></section>
+<section class="slide" data-slide>
+  <h2 id="lesson-title">좌표 <em id="token" style="display:inline-block">평면</em><br>그리기</h2>
+  <svg id="figure" viewBox="0 0 100 50"><defs><linearGradient id="chalk"><stop stop-color="red"/><stop offset="1" stop-color="blue"/></linearGradient></defs><rect x="10" y="10" width="60" height="30" fill="url(#chalk)"/></svg>
+  <figure><figcaption id="caption">그림 설명</figcaption></figure>
+  <div id="flex"><p id="flex-item">첫 번째 식</p><p>두 번째 식</p></div>
+  <div id="link-box"><a href="#5"><span>풀이로</span></a></div>
+</section>
+<section class="slide" data-slide>
+  <h2>공개 순서</h2>
+  <div data-step="2" id="late"><p id="early" data-step="1">첫째 힌트</p></div>
+  <div id="answer" hidden><p data-step="3">교사용 정답</p></div>
+  <div style="display:none"><p data-step="5">숨은 단계</p></div>
+  <p id="last" data-step="4">마지막 힌트</p>
+  <button data-peek id="peek">정답 <span class="ans">세 변</span></button>
+  <button data-timer="30" id="timer"><b>모둠 토의</b></button>
+  <span id="author-edit" contenteditable="plaintext-only">작성자가 편집을 허용한 영역</span>
+  <span id="author-inert" inert aria-hidden="true">작성자가 조작을 막은 영역</span>
+  <div id="generated"></div>
+</section>
+<section class="slide" data-slide><h2>한 단계</h2><p id="solo" data-step="3">힌트</p></section>
+<section class="slide" data-slide>
+  <h2>눈으로 맞춰 보기</h2>
+  <div id="clip-deco" style="position:absolute;left:100px;top:150px;height:100px;width:300px;overflow:hidden"><p>정상 글자</p><i style="position:absolute;top:150px;height:40px;width:40px;background:red"></i></div>
+  <p id="clip-text" style="position:absolute;left:470px;top:150px;height:15px;overflow:hidden">실제 잘리는 글</p>
+  <div style="position:absolute;left:100px;top:300px;width:800px"><p id="range">긴 첫째 줄에만 있는 글자가 오른쪽까지 채워집니다<br>둘째</p><p id="gap" style="position:absolute;top:40px;left:330px">메모</p></div>
+  <div style="position:absolute;left:100px;top:440px;width:800px"><p id="real">정말로 <span style="display:inline-block">겹치는</span> 문단입니다</p><p id="overlay" style="position:absolute;inset:0 auto auto 0">정말로 겹치는 메모</p></div>
+  <span style="position:absolute;left:100px;top:570px;visibility:hidden"><span id="revived" style="visibility:visible;font-size:12px">학생에게 보이는 작은 글씨</span><span id="invisible" style="font-size:12px">숨은 글씨</span></span>
+  <svg style="position:absolute;left:720px;top:565px;width:400px;height:160px" viewBox="0 0 200 80"><rect width="200" height="80" fill="black"/><text id="svg-white" x="5" y="25" font-size="20" fill="white">흰 글 정상</text></svg>
+  <p id="gradient" style="position:absolute;left:100px;top:680px;color:white;background:linear-gradient(black,#111)">그라디언트 위 흰 글자</p>
+  <p id="low" style="position:absolute;left:100px;top:780px;color:#ccc">단색 배경의 낮은 대비</p>
+</section>
+</main></div>
+<script data-deck="engine" src="../../assets/engine/deck.js"></script>
+<script>
+deck.ready.then(()=>{
+  const button=document.createElement('button'); button.dataset.runtime=''; button.textContent='계산';
+  document.querySelector('#generated').append(button);
+  const token=document.querySelector('#token');
+  token.addEventListener('click',()=>{token.dataset.clicks=String(+(token.dataset.clicks||0)+1)});
+});
+</script>
+</body></html>

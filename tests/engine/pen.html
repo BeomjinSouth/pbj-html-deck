@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="ko">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>판서 엔진 시험</title>
+<link rel="stylesheet" href="../../assets/engine/deck.css">
+<link rel="stylesheet" href="../../assets/engine/lab.css">
+<link rel="stylesheet" href="../../assets/engine/pen.css">
+<style>
+  .slide { background:#fff; color:#1b2130; padding:100px; font:44px system-ui,sans-serif; }
+  .slide button { font:inherit; }
+  .slide [data-peek].is-open { background:yellow; }
+</style>
+<body>
+<div class="viewer"><main id="deck">
+  <section class="slide" data-slide><h1>첫째 장</h1>
+    <button type="button" id="peek" data-peek>가리개</button>
+    <button type="button" id="toggle" data-toggle>켜기</button>
+  </section>
+  <section class="slide" data-slide><h1>둘째 장</h1></section>
+</main></div>
+<script src="../../assets/engine/deck.js"></script>
+<script src="../../assets/engine/widgets.js"></script>
+<script src="../../assets/engine/lab.js"></script>
+<script src="../../assets/engine/pen.js"></script>
+</body>
+</html>

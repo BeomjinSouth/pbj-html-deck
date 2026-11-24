@@ -1,0 +1,12 @@
+<section class="slide" data-roomy>
+  <header class="hd">
+    {{#tag}}<span class="tag" data-tone="{{{_tone}}}">{{tag}}</span>{{/tag}}
+    <div class="fit"><h2{{#_len.title}} style="--n:{{{_len.title}}}"{{/_len.title}}>{{title}}</h2></div>
+  </header>
+  <div class="main">
+    <ol class="path" style="{{#_len.items.text}}--n:{{{_len.items.text}}};{{/_len.items.text}}">
+      {{#items}}<li class="stop{{#now}} now{{/now}}"><b class="badge">{{{@n}}}</b><span>{{text}}</span>{{#now}}{{asset:mascot|here}}{{/now}}</li>
+      {{/items}}
+    </ol>
+  </div>
+</section>

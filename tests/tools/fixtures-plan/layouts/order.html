@@ -1,0 +1,5 @@
+<section class="slide order" data-title="{{title}}">
+  <h2>{{title}}</h2><div data-sort="order" data-pool>
+  {{#items|shuffle}}<button data-chip data-rank="{{@rank}}">{{.}}</button>{{/items}}
+  </div>
+</section>

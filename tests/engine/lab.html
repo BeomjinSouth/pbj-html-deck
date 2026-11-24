@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="ko">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>조작 탐구 엔진 시험</title>
+<link rel="stylesheet" href="../../assets/engine/deck.css">
+<link rel="stylesheet" href="../../assets/engine/lab.css">
+<link rel="stylesheet" href="../../assets/engine/pen.css">
+<style>
+  .slide { background:#faf8f2; color:#1b2130; font:42px system-ui,sans-serif; }
+  .slide .side { position:absolute; inset:150px auto auto 120px; width:680px; }
+  .slide h1 { margin:0 0 44px; font-size:60px; }
+  .slide svg { position:absolute; left:920px; top:100px; }
+  .slide input,.slide select,.slide button { font:inherit; }
+  .slide input[type="range"] { width:340px; }
+  .slide .samples { font-size:32px; }
+  .slide .blue { stroke:#2757d6; }
+  .slide .red { stroke:#a42b21; }
+  .slide .name { font:38px "Cambria Math",serif; fill:currentColor; }
+  .slide .free { position:absolute; left:var(--left,200px); top:var(--top,850px); width:90px; height:60px; background:#ddd; }
+</style>
+<body>
+<div class="viewer"><main id="deck">
+  <section class="slide" data-slide>
+    <div id="lab" data-lab='{"a":1,"b":0,"on":false,"kind":"p","px":2,"py":1,"cx":200,"cy":850}'>
+      <div class="side">
+        <h1>이차함수의 그래프</h1>
+        <p><math><mi>y</mi><mo>=</mo><mi>a</mi><msup><mi>x</mi><mn>2</mn></msup></math></p>
+        <label><var>a</var> = <output id="show" data-show="a" data-fix="1">1.0</output> <input id="slider" type="range" min="-2" max="2" step="0.5" value="1" data-var="a"></label>
+        <div class="samples">
+          <input id="number" aria-label="b" type="number" min="0" max="4" value="0" data-var="b">
+          <label><input id="check" type="checkbox" data-var="on"> 점 표시</label>
+          <select id="choice" aria-label="점 이름" data-var="kind"><option value="p">P</option><option value="q">Q</option></select>
+          <button id="set" type="button" data-set="a=2">2</button><button id="add" type="button" data-add="a:0.5">+0.5</button>
+          <p id="bound" data-bind="title: b; --amount: a; text: kind.toUpperCase()" title="0" style="--amount:1">P</p>
+          <output id="hook" data-runtime></output><output id="length" data-show="hypot(px, py)" data-fix="2">2.24</output>
+        </div>
+      </div>
+      <svg id="parabola" width="850" height="850" viewBox="0 0 850 850" data-graph='{"x":[-5,5],"y":[-5,5],"box":[80,40,720,720],"font":32}' role="img" aria-label="이차함수 그래프">
+        <path id="quadratic" class="blue" data-fn="a*x*x" />
+        <line id="segment" x1="440" y1="400" x2="584" y2="328" stroke="currentColor" stroke-width="2" stroke-dasharray="6 6" data-bind="x1:X(0); y1:Y(0); x2:X(px); y2:Y(py)" data-if="on" />
+        <circle id="dot" data-pt="px, py" cx="584" cy="328" r="16" data-drag="px,py" data-snap="0.5" data-range="x:-3..3; y:-3..3" data-axis="x" />
+        <g id="tag" data-pt="px, max(py,1)" transform="translate(584 328)" data-if="on"><text class="name" x="22" y="-16" data-bind="text: kind.toUpperCase()">P</text></g>
+      </svg>
+      <button class="free samples" id="free" type="button" data-drag="cx,cy" data-snap="10" data-bind="--left: cx + 'px'; --top: cy + 'px'">끌기</button>
+    </div>
+  </section>
+  <section class="slide" data-slide>
+    <div class="side"><h1>반비례 관계의 그래프</h1>
+      <math><mi>y</mi><mo>=</mo><mfrac><mn>4</mn><mi>x</mi></mfrac></math>
+    </div>
+    <svg width="850" height="850" viewBox="0 0 850 850" data-graph='{"x":[-5,5],"y":[-5,5],"font":32}' role="img" aria-label="반비례 관계의 그래프">
+      <path id="reciprocal" class="blue" data-fn="4/x" />
+      <circle data-pt="2, 2" r="9"/><circle data-pt="-2, -2" r="9"/>
+    </svg>
+  </section>
+  <section class="slide" data-slide>
+    <div class="side"><h1>두 직선의 교점</h1>
+      <p>가　<math><mi>y</mi><mo>=</mo><mi>x</mi><mo>+</mo><mn>1</mn></math></p>
+      <p>나　<math><mi>y</mi><mo>=</mo><mo>−</mo><mi>x</mi><mo>+</mo><mn>5</mn></math></p>
+      <p><math><mi mathvariant="normal">P</mi><mo stretchy="false">(</mo><mn>2</mn><mo>,</mo><mn>3</mn><mo stretchy="false">)</mo></math></p>
+    </div>
+    <svg id="lines" width="850" height="850" viewBox="0 0 850 850" data-graph='{"x":[-4,6],"y":[-4,6],"box":[80,75,700,650],"grid":1,"ticks":2,"font":34}' role="img" aria-label="두 일차함수와 교점">
+      <path id="line1" class="blue" data-fn="x + 1" data-domain="-3..4" />
+      <path id="line2" class="red" data-fn="-x + 5" />
+      <circle id="crossing" data-pt="2, 3" r="10"/>
+      <text class="name" data-pt="2, 3" x="-22" y="-30">P</text>
+      <text class="name" data-pt="4, 5" x="26" y="-6">가</text>
+      <text class="name" data-pt="4, 1" x="22" y="-25">나</text>
+    </svg>
+  </section>
+  <section class="slide" data-slide>
+    <h1>범위 밖의 축</h1>
+    <div id="keep" data-lab='{"n":1}' data-keep><button id="keep-add" type="button" data-add="n:1">더하기</button> <output data-show="n">1</output></div>
+    <svg id="off-axis" width="850" height="850" viewBox="0 0 850 850" data-graph='{"x":[1,10],"y":[-2,4],"box":[80,55,720,640],"labels":["u","v"],"origin":false}'>
+      <path data-fn="sin(x)" />
+    </svg>
+  </section>
+</main></div>
+<script src="../../assets/engine/deck.js"></script>
+<script src="../../assets/engine/widgets.js"></script>
+<script src="../../assets/engine/lab.js"></script>
+<script src="../../assets/engine/pen.js"></script>
+<script>
+  if (deck.lab) deck.lab('#lab', (state, root) => {
+    let out = root.querySelector('#hook');
+    if (!out) {
+      out = document.createElement('output'); out.id = 'hook'; out.dataset.runtime = '';
+      root.querySelector('.samples').append(out);
+    }
+    out.textContent = root.querySelector('#show').textContent + ' / ' + state.a;
+  });
+</script>
+</body>
+</html>

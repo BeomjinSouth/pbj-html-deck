@@ -1,0 +1,13 @@
+<section class="slide">
+  <header class="hd">
+    {{#tag}}<span class="tag" data-tone="{{{_tone}}}">{{tag}}</span>{{/tag}}
+    <div class="fit"><h2{{#_len.title}} style="--n:{{{_len.title}}}"{{/_len.title}}>{{title}}</h2></div>
+  </header>
+  <div class="main">
+    {{#lead}}<p class="lead">{{lead}}</p>{{/lead}}
+    <div class="cards peeks">
+      {{#cards}}<article class="card"><p class="ask">{{prompt}}</p><div class="flap" data-peek role="button" tabindex="0"><span>{{answer}}</span></div></article>
+      {{/cards}}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,7 @@
+Draw the deck mascot in a new pose, as one die-cut sticker.
+The attached character sheet is the mascot. Draw exactly this character: same body shape and proportions, same colors and markings, same face, same accessories, same outline weight and shading. Only the pose and expression change.
+Pose: {SUBJECT}
+A finished slide design may be attached too. If the mascot on that slide shows this pose, match that pose, expression and any small prop, but always take the character's look from the character sheet. If the pose is not on the slide, use the slide only as a drawing-style reference. Draw ONLY the mascot with its prop: none of the slide's cards, text, speech bubbles or background.
+Style: {STYLE}
+Whole body from head to feet. Centered, fully inside the frame with a generous empty margin on every side. Transparent background: nothing behind the subject, no scenery, no ground, no ground shadow, no glow, no frame, no border box.
+{TEXTS}

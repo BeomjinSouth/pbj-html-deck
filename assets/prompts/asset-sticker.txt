@@ -1,0 +1,7 @@
+ONE isolated die-cut sticker illustration for a Korean classroom slide deck.
+Subject: {SUBJECT}
+A finished slide design may be attached. If this object is drawn on that slide, match how it looks there (shape, colors, viewing angle); in any case match the drawing style of that slide's illustrations. Draw ONLY this object: none of the slide's cards, text, mascot or background.
+Style: {STYLE}
+Deck colors: {PALETTE}
+One single subject, simple and bold enough to read at small size. An object stays a plain object: no face, eyes, mouth, arms or legs on it unless the subject asks for them. Centered, fully inside the frame with a generous empty margin on every side. Transparent background: nothing behind the subject, no scenery, no ground, no ground shadow, no glow, no frame, no border box.
+{TEXTS}

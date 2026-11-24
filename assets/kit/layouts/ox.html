@@ -1,0 +1,21 @@
+<section class="slide">
+  <header class="hd plate">
+    {{#tag}}<span class="tag" data-tone="{{{_tone}}}">{{tag}}</span>{{/tag}}
+    <h2{{#_len.title}} style="--n:{{{_len.title}}}"{{/_len.title}}>{{title}}</h2>
+  </header>
+  <div class="main" data-quiz="{{{mode}}}">
+    <div class="opts ox">
+      <div class="opt o" data-opt{{#truth}} data-correct{{/truth}} role="button" tabindex="0" aria-label="맞다"><i></i></div>
+      <div class="opt x" data-opt{{^truth}} data-correct{{/truth}} role="button" tabindex="0" aria-label="아니다"><i></i></div>
+    </div>
+    {{#explain}}<p data-explain>{{explain}}</p>{{/explain}}
+  </div>
+  {{#mascot}}<figure class="buddy" data-buddy>
+    <div class="says">
+      {{#say}}{{#@first}}<p class="bubble" data-when="idle">{{.}}</p>{{/@first}}{{/say}}
+      <p class="bubble" data-when="correct done">{{#cheer}}{{cheer}}{{/cheer}}{{^cheer}}정답!{{/cheer}}</p>
+      <p class="bubble" data-when="wrong">{{#retry}}{{retry}}{{/retry}}{{^retry}}다시 해 볼까?{{/retry}}</p>
+    </div>
+    {{#deck.mascot.yes}}{{asset:mascot|when-idle}}{{asset:deck.mascot.yes|when-yes}}{{asset:deck.mascot.no|when-no}}{{/deck.mascot.yes}}{{^deck.mascot.yes}}{{asset:mascot}}{{/deck.mascot.yes}}
+  </figure>{{/mascot}}
+</section>

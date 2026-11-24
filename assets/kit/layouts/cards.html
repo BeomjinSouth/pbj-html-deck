@@ -1,0 +1,21 @@
+<section class="slide">
+  <header class="hd">
+    {{#tag}}<span class="tag" data-tone="{{{_tone}}}">{{tag}}</span>{{/tag}}
+    <div class="fit"><h2{{#_len.title}} style="--n:{{{_len.title}}}"{{/_len.title}}>{{title}}</h2></div>
+  </header>
+  <div class="main">
+    <div class="cards" style="{{#_len.cards.title}}--nt:{{{_len.cards.title}}};{{/_len.cards.title}}{{#_len.cards.desc}}--nd:{{{_len.cards.desc}}};{{/_len.cards.desc}}">
+      {{#cards}}<article class="card"{{step}}>
+        {{#image}}<div class="pic">{{asset:image}}</div>{{/image}}{{#draw}}<div class="pic">{{{draw}}}</div>{{/draw}}
+        <h3>{{title}}</h3>
+        {{#desc}}<p>{{desc}}</p>{{/desc}}
+      </article>
+      {{/cards}}
+    </div>
+    {{#note}}<p class="bar"{{step}}>{{note}}</p>{{/note}}
+  </div>
+  {{#mascot}}<figure class="buddy">
+    {{#say}}{{#@first}}<div class="says">{{/@first}}<p class="bubble"{{^@first}} data-step="{{{@i}}}"{{/@first}}{{^@last}} data-until="{{{@n}}}"{{/@last}}>{{.}}</p>{{#@last}}</div>{{/@last}}{{/say}}
+    {{asset:mascot}}
+  </figure>{{/mascot}}
+</section>

@@ -1,0 +1,22 @@
+<section class="slide">
+  <header class="hd">
+    {{#tag}}<span class="tag" data-tone="{{{_tone}}}">{{tag}}</span>{{/tag}}
+    <div class="fit"><h2{{#_len.title}} style="--n:{{{_len.title}}}"{{/_len.title}}>{{title}}</h2></div>
+  </header>
+  <div class="main">
+    <div class="versus{{#yesno}} yesno{{/yesno}}">
+      {{#left}}<article class="card"{{step}}>
+        <b class="cap">{{label}}</b>
+        <div class="pic">{{asset:image}}{{{draw}}}</div>
+        {{#lines}}<p>{{.}}</p>{{/lines}}
+      </article>{{/left}}
+      {{#right}}<article class="card"{{step}}>
+        <b class="cap">{{label}}</b>
+        <div class="pic">{{asset:image}}{{{draw}}}</div>
+        {{#lines}}<p>{{.}}</p>{{/lines}}
+      </article>{{/right}}
+      <b class="vs"{{step:same}}>VS</b>
+    </div>
+    {{#note}}<p class="bar"{{step}}>{{note}}</p>{{/note}}
+  </div>
+</section>

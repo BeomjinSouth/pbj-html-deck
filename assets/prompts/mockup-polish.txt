@@ -1,0 +1,20 @@
+Redraw the attached slide screenshot as ONE finished, polished presentation slide for a Korean classroom, shown full-screen on a large classroom display. 16:9 landscape.
+
+KEEP (the screenshot is the source of truth): The screenshot is the real slide rendered in a browser. Reproduce its composition faithfully: every card, row, button, table, graph, slider and bubble stays in the same place, at the same size and in the same reading order. Reproduce every piece of text exactly as it appears: same wording, same line breaks, same size hierarchy, same colors, and the same typeface (the rounded, chunky Korean display typeface "Maplestory": Bold for titles, Light for body text; math letters stay in italic serif). Do not move, resize, reword, translate, add or drop any text. Small fixed interface labels that the screenshot shows (a "VS" badge, letter badges A B C D, a "확인" button, a tiny page number) stay as they are even though the text list below does not repeat them. Mathematical figures are exact: redraw coordinate planes, lines, points, tick numbers and tables cleanly with the same values in the same positions; never change, add or invent them.
+
+CHANGE (only these): 1) A grey box with a dashed border and a small grey caption in its center is a placeholder for an illustration. Replace each placeholder with the finished sticker illustration listed for it under Illustrations, about as large as the box or a little larger, staying in that area. Never draw the placeholder box or its caption. Other dashed outlines belong to the interface (drop zones, empty answer slots): keep them empty and never put a picture in them. Draw only the illustrations that are listed, each exactly once. 2) Add hand-made finish: the yellow marker swash behind highlighted key words looks hand-drawn, two or three small radiating sparkle strokes accent the focal element, stickers get a soft shadow. Keep the finish light and never let it cover text.
+
+MASCOT: The attached character sheet is the deck mascot. Wherever the mascot is listed, draw exactly this character (same body shape and proportions, colors, face and accessories) in the described pose, as a die-cut sticker. Do not draw the mascot where it is not listed.
+
+VISUAL DIRECTION: "Sticker Pop", a playful sticker-book look. Colors: {PALETTE}. The background color fills the whole canvas with a faint dot grid. Content sits on white cards with a 4px dark-navy outline, 28px rounded corners and a hard offset shadow (8px down-right, solid navy, no blur). Titles are dark navy, with the key word sitting on a hand-drawn yellow marker swash. Small tag pills are slightly tilted like stickers. Illustrations are die-cut stickers with thick white borders. Energetic but tidy.
+Illustration style: {STYLE}
+
+THIS SLIDE
+Layout: {LAYOUT}
+Text on the slide, verbatim (label: "text" - draw only what is inside the quotes, never the label):
+{TEXTS}
+Illustrations:
+{ILLUSTRATIONS}
+Notes for you, not slide text (never write these on the slide): purpose of the slide "{PURPOSE}"; what the eye should land on first "{FOCUS}"; extra direction: {NOTE}
+
+RULES: Korean text must be spelled exactly, every syllable block crisp and correct, large and readable from the back of a classroom. Only the listed text, plus the numbers and letters that belong to a graph, table or diagram: no extra words, no captions, no lorem ipsum, no watermark, no signature. Interactive parts (buttons, sliders, chips, checkboxes, input boxes) are shown in their untouched initial state: nothing selected, nothing marked right or wrong, no answers revealed. One clear focal point; nothing cramped, nothing cut off; keep all content away from the canvas edges. No browser window, no app chrome, no device frame, no cursor, no presenter, no hands. Flat front view of the slide only, filling the whole canvas edge to edge.

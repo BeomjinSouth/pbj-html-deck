@@ -1,0 +1,13 @@
+<section class="slide" data-roomy>
+  <div class="plate">
+    {{#tag}}<span class="tag" data-tone="{{{_tone}}}">{{tag}}</span>{{/tag}}
+    <div class="words">
+      <h2 class="q"{{#_len.title}} style="--n:{{{_len.title}}}"{{/_len.title}}>{{title}}</h2>
+      {{#sub}}<p class="chip">{{sub}}</p>{{/sub}}
+    </div>
+    {{#mascot}}<figure class="buddy">
+      {{#say}}{{#@first}}<div class="says">{{/@first}}<p class="bubble"{{^@first}} data-step="{{{@i}}}"{{/@first}}{{^@last}} data-until="{{{@n}}}"{{/@last}}>{{.}}</p>{{#@last}}</div>{{/@last}}{{/say}}
+      {{asset:mascot}}
+    </figure>{{/mascot}}
+  </div>
+</section>

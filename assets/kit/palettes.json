@@ -1,0 +1,55 @@
+{
+ "_note": "kit.css의 html[data-palette] 블록과 같은 값. 순서: 바탕, 글자·외곽선, 강조, 스티커 색들",
+ "sunny": {
+  "name": "햇살(기본)",
+  "ground": "#FFF8EA",
+  "ink": "#232B5C",
+  "accent": "#EF5350",
+  "stickers": [
+   "#FF6B6B",
+   "#FFD166",
+   "#2EC4B6",
+   "#4DABF7",
+   "#9D8CFF"
+  ]
+ },
+ "sky": {
+  "name": "하늘",
+  "ground": "#E6F2FF",
+  "ink": "#232B5C",
+  "accent": "#2F80ED",
+  "stickers": [
+   "#4DABF7",
+   "#FFD166",
+   "#FF6B6B",
+   "#2EC4B6",
+   "#9D8CFF"
+  ]
+ },
+ "mint": {
+  "name": "민트",
+  "ground": "#E2F7EE",
+  "ink": "#232B5C",
+  "accent": "#0E9C8B",
+  "stickers": [
+   "#2EC4B6",
+   "#FFD166",
+   "#FF6B6B",
+   "#4DABF7",
+   "#9D8CFF"
+  ]
+ },
+ "grape": {
+  "name": "포도",
+  "ground": "#F2EDFF",
+  "ink": "#232B5C",
+  "accent": "#7C5CFC",
+  "stickers": [
+   "#9D8CFF",
+   "#FFD166",
+   "#FF6B6B",
+   "#2EC4B6",
+   "#4DABF7"
+  ]
+ }
+}

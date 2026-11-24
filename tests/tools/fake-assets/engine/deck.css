@@ -1,0 +1,8 @@
+html,body{height:100%;margin:0}
+body{background:var(--deck-backdrop,#15171c);overflow:hidden}
+.viewer{height:calc(100dvh - var(--bar,0px));width:calc(100% - var(--panel,0px));display:grid;place-items:center}
+#deck{position:relative;container-type:inline-size;width:min(100%,calc((100dvh - var(--bar,0px)) * 16 / 9));aspect-ratio:16/9;overflow:clip}
+.slide{position:absolute;left:0;top:0;width:1920px;height:1080px;box-sizing:border-box;overflow:clip;transform-origin:0 0;transform:scale(tan(atan2(100cqw,1920px)))}
+.slide[hidden]{display:none!important}
+html:not(.deck-on) #deck>.slide:not(:first-child){display:none}
+[data-waiting]{visibility:hidden}
