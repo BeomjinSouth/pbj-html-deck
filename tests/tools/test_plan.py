@@ -697,6 +697,17 @@ class WorkflowTest(unittest.TestCase):
         self.assertIn("질문으로 시작한다", (folder / "진행안.md").read_text(encoding="utf-8"))
         self.assertIsNotNone(doc)
 
+    def test_multiline_title_is_one_line_in_guide_and_attribute(self):
+        plan = load(FIXTURES / "콘티.json")
+        plan["slides"][0]["title"] = "정비례\n**그래프** $x^2$"
+        self.put_plan(plan)
+        self.cli("scaffold", self.root)
+        guide = (self.root / "진행안.md").read_text(encoding="utf-8")
+        self.assertIn("## 1. 정비례 그래프 x²\n\n질문으로 시작한다.", guide)
+        source = (self.root / "원고.html").read_text(encoding="utf-8")
+        self.assertIn('data-title="정비례 그래프 x²"', source)
+        self.assertIn('정비례<br>\n<b class="hl">그래프</b>', source)
+
     def test_new_uses_optional_product_and_design_templates(self):
         from contextlib import redirect_stdout
         from io import StringIO

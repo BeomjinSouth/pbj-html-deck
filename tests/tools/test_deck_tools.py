@@ -542,6 +542,86 @@ class DeckToolsTest(unittest.TestCase):
             self.assertEqual(image.convert("RGB").getpixel((960, 540)), (0, 255, 0))
 
     @unittest.skipUnless(has_browser(), "Chrome 또는 Edge가 설치되지 않았습니다")
+    def test_input_card_fits_content_and_does_not_move_when_solved(self):
+        import deck_plan
+        plan = {"meta": {}, "assets": [{"id": "mascot", "alt": "마스코트"}]}
+        slides = []
+        for ident, question, explain in (("short", "답은 얼마일까요?", "답을 확인해요."),
+                                         ("full", "가" * 22 + "\n" + "나" * 22, "다" * 26),
+                                         ("no-explain", "답을 써 보세요.", None)):
+            slide = {"id": ident, "layout": "input", "title": "답 쓰기", "question": question,
+                     "answer": "3", "mascot": "mascot", "say": ["한번 풀어 봐!"]}
+            if explain:
+                slide["explain"] = explain
+            slides.append(slide)
+        plan["slides"] = slides
+        (self.root / "그림").mkdir()
+        (self.root / "그림" / "mascot.png").write_bytes(PNG)
+        body = "\n".join(deck_plan.rendered_slide(plan, slide, deck.ASSETS / "kit") for slide in slides)
+        source = self.source(body)
+        output = self.root / "입력 시험.html"
+        self.run_deck("build", source, "-o", output, assets=deck.ASSETS)
+        with Browser() as browser:
+            cdp = browser.cdp
+            cdp.call("Page.enable")
+            cdp.call("Runtime.enable")
+            cdp.call("Emulation.setDeviceMetricsOverride", {"width": 1920, "height": 1080,
+                                                            "deviceScaleFactor": 1, "mobile": False})
+            cdp.call("Page.navigate", {"url": output.as_uri()})
+            cdp.wait_event("Page.loadEventFired")
+            cdp.evaluate("window.deck.ready", True)
+            cdp.evaluate("window.deck.setMode('present')")
+            measure = """(()=>{const s=window.deck.slides[window.deck.page];
+              const rect=e=>{const r=e.getBoundingClientRect();return [r.x,r.y,r.width,r.height]};
+              return {main:rect(s.querySelector('.main')),card:rect(s.querySelector('.qcard')),
+                question:rect(s.querySelector('.qtext')),answer:rect(s.querySelector('.answer')),
+                buddy:rect(s.querySelector('.buddy')),
+                explain:s.querySelector('[data-explain]') ? rect(s.querySelector('[data-explain]')) : null};})()"""
+            for index in range(len(slides)):
+                with self.subTest(slide=slides[index]["id"]):
+                    cdp.evaluate(f"window.deck.go({index},'all')")
+                    cdp.evaluate(deck.SETTLE)
+                    before = cdp.evaluate(measure)
+                    main, card = before["main"], before["card"]
+                    self.assertLess(card[3], main[3] - 20)
+                    self.assertAlmostEqual(card[1] + card[3] / 2, main[1] + main[3] / 2, delta=1)
+                    cdp.evaluate("""(()=>{const s=window.deck.slides[window.deck.page];
+                      s.querySelector('input').value='3';s.querySelector('[data-check]').click()})()""")
+                    cdp.evaluate(deck.SETTLE)
+                    after = cdp.evaluate(measure)
+                    for name in ("card", "question", "answer", "buddy", "explain"):
+                        if before[name] is not None:
+                            for a, b in zip(before[name], after[name]):
+                                self.assertAlmostEqual(a, b, delta=1, msg=name)
+                    if after["explain"] is not None:
+                        self.assertLessEqual(after["explain"][1] + after["explain"][3], card[1] + card[3] - 4)
+                        self.assertTrue(cdp.evaluate("getComputedStyle(window.deck.slides[window.deck.page].querySelector('[data-explain]')).visibility === 'visible'"))
+
+    @unittest.skipUnless(has_browser(), "Chrome 또는 Edge가 설치되지 않았습니다")
+    def test_check_warns_once_for_extra_html_in_deck_folder(self):
+        self.source(title="전달 자료")
+        self.run_deck("build", self.root)
+        (self.root / "roundtrip-check.html").write_text("임시 사본", encoding="utf-8")
+        (self.root / "이전.HTML").write_text("이전 사본", encoding="utf-8")
+        nested = self.root / "하위 폴더"
+        nested.mkdir()
+        (nested / "무시.html").write_text("하위 파일", encoding="utf-8")
+        for target in (self.root, self.root / "전달 자료.html"):
+            with self.subTest(target=target):
+                folder = self.root / "검사 결과"
+                result = self.run_deck("check", target, "--out", folder)
+                report = json.loads((folder / "report.json").read_text(encoding="utf-8"))
+                extra = [p for p in report["problems"] if p["code"] == "extra-html"]
+                self.assertEqual(len(extra), 1)
+                self.assertEqual(extra[0]["level"], "warn")
+                self.assertIn("roundtrip-check.html", extra[0]["message"])
+                self.assertIn("이전.HTML", extra[0]["message"])
+                self.assertNotIn("원고.html", extra[0]["message"])
+                self.assertNotIn("전달 자료.html", extra[0]["message"])
+                self.assertNotIn("무시.html", extra[0]["message"])
+                self.assertEqual(sum("extra-html" in line for line in result.stdout.splitlines()), 1)
+
+    @unittest.skipUnless(has_browser(), "Chrome 또는 Edge가 설치되지 않았습니다")
     def test_check_real_browser_and_exit_codes(self):
         body = '<section class="slide"><h1>첫 장</h1></section><section class="slide" data-test-error><h1>둘째 장</h1></section>'
         output, _ = self.build(self.source(body))

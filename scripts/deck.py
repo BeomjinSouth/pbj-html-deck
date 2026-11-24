@@ -1376,6 +1376,23 @@ def plan_problems(source, assets):
     return result
 
 
+def extra_html_problems(source):
+    """덱 폴더의 원고와 검사할 결과 외 HTML을 한 번에 알린다."""
+    folder = source.parent
+    draft = folder / "원고.html"
+    if not draft.is_file():
+        return []
+    allowed = {draft.resolve(), source.resolve()}
+    extra = sorted((item.name for item in folder.iterdir()
+                    if item.is_file() and item.suffix.lower() == ".html" and item.resolve() not in allowed),
+                   key=str.casefold)
+    if not extra:
+        return []
+    return [{"slide": None, "level": "warn", "code": "extra-html",
+             "message": "원고와 검사할 결과 외 HTML이 덱 폴더에 있습니다: " + ", ".join(extra)
+                        + " · 시험 사본은 임시 폴더로 옮기세요", "target": "", "rect": None}]
+
+
 def check_command(args):
     source = Path(args.input).resolve()
     deck_folder = source if source.is_dir() else None
@@ -1388,7 +1405,7 @@ def check_command(args):
         hint = cli_hint('build', deck_folder) if deck_folder else "결과 파일 경로를 확인하세요"
         raise DeckError(f"검사할 파일이 없습니다: {source} · {hint}")
     out = Path(args.out) if args.out else source.parent / "검사"
-    problems = plan_problems(source, getattr(args, "assets", ASSETS))
+    problems = plan_problems(source, getattr(args, "assets", ASSETS)) + extra_html_problems(source)
     files = []
     images = []
     with Browser() as browser:

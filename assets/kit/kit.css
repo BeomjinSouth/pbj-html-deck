@@ -1520,9 +1520,8 @@ html[data-deck-mode="edit"] .slide *,html[data-deck-mode="edit"] .slide *::befor
 .slide .blank.is-open>*{visibility:visible;display:inline-block;animation:kit-pop .35s cubic-bezier(.3,1.4,.5,1)}
 
 /* 답 쓰기 */
-.slide .qcard{flex:1 1 0;min-height:0;display:flex;flex-direction:column;justify-content:center;gap:40px;padding:48px 56px}
-/* 풀이 칸은 열리기 전에도 자리를 차지한다. 위에 같은 높이의 빈 칸을 두어 물음과 입력칸이 판의 세로 가운데에 오게 한다 */
-.slide .qcard:has(>[data-explain])::before{content:"";flex:none;height:92px}
+/* 판은 내용 높이로 두고 본문 가운데에 놓는다. 숨은 풀이도 자리를 차지해 열려도 판이 움직이지 않는다. */
+.slide .qcard{flex:none;margin:auto 0;display:flex;flex-direction:column;gap:40px;padding:48px 56px}
 .slide .qtext{font-size:calc(60px * var(--body-scale,1));line-height:1.34}
 .slide .answer{display:flex;align-items:center;gap:26px}
 .slide .field{

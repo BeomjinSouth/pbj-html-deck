@@ -1548,7 +1548,7 @@ def scaffold_command(args):
     write_text(output, result)
     guide = ["# 진행안", ""]
     for number, slide in enumerate(slides, 1):
-        guide.extend([f"## {number}. {plain_text(slide.get('title', ''))}", "", str(slide.get("talk", "")), ""])
+        guide.extend([f"## {number}. {attribute_text(slide.get('title', ''))}", "", str(slide.get("talk", "")), ""])
     write_text(folder / "진행안.md", "\n".join(guide))
     print(f"원고 뼈대를 만들었습니다: {output} · 진행안.md")
     return 0
