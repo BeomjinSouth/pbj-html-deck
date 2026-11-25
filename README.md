@@ -23,7 +23,15 @@ PPT 대신 쓰는 **HTML 수업 슬라이드 한 파일**을 만드는 에이전
 
 ## 설치
 
-이 폴더 전체를 스킬 폴더에 `pbj-html-deck`이라는 이름으로 넣습니다.
+Codex나 Claude Code에 아래 한 줄을 붙여 넣습니다.
+
+```text
+https://github.com/BeomjinSouth/pbj-html-deck 저장소를 받아서 pbj-html-deck이라는 이름의 전역 스킬로 설치해 줘. Codex면 ~/.codex/skills, Claude Code면 ~/.claude/skills 아래에 넣어 줘.
+```
+
+인터넷에서 내려받고 작업 폴더 밖에 쓰는 일이라 허용 여부를 묻는 창이 뜹니다. 허용한 뒤 Codex나 Claude Code를 새로 열면 스킬이 잡힙니다.
+
+직접 넣으려면 이 폴더 전체를 스킬 폴더에 `pbj-html-deck`이라는 이름으로 넣습니다.
 
 - Codex: `~/.codex/skills/pbj-html-deck`
 - Claude Code: `~/.claude/skills/pbj-html-deck`
