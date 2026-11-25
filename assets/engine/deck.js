@@ -1962,95 +1962,187 @@
   function mountEditor() {
     mountOverlay();
     const css = `
-      #edit-panel{position:absolute;inset:0 0 0 auto;width:340px;background:#fff;pointer-events:auto;border-left:1px solid #dce1e9;display:flex;flex-direction:column;box-shadow:-5px 0 28px #0002;z-index:5}
-      #panel-actions{flex:none;padding:14px 16px 12px;border-bottom:1px solid var(--border);display:grid;gap:6px}
-      #panel-scroll{overflow:auto;overscroll-behavior:contain;padding:0 16px;scrollbar-width:thin;scrollbar-color:#bcc6d6 transparent}
-      #panel-scroll section{display:grid;gap:7px;padding:13px 0;border-bottom:1px solid var(--border)}
-      #panel-scroll section:last-child{border:0;padding-bottom:20px}
-      #panel-scroll h2{margin:0 0 1px;color:#5b6475;font:750 12px/1.25 system-ui,"Malgun Gothic",sans-serif}
-      .row,.stack{display:grid;gap:6px;min-width:0}
-      .row{grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);align-items:center}
-      #slide-nav{display:grid;grid-template-columns:36px minmax(50px,1fr) 36px;gap:6px;align-items:center}
-      .slide-controls{display:grid;grid-template-columns:1fr minmax(86px,.8fr);gap:6px}
-      .tight button{padding-inline:3px;font-size:12px}
-      .range-label{display:grid;grid-template-columns:1fr auto;gap:1px 8px;align-items:center;font-weight:650;min-width:0}
-      .range-label output{color:#2549bd;font-weight:750;font-size:12px}
-      input[type=range]{grid-column:1/-1;margin:0;width:100%;height:18px;accent-color:var(--blue)}
-      input[type=checkbox]{margin:0;accent-color:var(--blue);width:15px;height:15px}
-      input[type=color]{width:38px;height:36px;padding:4px;border:1px solid var(--border);border-radius:8px;background:white;cursor:pointer}
-      select{display:block;width:100%;min-width:0;height:36px;padding:0 5px;border:1px solid #d9dfe8;border-radius:8px;background:#fff}
-      .field{display:grid;gap:4px;min-width:0;font-weight:650;font-size:13px}
-      .swatch{display:flex;align-items:center;justify-content:space-between;gap:8px;font-weight:650;font-size:13px}
-      .check{display:flex;align-items:center;gap:7px;min-height:27px}
-      .notice{margin:0;color:#596276;font-size:12px;line-height:1.45}
-      .font-row{display:grid;grid-template-columns:minmax(0,1fr) auto auto;align-items:center;gap:8px;padding:0 0 3px;font-size:12px}
-      .font-row span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-      .font-row output{color:#5b6475}
-      #selection-path{display:flex;align-items:center;gap:4px;flex-wrap:wrap;color:#354878}
-      #selection-path button{max-width:180px;overflow:hidden;text-overflow:ellipsis;background:#edf2ff;font-size:12px}
-      #selection-path button:last-child{background:#e0e9ff}
-      #selection-fields,.text-controls{display:grid;gap:7px}
-      #reset-element{justify-self:start}
+      #edit-panel{--paper:#FBF8F1;--face:#FFFFFF;--ink:#1F2A4D;--ink-2:#5A6482;--rule:#E4DFD2;--track:#D9D3C3;--mark:#FFD45C;--mark-soft:#FFF3C4;--danger:#C63D3D;position:absolute;inset:0 0 0 auto;width:340px;background:var(--paper);color:var(--ink);font-size:13px;word-break:keep-all;pointer-events:auto;border-radius:16px 0 0 16px;box-shadow:inset 1.5px 0 0 var(--rule);overflow:hidden;display:flex;flex-direction:column;z-index:5}
+      #edit-panel svg{flex:none;width:18px;height:18px;pointer-events:none}
+      #edit-panel button{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:36px;padding:0 12px;border:1.5px solid var(--rule);border-radius:10px;background:var(--face);color:var(--ink);font-size:13px;font-weight:500;line-height:1.2}
+      #edit-panel button:hover:enabled{background-color:var(--mark-soft)}
+      #edit-panel button:active:enabled{background-color:var(--mark)}
+      #edit-panel button:disabled{opacity:.38}
+      #edit-panel button:focus-visible,#edit-panel input:focus-visible,#edit-panel select:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+      #panel-actions{flex:none;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:12px 16px 11px;border-bottom:1.5px solid var(--rule)}
+      #panel-actions .history,#panel-actions .main-actions{display:flex;align-items:center}
+      #panel-actions .history{gap:2px;margin-left:-9px}
+      #panel-actions .main-actions{gap:8px}
+      #edit-panel .icon-btn{width:36px;padding:0;border-color:transparent;background:none}
+      #edit-panel #save{padding:0 15px;border-color:var(--ink);font-weight:700}
+      #edit-panel #save.primary,#edit-panel #save.primary:hover:enabled{background-color:var(--mark)}
+      #edit-panel #edit-present{padding:0 15px 0 11px;border-color:var(--ink);background:var(--ink);color:#fff;font-weight:700}
+      #edit-panel #edit-present:hover:enabled{background-color:#2F3D6B}
+      #edit-panel #edit-present:active:enabled{background-color:#151D38}
+      #panel-scroll{overflow:auto;overscroll-behavior:contain;padding:0 16px 22px;scrollbar-width:thin;scrollbar-color:#CFC8B6 transparent}
+      #panel-scroll section{display:grid;gap:10px;padding:20px 0 0}
+      #panel-scroll section:first-child{padding-top:16px}
+      #panel-scroll h2{justify-self:start;margin:0 0 2px -3px;padding:0 4px;color:var(--ink);font:700 13px/1.5 system-ui,"Malgun Gothic",sans-serif;background:linear-gradient(transparent 50%,var(--mark) 50%,var(--mark) 90%,transparent 90%)}
+      #edit-panel .row{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);gap:8px;align-items:end;min-width:0}
+      #edit-panel .slide-controls{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center}
+      #edit-panel nav{display:flex;align-items:center;height:40px;padding:0 2px;border:1.5px solid var(--rule);border-radius:999px;background:var(--face)}
+      #edit-panel nav button{flex:none;width:36px;height:36px;padding:0;border:0;border-radius:50%;background:none}
+      #edit-panel nav .counter{flex:1;min-width:0;font-weight:700}
+      #edit-panel #edit-overview{min-height:40px;padding:0 15px 0 12px;border-radius:999px}
+      #edit-panel .tiles{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);gap:6px}
+      #edit-panel .tile{flex-direction:column;gap:5px;min-height:58px;padding:9px 2px 7px;font-size:12px}
+      #edit-panel .tile.danger{color:var(--danger)}
+      #edit-panel .check,#edit-panel .swatch{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:36px;font-weight:500;cursor:pointer}
+      #edit-panel .check{flex-direction:row-reverse}
+      #edit-panel input[type=checkbox]{-webkit-appearance:none;appearance:none;flex:none;position:relative;width:40px;height:24px;margin:0;border:1.5px solid #B4AD9B;border-radius:999px;background:var(--rule);cursor:pointer;transition:background-color .15s,border-color .15s}
+      #edit-panel input[type=checkbox]::before{content:"";position:absolute;top:50%;left:2px;width:17px;height:17px;border:2px solid var(--ink-2);border-radius:50%;background:var(--face);translate:0 -50%;transition:translate .15s,border-color .15s}
+      #edit-panel input[type=checkbox]:checked{background:var(--mark);border-color:var(--ink)}
+      #edit-panel input[type=checkbox]:checked::before{translate:16px -50%;border-color:var(--ink)}
+      #edit-panel .seg{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);border:1.5px solid var(--rule);border-radius:10px;background:var(--face);overflow:hidden;min-width:0}
+      #edit-panel .seg button{padding:0 4px;border:0;border-radius:0;background:none;color:var(--ink-2)}
+      #edit-panel .seg button+button{box-shadow:-1.5px 0 0 var(--rule)}
+      #edit-panel .seg button:hover:enabled{color:var(--ink)}
+      #edit-panel .seg button:focus-visible{outline-offset:-3px;border-radius:9px}
+      #edit-panel .seg button[aria-pressed=true],#edit-panel .seg button[aria-pressed=true]:hover:enabled{background-color:var(--mark);color:var(--ink);font-weight:700}
+      #edit-panel .range-label{display:grid;grid-template-columns:1fr auto;gap:0 8px;align-items:center;font-weight:500;min-width:0}
+      #edit-panel .range-label output{min-width:48px;padding:2px 8px;border:1px solid var(--rule);border-radius:999px;background:var(--face);text-align:center;font-size:12px;font-weight:700}
+      #edit-panel input[type=range]{-webkit-appearance:none;appearance:none;grid-column:1/-1;width:100%;height:28px;margin:0;border-radius:999px;background:none;cursor:pointer}
+      #edit-panel input[type=range]::-webkit-slider-runnable-track{height:6px;border-radius:999px;background:var(--track)}
+      #edit-panel input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:18px;height:18px;margin-top:-6px;border:2px solid var(--ink);border-radius:50%;background:var(--face)}
+      #edit-panel input[type=range]:focus-visible{outline:0}
+      #edit-panel input[type=range]:focus-visible::-webkit-slider-thumb{outline:2px solid var(--ink);outline-offset:2px}
+      #edit-panel input[type=range]:focus-visible::-moz-range-thumb{outline:2px solid var(--ink);outline-offset:2px}
+      #edit-panel input[type=range]:hover::-webkit-slider-thumb{background:var(--mark-soft)}
+      #edit-panel input[type=range]:active::-webkit-slider-thumb{background:var(--mark)}
+      #edit-panel input[type=range]::-moz-range-track{height:6px;border-radius:999px;background:var(--track)}
+      #edit-panel input[type=range]::-moz-range-thumb{box-sizing:border-box;width:18px;height:18px;border:2px solid var(--ink);border-radius:50%;background:var(--face)}
+      #edit-panel input[type=range]:hover::-moz-range-thumb{background:var(--mark-soft)}
+      #edit-panel input[type=range]:active::-moz-range-thumb{background:var(--mark)}
+      #edit-panel select{-webkit-appearance:none;appearance:none;display:block;width:100%;min-width:0;height:38px;padding:0 30px 0 10px;border:1.5px solid var(--rule);border-radius:10px;background:var(--face) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 18' fill='none' stroke='%231F2A4D' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m4.5 7 4.5 4.5L13.5 7'/%3E%3C/svg%3E") right 8px center/18px no-repeat;font-weight:400;text-overflow:ellipsis;cursor:pointer}
+      #edit-panel select:hover{background-color:var(--mark-soft)}
+      #edit-panel .field{display:grid;gap:5px;min-width:0;font-weight:500}
+      #edit-panel .field.inline{display:flex;align-items:center;justify-content:space-between;gap:10px}
+      #edit-panel .field.inline select{flex:0 1 172px;width:auto}
+      #edit-panel .font-line{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:end}
+      #edit-panel .toggle{min-height:38px;padding:0 16px;font-weight:700}
+      #edit-panel .toggle[aria-pressed=true],#edit-panel .toggle[aria-pressed=true]:hover:enabled{background-color:var(--mark);border-color:var(--ink)}
+      #edit-panel .colors{display:flex;align-items:center;gap:8px;min-width:0}
+      #edit-panel .colors .seg button{padding:0 11px}
+      #edit-panel input[type=color]{-webkit-appearance:none;appearance:none;flex:none;width:36px;height:36px;padding:3px;border:2px solid var(--ink);border-radius:50%;background:var(--face);cursor:pointer}
+      #edit-panel input[type=color]::-webkit-color-swatch-wrapper{padding:0}
+      #edit-panel input[type=color]::-webkit-color-swatch{border:0;border-radius:50%}
+      #edit-panel input[type=color]::-moz-color-swatch{border:0;border-radius:50%}
+      #edit-panel .lines{display:grid;justify-items:start}
+      #edit-panel .line{justify-self:start;justify-content:flex-start;gap:8px;margin-inline:-9px;padding:0 12px 0 9px;border-color:transparent;background:none}
+      #edit-panel .line.quiet{color:var(--ink-2)}
+      #edit-panel .notice{margin:0;color:var(--ink-2);font-size:12px;line-height:1.5}
+      #edit-panel .empty{display:flex;align-items:center;gap:11px;padding:14px;border:1.5px dashed #B4AD9B;border-radius:12px}
+      #edit-panel .empty svg{color:var(--ink)}
+      #edit-panel .deck-credit{margin-top:22px;text-align:center}
+      #edit-panel .stack{display:grid;gap:6px;min-width:0}
+      #edit-panel .font-row{display:grid;grid-template-columns:minmax(0,1fr) auto auto;align-items:center;gap:8px;min-height:40px;padding:0 1px 0 12px;border:1.5px solid var(--rule);border-radius:10px;background:var(--face);font-size:12px}
+      #edit-panel .font-row span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:13px}
+      #edit-panel .font-row output{color:var(--ink-2)}
+      #edit-panel .font-row button{padding:0 10px;border-color:transparent;background:none;color:var(--danger);font-size:12px}
+      #edit-panel .crumbs{display:flex;align-items:center;flex-wrap:wrap;margin:-3px -5px;color:var(--ink-2)}
+      #edit-panel .crumbs button{display:inline-block;max-width:160px;padding:0 10px;border:5px solid transparent;border-radius:999px;background-clip:padding-box;box-shadow:inset 0 0 0 1.5px var(--rule);font-size:12px;overflow:hidden;text-overflow:ellipsis}
+      #edit-panel .crumbs button:focus-visible{outline-offset:-3px}
+      #edit-panel .crumbs button:last-child,#edit-panel .crumbs button:last-child:hover:enabled{background-color:var(--mark);box-shadow:inset 0 0 0 1.5px var(--ink);font-weight:700}
+      #selection-fields,.text-controls{display:grid;gap:10px}
+      #edit-panel .list{display:grid;gap:6px}
+      #edit-panel .list-row{justify-content:flex-start;gap:10px;min-height:44px;padding:0 9px 0 12px}
+      #edit-panel .list-row span{flex:1;text-align:left}
+      #edit-panel .list-row svg:last-child{color:var(--ink-2)}
       #deck-status{position:absolute;z-index:8;bottom:54px;left:16px;max-width:min(460px,calc(100vw - 32px));padding:9px 13px;background:#182642;color:#fff;border-radius:8px;box-shadow:0 4px 16px #0003}
-      @media(max-width:760px){#edit-panel{inset:auto 0 0;width:auto;height:var(--panel-height);border-left:0;border-top:1px solid var(--border)}#panel-actions{grid-template-columns:1fr 1fr;gap:8px;padding:9px 12px}#panel-scroll{padding-inline:12px}#deck-status{bottom:calc(var(--panel-height) + 8px)}}
-      @media(max-width:365px){#panel-actions{grid-template-columns:1fr}.tight button{font-size:11px}}
+      @media(max-width:760px){#edit-panel{inset:auto 0 0;width:auto;height:var(--panel-height);border-radius:16px 16px 0 0;box-shadow:inset 0 1.5px 0 var(--rule)}#panel-actions{padding:8px 12px}#panel-scroll{padding-inline:12px}#panel-scroll>*{max-width:560px;margin-inline:auto}#panel-scroll section:first-child{padding-top:12px}#deck-status{bottom:calc(var(--panel-height) + 8px)}}
+      @media(max-width:365px){#edit-panel .tiles{gap:4px}#edit-panel .tile{font-size:11px}#edit-panel .seg button{gap:4px;font-size:12px}#edit-panel .colors .seg button{padding:0 7px}}
     `;
     panel = make('aside'); panel.id = 'edit-panel'; panel.hidden = true;
     panel.setAttribute('aria-label','편집');
     const range = (id, label, min, max) => `<label class="range-label">${label}<output id="${id}-value">100%</output><input id="${id}" aria-label="${label}" type="range" min="${min}" max="${max}" value="100"></label>`;
+    // Panel icons: one hand-drawn set on an 18px grid, 1.75px round strokes.
+    const ic = Object.fromEntries(Object.entries({
+      undo: '<path d="M6.5 3 3 6.5 6.5 10"/><path d="M3 6.5h7.5a4.5 4.5 0 0 1 0 9H8"/>',
+      redo: '<path d="M11.5 3 15 6.5 11.5 10"/><path d="M15 6.5H7.5a4.5 4.5 0 0 0 0 9H10"/>',
+      play: '<path d="M6 3.5v11L14.5 9z" fill="currentColor"/>',
+      prev: '<path d="M11 4 6 9l5 5"/>',
+      next: '<path d="m7 4 5 5-5 5"/>',
+      grid: '<rect x="2.5" y="2.5" width="5" height="5" rx="1.2"/><rect x="10.5" y="2.5" width="5" height="5" rx="1.2"/><rect x="2.5" y="10.5" width="5" height="5" rx="1.2"/><rect x="10.5" y="10.5" width="5" height="5" rx="1.2"/>',
+      slideNew: '<rect x="2" y="3.5" width="14" height="11" rx="2"/><path d="M9 6.5v5M6.5 9h5"/>',
+      copy: '<rect x="6.5" y="6.5" width="9" height="9" rx="2"/><path d="M4.5 11.5H4A1.5 1.5 0 0 1 2.5 10V4A1.5 1.5 0 0 1 4 2.5h6A1.5 1.5 0 0 1 11.5 4v.5"/>',
+      trash: '<path d="M3 5h12"/><path d="M7 5V3.5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1V5"/><path d="m4.5 5 .7 9a1.5 1.5 0 0 0 1.5 1.4h4.6a1.5 1.5 0 0 0 1.5-1.4l.7-9"/><path d="M7.5 8.5v4M10.5 8.5v4"/>',
+      earlier: '<path d="M15 9H3"/><path d="M7.5 4.5 3 9l4.5 4.5"/>',
+      later: '<path d="M3 9h12"/><path d="M10.5 4.5 15 9l-4.5 4.5"/>',
+      sun: '<circle cx="9" cy="9" r="3"/><path d="M9 1.8v1.4M9 14.8v1.4M1.8 9h1.4M14.8 9h1.4M3.9 3.9l1 1M13.1 13.1l1 1M3.9 14.1l1-1M13.1 4.9l1-1"/>',
+      moon: '<path d="M15 10.4A6.5 6.5 0 1 1 7.6 3a5.2 5.2 0 0 0 7.4 7.4z"/>',
+      plus: '<path d="M9 3.5v11M3.5 9h11"/>',
+      cursor: '<path d="M4 3l4.2 11.5 1.9-4.6 4.6-1.9z"/>',
+      alignLeft: '<path d="M3 4.5h12M3 9h7M3 13.5h10"/>',
+      alignCenter: '<path d="M3 4.5h12M5.5 9h7M4 13.5h10"/>',
+      alignRight: '<path d="M3 4.5h12M8 9h7M5 13.5h10"/>',
+      front: '<rect x="1.6" y="1.6" width="10.8" height="10.8" rx="2.6" fill="currentColor" stroke="none"/><path d="M14 6.5a1.5 1.5 0 0 1 1.5 1.5v6a1.5 1.5 0 0 1-1.5 1.5H8A1.5 1.5 0 0 1 6.5 14"/>',
+      back: '<rect x="2.5" y="2.5" width="9" height="9" rx="2"/><path d="M13.4 5.6h1.1a1.9 1.9 0 0 1 1.9 1.9v7a1.9 1.9 0 0 1-1.9 1.9h-7a1.9 1.9 0 0 1-1.9-1.9v-1.1h7.8z" fill="currentColor" stroke="none"/>',
+      restore: '<path d="M3.6 9.6A5.5 5.5 0 1 0 5 5.2"/><path d="M3 2.8v3.4h3.4"/>',
+      textbox: '<rect x="2.5" y="3.5" width="13" height="11" rx="2"/><path d="M6.5 7h5M9 7v4.5"/>',
+      image: '<rect x="2.5" y="3.5" width="13" height="11" rx="2"/><circle cx="6.6" cy="7.4" r="1.2"/><path d="m3 12.6 3.3-3 2.6 2.2 2.6-2.8 3.5 3.4"/>',
+      print: '<path d="M5.5 6.5v-4h7v4"/><path d="M5.5 13H4a1.5 1.5 0 0 1-1.5-1.5V8A1.5 1.5 0 0 1 4 6.5h10A1.5 1.5 0 0 1 15.5 8v3.5A1.5 1.5 0 0 1 14 13h-1.5"/><path d="M5.5 10.5h7v5h-7z"/>',
+      download: '<path d="M9 2.5V11M5.5 7.5 9 11l3.5-3.5"/><path d="M3 12.5V14a1.5 1.5 0 0 0 1.5 1.5h9A1.5 1.5 0 0 0 15 14v-1.5"/>'
+    }).map(([name, shape]) => [name, `<svg viewBox="0 0 18 18" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">${shape}</svg>`]));
     panel.innerHTML = `
       <div id="panel-actions">
-        <div class="row"><button class="primary" id="edit-present" type="button">▶ 발표</button><button id="save" type="button">저장</button></div>
-        <div class="row"><button id="undo" type="button">되돌리기</button><button id="redo" type="button">다시 하기</button></div>
+        <div class="history"><button class="icon-btn" id="undo" type="button" aria-label="되돌리기" title="되돌리기">${ic.undo}</button><button class="icon-btn" id="redo" type="button" aria-label="다시 하기" title="다시 하기">${ic.redo}</button></div>
+        <div class="main-actions"><button id="save" type="button">저장</button><button id="edit-present" type="button">${ic.play}발표</button></div>
       </div>
       <div id="panel-scroll">
         <section aria-labelledby="slide-heading">
           <h2 id="slide-heading">슬라이드</h2>
-          <div class="slide-controls" id="slide-controls"><button id="edit-overview" type="button">모아보기</button></div>
-          <div class="row tight">
-            <button id="slide-new" type="button">새 장</button><button id="slide-copy" type="button" aria-label="슬라이드 복제">복제</button><button id="slide-delete" type="button" aria-label="슬라이드 삭제">삭제</button><button id="slide-earlier" type="button">앞으로</button><button id="slide-later" type="button">뒤로</button>
+          <div class="slide-controls" id="slide-controls"><button id="edit-overview" type="button">${ic.grid}모아보기</button></div>
+          <div class="tiles">
+            <button class="tile" id="slide-new" type="button">${ic.slideNew}새 장</button><button class="tile" id="slide-copy" type="button" aria-label="슬라이드 복제">${ic.copy}복제</button><button class="tile danger" id="slide-delete" type="button" aria-label="슬라이드 삭제">${ic.trash}삭제</button><button class="tile" id="slide-earlier" type="button">${ic.earlier}앞으로</button><button class="tile" id="slide-later" type="button">${ic.later}뒤로</button>
           </div>
           <label class="check"><input type="checkbox" id="skip-slide">발표에서 건너뛰기</label>
         </section>
         <section aria-labelledby="all-heading">
           <h2 id="all-heading">전체</h2>
-          <div class="row"><button id="theme-light" type="button">밝게</button><button id="theme-dark" type="button">어둡게</button></div>
+          <div class="seg"><button id="theme-light" type="button">${ic.sun}밝게</button><button id="theme-dark" type="button">${ic.moon}어둡게</button></div>
           ${range('title-scale','제목 크기',50,200)}
           ${range('body-scale','본문 크기',50,200)}
           <div class="row"><label class="field">제목 글꼴<select id="title-font"></select></label><label class="field">본문 글꼴<select id="body-font"></select></label></div>
           <p class="notice" id="font-fallback" hidden>이 글꼴이 없는 컴퓨터에서는 기본 글꼴로 보입니다.</p>
-          <button id="add-font" type="button">글꼴 파일 추가</button>
-          <button id="local-fonts" type="button" hidden>설치된 글꼴 더 보기</button>
+          <div class="lines"><button class="line" id="add-font" type="button">${ic.plus}글꼴 파일 추가</button><button class="line" id="local-fonts" type="button" hidden>${ic.plus}설치된 글꼴 더 보기</button></div>
           <div id="embedded-fonts" class="stack" aria-label="파일에 포함" hidden></div>
           <label class="swatch">강조색 <input id="accent" type="color"></label>
         </section>
         <section aria-labelledby="selection-heading">
           <h2 id="selection-heading">선택한 요소</h2>
-          <p class="notice" id="selection-empty">슬라이드에서 고칠 곳을 누르세요. 두 번 누르면 글자를 고칩니다.</p>
+          <p class="notice empty" id="selection-empty">${ic.cursor}<span>슬라이드에서 고칠 곳을 누르세요. 두 번 누르면 글자를 고칩니다.</span></p>
           <div id="selection-fields" hidden>
-            <div id="selection-path" aria-label="선택 경로"></div>
+            <div id="selection-path" class="crumbs" aria-label="선택 경로"></div>
             ${range('size','크기',10,400)}
             <div id="text-controls" class="text-controls">
               ${range('font-size','글자 크기',20,400)}
-              <div class="row"><label class="field">글꼴<select id="element-font"></select></label><button id="bold" type="button">굵게</button></div>
+              <div class="font-line"><label class="field">글꼴<select id="element-font"></select></label><button class="toggle" id="bold" type="button">굵게</button></div>
               <p class="notice" id="element-font-fallback" hidden>이 글꼴이 없는 컴퓨터에서는 기본 글꼴로 보입니다.</p>
-              <div class="row tight" role="group" aria-label="정렬"><button id="align-left" type="button">왼쪽</button><button id="align-center" type="button">가운데</button><button id="align-right" type="button">오른쪽</button></div>
-              <div class="field">글자색<div class="row tight" role="group" aria-label="글자색">
-                <button id="color-default" type="button">기본</button><button id="color-accent" type="button">강조</button><button id="color-muted" type="button">흐리게</button><input id="color-custom" type="color" aria-label="색">
+              <div class="seg" role="group" aria-label="정렬"><button id="align-left" type="button">${ic.alignLeft}왼쪽</button><button id="align-center" type="button">${ic.alignCenter}가운데</button><button id="align-right" type="button">${ic.alignRight}오른쪽</button></div>
+              <div class="field inline">글자색<div class="colors" role="group" aria-label="글자색">
+                <div class="seg"><button id="color-default" type="button">기본</button><button id="color-accent" type="button">강조</button><button id="color-muted" type="button">흐리게</button></div><input id="color-custom" type="color" aria-label="색" title="직접 고르기">
               </div></div>
             </div>
-            <label class="field">나타나는 순서<select id="element-step"></select></label>
-            <button id="picture-replace" type="button" hidden>그림 바꾸기</button>
-            <div class="row tight"><button id="copy-element" type="button" aria-label="요소 복제">복제</button><button id="delete-element" type="button" aria-label="요소 삭제">삭제</button><button id="front" type="button">맨 앞으로</button><button id="back" type="button">맨 뒤로</button></div>
-            <button id="reset-element" type="button">원래대로</button>
+            <label class="field inline">나타나는 순서<select id="element-step"></select></label>
+            <button class="line" id="picture-replace" type="button" hidden>${ic.image}그림 바꾸기</button>
+            <div class="tiles"><button class="tile" id="copy-element" type="button" aria-label="요소 복제">${ic.copy}복제</button><button class="tile danger" id="delete-element" type="button" aria-label="요소 삭제">${ic.trash}삭제</button><button class="tile" id="front" type="button">${ic.front}맨 앞으로</button><button class="tile" id="back" type="button">${ic.back}맨 뒤로</button></div>
+            <button class="line quiet" id="reset-element" type="button">${ic.restore}원래대로</button>
           </div>
         </section>
-        <section aria-labelledby="add-heading"><h2 id="add-heading">넣기</h2><div class="row"><button id="add-text" type="button">글상자</button><button id="add-picture" type="button">그림</button></div></section>
-        <section aria-labelledby="file-heading"><h2 id="file-heading">파일</h2><button id="print" type="button">PDF로 인쇄</button><button id="save-student" type="button">학생용으로 저장</button></section>
+        <section aria-labelledby="add-heading"><h2 id="add-heading">넣기</h2><div class="tiles"><button class="tile" id="add-text" type="button">${ic.textbox}글상자</button><button class="tile" id="add-picture" type="button">${ic.image}그림</button></div></section>
+        <section aria-labelledby="file-heading"><h2 id="file-heading">파일</h2><div class="list"><button class="list-row" id="print" type="button">${ic.print}<span>PDF로 인쇄</span>${ic.next}</button><button class="list-row" id="save-student" type="button">${ic.download}<span>학생용으로 저장</span>${ic.next}</button></div></section>
       </div>
       <input id="font-files" type="file" accept=".woff2,.woff,.ttf,.otf" multiple hidden>
       <input id="picture-file" type="file" accept="image/*" hidden>`;
     panel.querySelector('#slide-controls').prepend(addNavigation('slide-nav', false));
+    for (const [id, name] of [['prev','이전'],['next','다음']]) {
+      const step = panel.querySelector(`#slide-nav-${id}`); step.innerHTML = ic[id]; step.title = name;
+    }
     if (credit()) panel.querySelector('#panel-scroll').append(make('p', credit(), 'notice deck-credit'));
     toast = make('div'); toast.id = 'deck-status'; toast.setAttribute('role','status'); toast.hidden = true;
     ui.append(make('style', css), panel, toast);
