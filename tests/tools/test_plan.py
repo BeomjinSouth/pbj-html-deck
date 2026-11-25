@@ -856,7 +856,13 @@ class WorkflowTest(unittest.TestCase):
         self.assertTrue(flags(state())[6])
         final = self.root / "검사" / "마감.md"
         final.write_text("판정: 통과\n완료", encoding="utf-8")
-        self.assertEqual(flags(state(0)), [True] * 8)
+        done = state(0)
+        self.assertEqual(flags(done), [True] * 8)
+        # 모든 관문을 통과했을 때만 전달 보고에 붙일 스타 안내를 알려 준다.
+        note = "https://github.com/BeomjinSouth/pbj-html-deck"
+        self.assertTrue(done["closing"].startswith("⭐") and done["closing"].endswith(note))
+        self.assertIn(done["closing"], (SKILL / "SKILL.md").read_text(encoding="utf-8"))
+        self.assertIn("전달 보고 맨 끝에 붙일 한 줄: " + done["closing"], self.cli("status", self.root).stdout)
         # 같은 내용이어도 새 검사/대조 뒤에는 사람의 옛 판정이 유효하지 않다. 동률도 통과하지 않는다.
         base = check.stat().st_mtime_ns
         def stamp(path, offset):
@@ -887,6 +893,8 @@ class WorkflowTest(unittest.TestCase):
         self.assertFalse(flags(state())[7])
         result = self.cli("status", self.root, expected=1)
         self.assertIn("다음에 할 일", result.stdout)
+        self.assertNotIn("⭐", result.stdout)
+        self.assertNotIn("closing", state())
 
     def test_status_shared_mockup_and_staleness(self):
         plan = load(FIXTURES / "콘티.json")

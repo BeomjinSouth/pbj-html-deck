@@ -1,6 +1,11 @@
 # pbj-html-deck
 
+[![GitHub stars](https://img.shields.io/github/stars/BeomjinSouth/pbj-html-deck?style=social)](https://github.com/BeomjinSouth/pbj-html-deck/stargazers)
+[![License](https://img.shields.io/github/license/BeomjinSouth/pbj-html-deck)](LICENSE)
+
 PPT 대신 쓰는 **HTML 수업 슬라이드 한 파일**을 만드는 에이전트 스킬입니다. Codex(또는 Claude Code)에 주제를 말하면 구상부터 그림 생성, 구현, 검사까지 스킬이 정한 순서대로 진행합니다.
+
+> ⭐ **이 스킬이 도움이 되셨다면 [GitHub에서 Star](https://github.com/BeomjinSouth/pbj-html-deck)를 눌러 주세요!** 수업 슬라이드가 필요한 다른 선생님들께도 닿을 수 있게 도와주세요.
 
 ![견본 1](docs/견본-1.png)
 ![견본 2](docs/견본-2.png)
