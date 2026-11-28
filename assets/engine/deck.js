@@ -854,7 +854,8 @@
   let outline, hoverOutline, floating, hovered, redrawId;
   const handles = [['nw',-1,-1], ['ne',1,-1], ['sw',-1,1], ['se',1,1], ['w',-1,0], ['e',1,0]];
   const textBearing = el => Boolean(el?.textContent.trim() && !el.matches(nonContent));
-  const local = (el, css) => el?.matches(css);
+  const textToken = target => target.namespaceURI === MATH ? target.closest(mathText)
+    : target.namespaceURI === SVG ? target.closest(svgText) : null;
   const inlineDisplay = display => /^(?:inline(?:$|[- ])|contents$)/.test(display);
   function isTextBox(el) {
     if (el?.namespaceURI !== html.namespaceURI || !textBearing(el) || el.matches('img,input,textarea,select,canvas,video,iframe')) return false;
@@ -871,6 +872,8 @@
     if (alt) return target;
     const atom = target.closest('svg,math');
     if (atom && slide.contains(atom)) {
+      // A math token can be edited on release; select the formula for dragging.
+      if (atom.namespaceURI === MATH) return atom;
       return (selected === atom || atom.contains(selected)) ? target : atom;
     }
     while (target !== slide && getComputedStyle(target).display === 'inline' && !target.matches(inlineAtoms)) target = target.parentElement;
@@ -896,7 +899,7 @@
     if (!outline.hidden) {
       outline.classList.toggle('typing', Boolean(editing));
       const canWidth = isTextBox(selected) && getComputedStyle(selected).display !== 'inline';
-      for (const el of all(outline, '[data-handle]')) el.hidden = Boolean(editing) || (!canWidth && el.dataset.y === '0');
+      for (const el of all(outline, '[data-handle]')) el.hidden = Boolean(editing?.input) || (!canWidth && el.dataset.y === '0');
     }
     if (editing?.input) {
       const r = editing.el.getBoundingClientRect();
@@ -908,15 +911,16 @@
     if (mode === 'edit') drawOverlay();
     redrawId = requestAnimationFrame(overlayLoop);
   }
-  function beginDrag(event, el, handle = '') {
+  const dragThreshold = 4;
+  function beginDrag(event, el, handle = '', token = null) {
     if (!el) return;
-    dragState = { el, handle, id: event.pointerId, x: event.clientX, y: event.clientY, started: false };
+    dragState = { el, handle, token, id: event.pointerId, x: event.clientX, y: event.clientY, started: false };
   }
   function dragMove(event) {
     const drag = dragState;
     if (!drag || event.pointerId !== drag.id) return;
     const dx = event.clientX - drag.x, dy = event.clientY - drag.y;
-    if (!drag.started && Math.hypot(dx, dy) <= 4) return;
+    if (!drag.started && Math.hypot(dx, dy) <= dragThreshold) return;
     const { el, handle } = drag;
     if (!drag.started) {
       drag.before = attrs(el, geometryAttrs); drag.data = geometry(el);
@@ -958,6 +962,10 @@
     if (!drag || event.pointerId !== drag.id) return;
     dragState = null;
     if (drag.started) recordAttrs(drag.el, geometryAttrs, drag.before);
+    else if (!drag.handle && selected === drag.el && activeSlide()?.contains(drag.el) &&
+             Math.hypot(event.clientX - drag.x, event.clientY - drag.y) <= dragThreshold) {
+      startText(drag.token || drag.el, drag);
+    }
   }
   function cancelDrag() {
     if (dragState?.started) writeAttrs(dragState.el, geometryAttrs, dragState.before);
@@ -1034,17 +1042,28 @@
     target.addEventListener('compositionstart', () => { session.composing = true; }, options);
     target.addEventListener('compositionend', () => { session.composing = false; }, options);
   }
-  function startText(el, position) {
-    if (!el) return;
-    if (local(el, 'svg,math')) {
-      const token = position?.target.closest(svgText + ',' + mathText);
-      if (!token || !el.contains(token)) return;
-      el = token;
+  function placeTextSelection(el, position) {
+    const selection = getSelection(), range = doc.createRange();
+    range.selectNodeContents(el);
+    if (position) {
+      const { x, y } = position;
+      const caret = doc.caretPositionFromPoint?.(x, y);
+      const legacy = caret ? null : doc.caretRangeFromPoint?.(x, y);
+      const node = caret?.offsetNode ?? legacy?.startContainer;
+      if (node && el.contains(node)) {
+        range.setStart(node, caret?.offset ?? legacy.startOffset);
+        range.collapse(true);
+      } else range.collapse(false);
     }
-    if (editing?.el === el) return;
-    finishEdit(); select(el);
-    if (el.namespaceURI !== html.namespaceURI) {
-      if (!el.matches(svgText + ',' + mathText)) return;
+    selection.removeAllRanges(); selection.addRange(range);
+  }
+  function startText(el, position) {
+    if (!el || editing?.el === el) return;
+    const htmlText = el.namespaceURI === html.namespaceURI;
+    if (htmlText ? !isTextBox(el) : !el.matches(svgText + ',' + mathText)) return;
+    finishEdit();
+    if (selected !== el) select(el);
+    if (!htmlText) {
       const input = make('input'); input.type = 'text'; input.id = 'floating-text';
       input.setAttribute('aria-label', '글자');
       // An SVG text container may contain formatted tspans. Edit only the clicked token.
@@ -1064,10 +1083,7 @@
       input.addEventListener('blur', finishEdit);
       return;
     }
-    if (!isTextBox(el)) return;
     const editable = el.getAttribute('contenteditable');
-    const caret = position && doc.caretRangeFromPoint?.(position.clientX, position.clientY);
-    const clicked = caret?.startContainer;
     const controller = new AbortController(), { signal } = controller;
     const mutations = [], observer = new MutationObserver(records => { for (const entry of records) mutations.push(entry); });
     const collect = () => { for (const entry of observer.takeRecords()) mutations.push(entry); };
@@ -1082,10 +1098,7 @@
     } };
     trackComposition(el, editing, { signal });
     el.focus({ preventScroll: true });
-    const sel = getSelection(), range = doc.createRange();
-    if (el.children.length && clicked?.nodeType === Node.TEXT_NODE && el.contains(clicked)) range.selectNodeContents(clicked);
-    else range.selectNodeContents(el);
-    sel.removeAllRanges(); sel.addRange(range);
+    placeTextSelection(el, position);
     el.addEventListener('beforeinput', event => {
       if (event.isComposing || editing?.composing) return;
       if (event.inputType === 'insertParagraph' || event.inputType === 'insertLineBreak') {
@@ -1109,19 +1122,21 @@
     window.addEventListener('pointerdown', event => {
       if (mode !== 'edit' || overviewNode || event.button !== 0 || !event.isPrimary) return;
       const target = event.composedPath()[0];
-      if (target === editing?.input || editing?.el.contains(target)) return;
+      const onStage = stage.contains(target), widget = onStage && editInteraction(event);
+      const token = onStage ? textToken(target) : null;
+      if (target === editing?.input || (!widget && !token && editing?.el.contains(target))) return;
       finishEdit(); finishSlider();
-      if (stage.contains(target) && event.ctrlKey && widgetTarget(target)) return;
+      if (widget) return;
       if (target.dataset?.handle) {
         event.preventDefault(); beginDrag(event, selected, target.dataset.handle); return;
       }
       if (target.getRootNode() === ui) return;
-      const hitElement = hit(target, event.altKey);
-      select(hitElement);
-      if (stage.contains(target)) {
+      const el = hit(target, event.altKey);
+      select(el);
+      if (onStage) {
         event.preventDefault(); event.stopImmediatePropagation();
         if (doc.activeElement?.getRootNode() === doc) doc.activeElement.blur();
-        beginDrag(event, hitElement);
+        beginDrag(event, el, '', token);
       }
     }, true);
     window.addEventListener('pointermove', event => {
@@ -1134,8 +1149,9 @@
     window.addEventListener('blur', cancelDrag);
     window.addEventListener('dblclick', event => {
       if (mode !== 'edit' || !stage.contains(event.target)) return;
-      event.preventDefault(); event.stopImmediatePropagation();
-      if (!editing) startText(hit(event.target, event.altKey), event);
+      // Keep slide handlers blocked without canceling the browser's text selection.
+      event.stopImmediatePropagation();
+      if (!editing || editing.input || !editing.el.contains(event.target)) event.preventDefault();
     }, true);
     window.addEventListener('dragstart', event => { if (mode === 'edit' && stage.contains(event.target)) event.preventDefault(); }, true);
     window.addEventListener('beforeunload', event => { if (isDirty()) { event.preventDefault(); event.returnValue = true; } });
@@ -1557,7 +1573,7 @@
     const path = control('selection-path'); path.replaceChildren();
     const chain = [];
     for (let n = el; n && n !== activeSlide(); n = n.parentElement) chain.unshift(n);
-    const labels = { h1:'제목',h2:'제목',p:'문단',div:'묶음',img:'그림',image:'그림',svg:'도형',math:'수식',text:'글자',strong:'강조',button:'버튼' };
+    const labels = { h1:'제목',h2:'제목',p:'문단',div:'묶음',img:'그림',image:'그림',svg:'도형',math:'수식',mi:'수식 글자',mn:'수식 글자',mo:'수식 글자',mtext:'수식 글자',ms:'수식 글자',text:'글자',tspan:'글자',strong:'강조',button:'버튼' };
     path.append(button('path-slide', '장', () => select(null)));
     chain.forEach((node,i) => {
       const divider = make('span','›'); divider.setAttribute('aria-hidden','true');
@@ -1937,7 +1953,9 @@
     const css = `
       #selection,#hover-outline{position:fixed;pointer-events:none;border:1px solid var(--blue);z-index:2}
       #hover-outline{border-style:dashed;opacity:.8}
-      #selection.typing{border-width:2px}
+      #selection.typing{border-color:transparent;outline:2px solid var(--blue)}
+      #selection.typing .handle[data-x="-1"]{translate:calc(-100% - 3px) -50%}
+      #selection.typing .handle[data-x="1"]{translate:3px -50%}
       #selection .handle{position:absolute;width:12px;height:12px;padding:0;min-height:0;border:2px solid var(--blue);border-radius:3px;background:white;translate:-50% -50%;pointer-events:auto;touch-action:none}
       #selection .handle:hover{background:#dfe8ff}
       #selection .handle[data-x="-1"]{left:0}
@@ -2115,7 +2133,7 @@
         </section>
         <section aria-labelledby="selection-heading">
           <h2 id="selection-heading">선택한 요소</h2>
-          <p class="notice empty" id="selection-empty">${ic.cursor}<span>슬라이드에서 고칠 곳을 누르세요. 두 번 누르면 글자를 고칩니다.</span></p>
+          <p class="notice empty" id="selection-empty">${ic.cursor}<span>글자를 누르면 바로 고쳐요. 끌면 옮겨요.</span></p>
           <div id="selection-fields" hidden>
             <div id="selection-path" class="crumbs" aria-label="선택 경로"></div>
             ${range('size','크기',10,400)}

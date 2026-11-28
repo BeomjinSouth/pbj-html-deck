@@ -233,6 +233,7 @@ try {
     assert.equal(await js('deck.mode'), 'edit');
     await click('#cover-title');
     assert.equal(await js('deck.selection?.id'), 'cover-title');
+    await key('Escape');
     const start = await rect('#cover-title');
     await drag('#cover-title', 120, 60);
     const moved = await rect('#cover-title');
@@ -258,9 +259,10 @@ try {
   });
   await test('4b. 인라인 서식·SVG·MathML 직접 수정과 폭', async () => {
     await open(`${fixture}?edit`);
-    await click('#cover-title'); await saveShot('02-edit-selected');
-    await click('#rich strong', { count: 2 });
+    await click('#cover-title'); await key('Escape'); await saveShot('02-edit-selected');
+    await click('#rich strong');
     assert.equal(await js('document.activeElement.id'), 'rich');
+    await js(`getSelection().selectAllChildren(${selector('#rich strong')})`);
     await type('직접 본 사실'); await saveShot('04-text-edit'); await key('Escape');
     assert.equal(await js('document.querySelector("#rich").innerHTML'), '먼저 <strong>직접 본 사실</strong>을 적으세요.');
     await key('z', 2); assert.equal(await js('document.querySelector("#rich strong").textContent'), '관찰한 사실');
@@ -270,17 +272,17 @@ try {
     const narrow = await rect('#rich');
     closeTo(narrow.x, before.x); closeTo(narrow.width, before.width - 100);
     await key('z', 2);
-    await click('#svg-label', { count: 2 });
+    await click('#svg-label');
     await type('세 변'); await key('Escape');
     assert.equal(await js('document.querySelector("#svg-label").textContent'), '세 변');
     await key('z', 2);
     assert.equal(await js('document.querySelector("#svg-label").textContent'), '삼각형');
-    await key('PageDown'); await key('PageDown'); await click('#math-label', { count: 2 });
+    await key('PageDown'); await key('PageDown'); await click('#math-label');
     await type('b'); await key('Escape');
     assert.equal(await js('document.querySelector("#math-label").textContent'), 'b');
   });
   await test('4c. 요소 복제·삭제와 되돌리기', async () => {
-    await open(`${fixture}?edit`); await click('#cover-title');
+    await open(`${fixture}?edit`); await click('#cover-title'); await key('Escape');
     const original = await rect('#cover-title'), offset = (await rect('#deck')).width / 96;
     await key('d', 2);
     assert.equal(await js('deck.slides[0].querySelectorAll("h1").length'), 2);
@@ -293,6 +295,96 @@ try {
   const editorState = () => js('[deck.page,deck.step,deck.mode,document.documentElement.dataset.theme,deck.selection?.id,deck.selection?.getAttribute("style")]');
   const editingTitle = () => js('document.querySelector("#cover-title").isContentEditable');
   const title = () => js('document.querySelector("#cover-title").textContent');
+  await test('4g. 한 번 눌러 정확한 글자 사이에 커서 놓기와 기본 글자 선택', async () => {
+    await open(`${fixture}?edit&caret`);
+    const [x, y] = await js(`{
+      const node = document.querySelector('#cover-title').firstChild, r = document.createRange();
+      r.setStart(node, 2); r.setEnd(node, 2);
+      const box = r.getBoundingClientRect(); [box.x, box.y + box.height / 2];
+    }`);
+    await mouse('mousePressed', x, y);
+    assert.equal(await editingTitle(), false, '떼기 전에는 편집을 시작하지 않음');
+    await mouse('mouseReleased', x + 3, y);
+    assert.deepEqual(await js(`{const s=getSelection();[document.activeElement.id, s.isCollapsed, s.anchorNode.parentElement.id, s.anchorOffset];}`), ['cover-title', true, 'cover-title', 2]);
+    await type('!'); assert.equal(await title(), '관찰!하고 설명하기');
+    await key('Escape'); await key('z', 2);
+    await click('#cover-title', { fx: .7 });
+    const anchor = await js('getSelection().anchorOffset');
+    await click('#cover-title', { fx: .25 });
+    assert.equal(await js('getSelection().isCollapsed'), true);
+    assert.notEqual(await js('getSelection().anchorOffset'), anchor);
+    await js(`${selector('#cover-title')}.addEventListener('dblclick', () => { window.slideDoubleClick = true; })`);
+    await click('#cover-title', { fx: .75, count: 2 });
+    assert.equal(await js('getSelection().toString()'), '설명하기');
+    assert.equal(await js('Boolean(window.slideDoubleClick)'), false);
+    await click('#cover-title', { fx: .75, count: 3 });
+    assert.equal(await js('getSelection().toString().trim()'), '관찰하고 설명하기');
+  });
+  await test('4h. 글자를 끌면 편집 대신 요소 이동만', async () => {
+    await open(`${fixture}?edit&drag-text`);
+    const before = await rect('#cover-title');
+    await drag('#cover-title', 60, 30);
+    sameRect(await rect('#cover-title'), { ...before, x: before.x + 60, y: before.y + 30 });
+    assert.equal(await editingTitle(), false);
+    assert.equal(await js('deck.selection?.id'), 'cover-title');
+    await key('z', 2); sameRect(await rect('#cover-title'), before);
+  });
+  await test('4i. Esc로 글자 편집만 끝내고 Delete로 요소 삭제', async () => {
+    await open(`${fixture}?edit&escape`); await click('#cover-title');
+    assert.equal(await editingTitle(), true);
+    await key('Escape');
+    assert.equal(await editingTitle(), false);
+    assert.equal(await js('deck.selection?.id'), 'cover-title');
+    await key('Delete'); assert.equal(await js('document.querySelector("#cover-title")'), null);
+    await key('z', 2); assert.equal(await title(), '관찰하고 설명하기');
+    await click('#cover-title'); await key('Escape'); await key('Escape');
+    assert.equal(await js('deck.selection'), null);
+  });
+  await test('4j. 수식과 SVG 조각을 한 번 눌러 입력하고 수식은 통째로 이동', async () => {
+    await open(`${fixture}?edit&token#3`);
+    await click('#math-label');
+    assert.equal(await js(`${selector('@#floating-text')}.value`), 'a');
+    assert.equal(await js('deck.selection?.id'), 'math-label');
+    await type('b'); await key('Escape');
+    assert.equal(await js(`${selector('#math-label')}.textContent`), 'b');
+    const formula = 'p > math', before = await rect(formula), token = await rect('#math-label');
+    await drag('#math-label', 45, 20);
+    assert.equal(await js('deck.selection?.localName'), 'math');
+    assert.equal(await js(`${selector('@#floating-text')}===null`), true);
+    sameRect(await rect(formula), { ...before, x: before.x + 45, y: before.y + 20 });
+    sameRect(await rect('#math-label'), { ...token, x: token.x + 45, y: token.y + 20 });
+    await key('PageUp'); await key('PageUp');
+    await js(`${selector('#svg-label')}.innerHTML='<tspan id="svg-word">삼각형</tspan>'`);
+    await click('#svg-word');
+    assert.equal(await js(`${selector('@#floating-text')}.value`), '삼각형');
+    assert.equal(await js('deck.selection?.id'), 'svg-word');
+  });
+  await test('4k. 글자·수식에 들어갔다 수정 없이 벗어나면 이력 없음', async () => {
+    await open(`${fixture}?edit&empty-edit#3`);
+    await click('#math-label'); assert(await js(`!!${selector('@#floating-text')}`));
+    await click('section:not([hidden]) > h2'); assert(await js('document.activeElement.matches("h2[contenteditable]")'));
+    await click('#picture'); assert.equal(await js('deck.selection?.id'), 'picture');
+    assert.deepEqual(await js(`[deck.dirty, ${selector('@#undo')}.disabled, ${selector('@#redo')}.disabled]`), [false, true, true]);
+  });
+  await test('4l. 글자 편집 중에도 바깥 손잡이로 크기 조절', async () => {
+    await open(`${fixture}?edit&resize-text`);
+    await click('#rich'); assert.equal(await js('document.activeElement.id'), 'rich');
+    const before = await rect('#rich'), handle = await rect('@[data-handle="e"]');
+    assert(handle.width > 0 && handle.x >= before.right, '손잡이는 글자 상자 바깥에 있음');
+    await drag('@[data-handle="e"]', -70, 0);
+    assert.equal(await js(`${selector('#rich')}.isContentEditable`), false);
+    assert.equal(await js('deck.selection?.id'), 'rich');
+    const resized = await rect('#rich'); closeTo(resized.x, before.x); closeTo(resized.width, before.width - 70);
+    await key('z', 2); sameRect(await rect('#rich'), before);
+  });
+  await test('4m. 선택한 글자 상자는 Enter와 F2로 전체 선택하며 편집', async () => {
+    await open(`${fixture}?edit&edit-key`); await click('#cover-title');
+    for (const shortcut of ['Enter', 'F2']) {
+      await key('Escape'); await key(shortcut);
+      assert.equal(await editingTitle(), true, shortcut);
+      assert.equal(await js('getSelection().toString()'), await title(), shortcut);
+    }
+  });
   const inputKeys = ['Backspace','Delete','ArrowLeft','ArrowRight','ArrowUp','ArrowDown','e','d','g','f','Enter'];
   // Dispatch browser-shaped events for keys that could open a native picker.
   const scopedKey = (s, keyName, options = {}) => js(`${selector(s)}.dispatchEvent(new KeyboardEvent('keydown',${quote({key:keyName,bubbles:true,composed:true,cancelable:true,...options})}))`);
@@ -311,7 +403,7 @@ try {
       sameRect(await rect('#cover-title'),box);
       assert.equal(await js('!!document.querySelector("#deck-overview")'),false);
     }
-    await click('#svg-label',{count:2});
+    await click('#svg-label');
     const svgBase = await editorState();
     for (const k of inputKeys.slice(0,-1)) await key(k);
     assert.deepEqual(await editorState(),svgBase);
@@ -328,7 +420,7 @@ try {
       for (const k of ['ArrowRight','e','d','g','f','Enter','Escape']) assert.equal(await scopedKey('#deck',k,flags),true);
       assert.deepEqual(await editorState(),base);
     }
-    await click('#cover-title',{count:2});
+    await click('#cover-title');
     assert.equal(await editingTitle(),true);
     for (const flags of [{isComposing:true},{keyCode:229}]) {
       for (const k of ['Enter','Escape','e','d','g','f']) assert.equal(await scopedKey('#cover-title',k,flags),true);
@@ -340,7 +432,7 @@ try {
     assert.equal(await editingTitle(),true);
     await js(`${selector('#cover-title')}.dispatchEvent(new CompositionEvent('compositionend',{bubbles:true}))`);
     await key('Escape'); assert.equal(await editingTitle(),false);
-    await click('#svg-label',{count:2});
+    await click('#svg-label');
     for (const flags of [{isComposing:true},{keyCode:229}]) {
       for (const k of ['Enter','Escape','e','d','g','f']) assert.equal(await scopedKey('@#floating-text',k,flags),true);
       assert.equal(await js(`!!${selector('@#floating-text')}`),true);
@@ -355,7 +447,7 @@ try {
       ['next-key', () => key('PageDown')], ['present', () => click('@#edit-present')]
     ]) {
       await open(`${fixture}?edit&finish=${action}`);
-      await click('#cover-title',{count:2});
+      await click('#cover-title'); await key('a', 2);
       await type('새 제목'); await type(' 완성');
       assert.equal(await editingTitle(),true);
       assert.equal(await title(),'새 제목 완성');
@@ -472,7 +564,7 @@ try {
     await open(`${runtime}?edit`);
     const start = await rect('#cover-title');
     await drag('#cover-title',120,60); await drag('@[data-handle="se"]',84,17);
-    await click('#cover-title', { count: 2 }); await type('고친 제목'); await key('Escape');
+    await click('#cover-title'); await key('a', 2); await type('고친 제목'); await key('Escape');
     await setFile('@#font-files', process.env.PBJ_TEST_FONT || 'C:/Windows/Fonts/marlett.ttf');
     await eventually(() => js(`${selector('@#element-font')}.querySelector('optgroup[label="파일에 포함"] option')` + '!==null'));
     await turn('@#element-font','ArrowDown');
@@ -637,7 +729,7 @@ try {
         return { createWritable:async () => ({ write:async text => saveProbe.writes.push(text), close:async () => { saveProbe.closes++; } }) };
       };
     }`);
-    await click('#cover-title',{count:2});
+    await click('#cover-title'); await key('a', 2);
     await type('편집 중 저장'); await type(' 확인');
     assert.equal(await editingTitle(),true);
     assert.equal(await js('saveProbe.changes'),0);
@@ -659,7 +751,7 @@ try {
     await open(`${runtime}?edit`);
     await send('Browser.setDownloadBehavior', { behavior:'allow', downloadPath:downloadDir });
     await js('Object.defineProperty(window,"showSaveFilePicker",{configurable:true,value:undefined}); void 0');
-    await click('#cover-title'); await key('ArrowRight'); await click('@#save');
+    await click('#cover-title'); await key('Escape'); await key('ArrowRight'); await click('@#save');
     const downloaded = path.join(downloadDir,'inline-fixture.html');
     const text = await eventually(() => fs.readFile(downloaded,'utf8').catch(error => {
       if (error.code === 'ENOENT') return false;
@@ -687,7 +779,7 @@ try {
     }
     await reopenSaved('author-attributes','#3');
     assert.equal(await js('document.querySelector("#answer").checkVisibility()'),false);
-    await editReview(); await click('#caption',{count:2}); await type('편집 중');
+    await editReview(); await click('#caption'); await key('a', 2); await type('편집 중');
     assert.deepEqual(await savedDOM(`[d.querySelector('#caption').textContent,d.querySelector('#caption').hasAttribute('contenteditable')]`),['편집 중',false]);
     assert.equal(await js('document.querySelector("#caption").isContentEditable'),true);
   });
@@ -695,10 +787,10 @@ try {
     for (const operation of ['Delete','ArrowRight']) {
       await editReview();
       const before = await js('document.querySelector("#lesson-title").innerHTML');
-      await click('#token',{modifiers:1}); await key(operation);
+      await click('#token',{modifiers:1}); await key('Escape'); await key(operation);
       const afterOperation = await js('document.querySelector("#lesson-title").innerHTML');
       assert.notEqual(afterOperation,before);
-      await click('#lesson-title',{fx:.01,fy:.75}); await key('F2'); await key('End'); await type('!'); await key('Escape');
+      await click('#lesson-title',{fx:.01,fy:.75}); await key('Escape'); await key('F2'); await key('End'); await type('!'); await key('Escape');
       const afterText = await js('document.querySelector("#lesson-title").innerHTML');
       assert.match(afterText,/!$/);
       await js('deck.undo()'); assert.equal(await js('document.querySelector("#lesson-title").innerHTML'),afterOperation);
@@ -725,7 +817,7 @@ try {
   });
   await test('A4. 붙여넣기 뒤 처음·중간·끝 줄바꿈, 정리와 이력', async () => {
     for (const [line, offset, expected] of [[1,2,'첫 줄<br>둘째<br>셋째'],[0,0,'<br>셋째첫 줄<br>둘째'],[1,1,'첫 줄<br>둘<br>셋째째']]) {
-      await editReview(); await click('#caption',{count:2});
+      await editReview(); await click('#caption'); await key('a', 2);
       await js(`{const e=document.querySelector('#caption'),cb=new DataTransfer();cb.setData('text/plain','첫 줄\\n둘째');cb.setData('text/html','<b>서식</b>');e.dispatchEvent(new ClipboardEvent('paste',{clipboardData:cb,bubbles:true,cancelable:true}));const w=document.createTreeWalker(e,NodeFilter.SHOW_TEXT),runs=[];while(w.nextNode())if(w.currentNode.length)runs.push(w.currentNode);getSelection().collapse(runs[${line}],${offset});}`);
       await send('Input.dispatchKeyEvent',{type:'keyDown',key:'Enter',code:'Enter',windowsVirtualKeyCode:13,text:'\r'});
       await send('Input.dispatchKeyEvent',{type:'keyUp',key:'Enter',code:'Enter',windowsVirtualKeyCode:13});
@@ -735,7 +827,7 @@ try {
       await js('deck.undo()'); assert.equal(await markup(),'그림 설명');
       await js('deck.redo()'); assert.equal((await markup()).replaceAll('&nbsp;',' '),expected);
     }
-    await editReview(); await click('#caption',{count:2}); await key('End');
+    await editReview(); await click('#caption'); await key('End');
     await send('Input.dispatchKeyEvent',{type:'keyDown',key:'Enter',code:'Enter',windowsVirtualKeyCode:13,text:'\r'});
     await send('Input.dispatchKeyEvent',{type:'keyUp',key:'Enter',code:'Enter',windowsVirtualKeyCode:13});
     await key('Escape');
@@ -772,7 +864,7 @@ try {
       assert.equal(await scopedKey('#deck',keyName,{code}),false,code);
       assert.equal(await js(condition),true,code);
     }
-    await key('Escape'); await click('#caption');
+    await key('Escape'); await click('#caption'); await key('Escape');
     assert.equal(await scopedKey('#deck','ㅇ',{code:'KeyD',ctrlKey:true}),false);
     assert.equal(await js('deck.slides[1].querySelectorAll("figcaption").length'),2);
     await scopedKey('#deck','ㅋ',{code:'KeyZ',ctrlKey:true}); assert.equal(await js('deck.slides[1].querySelectorAll("figcaption").length'),1);
@@ -790,10 +882,10 @@ try {
     assert.equal(await js('getComputedStyle(deck.selection).flex'),'1 1 0px');
     await js('deck.undo()'); sameRect(await rect('#flex-item'),after);
   });
-  await test('B10. 인라인 링크 글자 두 번 눌러 수정', async () => {
-    await editReview(); await click('#link-box span',{count:2});
+  await test('B10. 인라인 링크 한 번 눌러 글자를 고치되 링크는 열지 않음', async () => {
+    await editReview(); await click('#link-box span');
     assert.equal(await js('document.activeElement.id'),'link-box');
-    await type('설명으로'); await key('Escape');
+    await key('a', 2); await type('설명으로'); await key('Escape');
     assert.deepEqual(await js('[document.querySelector("#link-box a").getAttribute("href"),document.querySelector("#link-box span").textContent,deck.page]'),['#5','설명으로',1]);
   });
   await test('B11. 복제 장이 강조색·테마·글자 배율을 따라감', async () => {
@@ -895,7 +987,7 @@ try {
     }
   });
   await test('C2. 최근 편집 300건 되돌리기와 다시 하기', async () => {
-    await editReview(); await click('#caption'); const initial=await rect('#caption');
+    await editReview(); await click('#caption'); await key('Escape'); const initial=await rect('#caption');
     await js(`{const key=()=>document.body.dispatchEvent(new KeyboardEvent('keydown',{key:'ArrowRight',bubbles:true,cancelable:true}));for(let i=0;i<301;i++)key();}`);
     for (let i=0;i<300;i++) assert.equal(await js('deck.undo()'),undefined);
     assert.equal(await js(`${selector('@#undo')}.disabled`),true);
@@ -954,16 +1046,17 @@ try {
     assert.deepEqual(issues,[],`3차 견본 audit 오류: ${JSON.stringify(issues)}`);
     await key('e');
     const active = '#deck > .slide:not([hidden])', heading = `${active} h2`, item = `${active} ol li:first-child span`;
-    await click(heading,{fx:.05}); assert.equal(await js('deck.selection?.localName'),'h2');
+    await click(heading,{fx:.05}); assert.equal(await js('deck.selection?.localName'),'h2'); await key('Escape');
     const before = await rect(heading); await drag(heading,34,-16);
     const moved = await rect(heading); sameRect(moved,{...before,x:before.x+34,y:before.y-16});
-    await click(item,{count:2,fx:.60});
+    await click(item,{fx:.60});
     assert.equal(await js('document.activeElement.localName'),'span');
-    await type('활동 수정'); await key('Escape');
-    const text = await js(`${selector(item)}.textContent`); assert.match(text,/활동 수정/);
+    await key('a', 2); await type('활동 수정'); await key('Escape');
+    const text = await js(`${selector(item)}.textContent`); assert.equal(text,'활동 수정');
     await js('deck.go(8)');
     const label=`${active} svg text:first-of-type`;
-    await click(label); await click(label); assert.equal(await js('deck.selection?.localName'),'text');
+    await click(label); assert.equal(await js('deck.selection?.localName'),'text');
+    assert(await js(`!!${selector('@#floating-text')}`));
     await js('deck.go(5)');
     const count = await js('deck.count'); await click('@#slide-copy');
     assert.equal(await js('deck.count'),count+1); sameRect(await rect(heading),moved);
@@ -1269,6 +1362,29 @@ try {
     await click('#flip',{modifiers:2}); assert(await hasState('#flip','is-flipped'));
     await click('[data-tab=a]',{modifiers:2}); assert(await hasState('[data-tab=a]','is-on'));
     assert.equal(await js('deck.dirty'),false); await key('z',2); assert(await hasState('#flip','is-flipped'));
+  });
+  await test('F15b. 퀴즈 보기·분류 칩 편집과 Ctrl로 공개한 해설 수식', async () => {
+    await open(`${widgetFixture}?edit&quiz-text#2`);
+    const formula = ['2','×','2','×','2','×','3','×','3','=','72'];
+    await js(`${selector('#quiz [data-explain]')}.innerHTML = ${quote(`<math>${formula.map((word,i) => i % 2 ? `<mo>${word}</mo>` : `<mn>${word}</mn>`).join('')}</math>`)}`);
+    await click('#right'); assert.equal(await js('document.activeElement.id'), 'right');
+    assert.equal(await hasState('#quiz','is-solved'), false);
+    assert.equal(await js(`${selector('#quiz [data-explain]')}.checkVisibility()`), false);
+    await click('#right', { modifiers: 2 }); assert(await hasState('#quiz','is-solved'));
+    for (const [i, word] of formula.entries()) {
+      const token = `#quiz [data-explain] math > :nth-child(${i + 1})`;
+      await click(token);
+      assert.equal(await js(`${selector('@#floating-text')}.value`), word);
+      assert.equal(await js(`deck.selection === ${selector(token)}`), true);
+      await key('Escape');
+    }
+    await key('PageDown'); await click('#blue');
+    assert.equal(await js('document.activeElement.id'), 'blue');
+    assert.equal(await hasState('#blue','is-picked'), false);
+    await key('a', 2); await type('파란색'); await key('Escape');
+    assert.equal(await textOf('#blue'), '파란색');
+    await click('#blue', { modifiers: 2 }); assert(await hasState('#blue','is-picked'));
+    await click('[data-bin=b]', { modifiers: 2 }); assert.equal(await holder('#blue'),'data-bin');
   });
   await test('F16. 편집기 장 복제·삭제·되돌리기 뒤 위젯 위임 유지', async () => {
     await open(`${widgetFixture}?edit#2`);
